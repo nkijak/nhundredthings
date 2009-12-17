@@ -50,6 +50,10 @@ public class ExerciseSet {
         return stillHasCounts || stillHasRests;
     }
     
+    public boolean isMax() {
+        return !onCount && countIndex == 0 && wrappedCounts;
+    }
+    
     
     
 }

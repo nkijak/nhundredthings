@@ -8,11 +8,25 @@
 			android:textSize="20pt" 
 			android:height="200px" 
 			android:onClick="count" android:layout_width="fill_parent"></Button>
-	<TextView android:id="@+id/TotalCount" 
+	<LinearLayout android:layout_below="@id/Count" 
+					android:id="@+id/LinearLayout01" 
+					android:layout_height="wrap_content" 
+					android:layout_toLeftOf="@+id/TotalCount" 
+					android:layout_width="fill_parent">
+		<TextView android:id="@+id/TotalCount" 
 				android:text="0" 
 				android:textSize="20pt" 
 				android:layout_height="wrap_content"
 				android:layout_below="@id/Count"
 				android:layout_alignParentBottom="true"
-				android:layout_width="fill_parent" android:gravity="bottom|center_horizontal"></TextView>
+				android:layout_width="wrap_content" android:gravity="bottom"></TextView>				
+		<Button android:layout_height='fill_parent'
+				android:id="@+id/Done"
+				android:text="DONE"
+				android:onClick="done"
+				android:layout_width='wrap_content'
+				android:visibility="invisible" ></Button>
+					
+	
+</LinearLayout>
 </RelativeLayout>
