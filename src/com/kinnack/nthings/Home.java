@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.kinnack.nthings.activity.RestActivity;
 import com.kinnack.nthings.model.ExerciseSet;
+import com.kinnack.nthings.model.Workout;
 
 public class Home extends Activity {
     public static final String TAG = "nthings:HOME";
@@ -25,7 +26,7 @@ public class Home extends Activity {
     }
     
     public void doPushups(View target_) {
-        set = new ExerciseSet(new int[] {6,6,4,4,3}, new int[] {20});
+        set = Workout.getPushupSetFor(1, 1, Workout.EASY);
         startCounterActivity();
         
     }
@@ -46,7 +47,7 @@ public class Home extends Activity {
     private void startRestActivity() {
         Intent restIntent = new Intent(this, RestActivity.class);
         Log.d(TAG, "About to launch intnet for "+RestActivity.class.getName());
-        restIntent.putExtra(RestActivity.REST_LENGTH, set.next()*1000);
+        restIntent.putExtra(RestActivity.REST_LENGTH, set.next());
         Log.d(TAG, "Rest about to start");
         startActivityForResult(restIntent, REST_INTENT);
     }

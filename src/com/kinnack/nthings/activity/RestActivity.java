@@ -1,21 +1,20 @@
 package com.kinnack.nthings.activity;
 
-import com.kinnack.nthings.R;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.TextView;
+
+import com.kinnack.nthings.R;
 
 public class RestActivity extends Activity {
     private int rest_milliseconds;
     private float warning_percent = 0.17f;
     
     public static final String REST_LENGTH = "com.kinnack.nthings.rest_length"; 
-    public static final String WARNING_PERCENT = "com.kinnack.nthings.warining_percent";
+    public static final String WARNING_PERCENT = "com.kinnack.nthings.warning_percent";
     
     @Override
     protected void onCreate(Bundle savedInstanceState_) {
