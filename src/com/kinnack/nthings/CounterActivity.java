@@ -4,6 +4,7 @@ import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.ExerciseSet;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,8 +44,9 @@ public class CounterActivity extends Activity {
     }
     
     public void done(View target) {
-        setResult(RESULT_OK);
-        getIntent().getExtras().putInt(MAX_COUNT, count);
+        Intent intent = new Intent();
+        intent.putExtra(MAX_COUNT, count);
+        setResult(RESULT_OK,intent);
         Log.d("nthings:CounterActivity","Set "+MAX_COUNT+" to "+count);
         finish();
     }

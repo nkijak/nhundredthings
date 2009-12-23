@@ -1,7 +1,8 @@
 package com.kinnack.nthings.model;
 
+import com.kinnack.nthings.model.level.Level;
+
 public class Workout {
-    //[week][day][level]
     
     public static final int[] STANDARD_REST = new int[]{60000};
     public static final int[] SHORT_REST = new int[]{45000};
@@ -9,7 +10,8 @@ public class Workout {
     public static final int EASY = 0;
     public static final int MED = 1;
     public static final int HARD = 2;
-    public static final int[][][][][] PUSHUPS = new int[][][][][] {
+    //[week][day][level][counts][rests]
+    protected static final int[][][][][] PUSHUPS = new int[][][][][] {
         // week 1
         {
             // day 1 
@@ -305,9 +307,9 @@ public class Workout {
     };
         
         
-    public static ExerciseSet getPushupSetFor(int week, int day, int level) {
+    public static ExerciseSet getPushupSetFor(int week, int day, Level level) {
         // TODO error handling, argument checking
-        int[][] countRest = PUSHUPS[week-1][day-1][level];
+        int[][] countRest = PUSHUPS[week-1][day-1][level.getIndex()];
         return new ExerciseSet(countRest[0], countRest[1]);
     }
         
