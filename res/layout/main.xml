@@ -3,10 +3,14 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_gravity="center_horizontal" android:padding="20px">
+    android:layout_gravity="center_horizontal" android:padding="20px" android:background="@drawable/background">
 
-<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton" android:text="Push Ups" android:textSize="20pt" android:gravity="center_horizontal" android:layout_width="fill_parent" android:onClick="doPushups"></Button>
-<Button android:layout_height="wrap_content" android:id="@+id/SquatsButton" android:text="Squats" android:textSize="20pt" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false"></Button>
-<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton" android:text="Sit Ups" android:textSize="20pt" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false"></Button>
-<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton" android:text="Workout" android:textSize="20pt" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false"></Button>
+<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton" android:text="Push Ups" android:gravity="center_horizontal" android:layout_width="fill_parent" android:onClick="doPushups" android:textSize="15pt"></Button>
+<Button android:layout_height="wrap_content" android:id="@+id/SquatsButton" android:text="Squats" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
+<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton" android:text="Sit Ups" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
+<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton" android:text="Workout" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
+<RelativeLayout android:id="@+id/HomeSummary" android:layout_width="fill_parent" android:layout_height="fill_parent"><TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek" android:text="0" android:textSize="20pt" android:layout_height="fill_parent" android:gravity="top" android:textColor="@style/main"></TextView>
+
+<TextView android:layout_toRightOf="@+id/HomeCurrentWeek" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/HomeWeekLabel" android:text="th Week" android:textColor="@style/main"></TextView>
+</RelativeLayout>
 </LinearLayout>

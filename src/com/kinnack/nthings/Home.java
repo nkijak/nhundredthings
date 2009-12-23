@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kinnack.nthings.activity.RestActivity;
@@ -31,16 +33,21 @@ public class Home extends Activity {
     private int week;
     private int day;
     private Level level;
+    private Editor prefEditor;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        prefEditor = prefs.edit();
         week = prefs.getInt(KEY_CURRENT_DAY, 1);
         day = prefs.getInt(KEY_CURRENT_DAY, 0);
         level = Test.findLevelForWeekByIndex(week, prefs.getInt(KEY_CURRENT_LEVEL, 0));
         Log.i(TAG,"Loaded week "+week+", day "+day+" with level="+level);
+        
+        TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
+        currentWeek.setText(""+week);
         
     }
     
@@ -97,6 +104,9 @@ public class Home extends Activity {
             level = Test.initialTestLevel(test_count);
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             day = 1;
+            prefEditor.putInt(KEY_CURRENT_DAY, day);
+            prefEditor.putInt(KEY_CURRENT_LEVEL, level.getIndex());
+            prefEditor.commit();
             break;
         default:
             Log.d(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
