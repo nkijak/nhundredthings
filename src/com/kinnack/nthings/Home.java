@@ -93,7 +93,7 @@ public class Home extends Activity {
             break;
         case TEST_INTENT:
             int test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
-            level = Test.findLevelForWeekByIndex(week, test_count);
+            level = Test.initialTestLevel(test_count);
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             day = 1;
             break;
