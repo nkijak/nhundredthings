@@ -41,10 +41,11 @@ public class Home extends Activity {
         day = prefs.getInt(KEY_CURRENT_DAY, 0);
         level = Test.findLevelForWeekByIndex(week, prefs.getInt(KEY_CURRENT_LEVEL, 0));
         Log.i(TAG,"Loaded week "+week+", day "+day+" with level="+level);
-        if (day == 0) startTestActivity();
+        
     }
     
     public void doPushups(View target_) {
+        if (day == 0) { startTestActivity(); return;}
         set = Workout.getPushupSetFor(week, day, level);
         startCounterActivity();
         

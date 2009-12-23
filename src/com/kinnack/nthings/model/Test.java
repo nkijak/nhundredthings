@@ -7,6 +7,7 @@ import com.kinnack.nthings.model.level.Level;
 import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
 import com.kinnack.nthings.model.level.pushup.InitialHardLevel;
 import com.kinnack.nthings.model.level.pushup.InitialMidLevel;
+import com.kinnack.nthings.model.level.pushup.SecondEasyLevel;
 import com.kinnack.nthings.model.level.pushup.SecondHardLevel;
 import com.kinnack.nthings.model.level.pushup.SecondMidLevel;
 
@@ -15,7 +16,7 @@ public class Test {
         add(new InitialEasyLevel());
         add(new InitialMidLevel());
         add(new InitialHardLevel());
-        add(new SecondMidLevel());
+        add(new SecondEasyLevel());
         add(new SecondMidLevel());
         add(new SecondHardLevel());
     }};
