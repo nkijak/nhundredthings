@@ -2,6 +2,7 @@ package com.kinnack.nthings;
 
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.ExerciseSet;
+import com.kinnack.nthings.model.History;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,19 +11,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class CounterActivity extends Activity {
     public static final String INIT_COUNT_KEY = "com.kinnack.nthings.init_count";
     public static final String SHOW_DONE = "com.kinnack.nthings.show_done";
     public static final String MAX_COUNT = "com.kinnack.nthing.max_count";
+    public static final String HISTORY = "com.kinnack.nthing.history";
     private int count = 0;
     private int increment = 1;
+    private int neededCount = 0;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        count = getIntent().getExtras().getInt(INIT_COUNT_KEY);
-        boolean showDone = getIntent().getExtras().getBoolean(SHOW_DONE);
+        Bundle extras = getIntent().getExtras();
+        neededCount = extras.getInt(INIT_COUNT_KEY);
+        count = neededCount;
+        boolean showDone = extras.getBoolean(SHOW_DONE);
+
+        
         if (!showDone) { increment = -1; }
         if (showDone) { count = 0; }
         setContentView(R.layout.counter);
@@ -36,7 +45,11 @@ public class CounterActivity extends Activity {
     
     public void count(View target) {
         TextView totalCount = (TextView) findViewById(R.id.TotalCount);
+        ProgressBar progress = (ProgressBar) findViewById(R.id.CountProgress);
         totalCount.setText(""+(count+=increment));
+        int progressPercent = getProgressPercent();
+        Log.d("nthings:CounterActivity", "Setting progress to "+progressPercent);
+        progress.setProgress(progressPercent);
         if ((increment  == -1) && (count == 0)) {
             setResult(RESULT_OK); 
             finish();
@@ -49,5 +62,17 @@ public class CounterActivity extends Activity {
         setResult(RESULT_OK,intent);
         Log.d("nthings:CounterActivity","Set "+MAX_COUNT+" to "+count);
         finish();
+    }
+    
+    private int getProgressPercent() {
+        int retval = 0;
+        if (increment == -1) {
+            
+            retval = (int) ((1-count*1.0/neededCount)*100);
+        } else {
+            double percentLeft = count*1.0/neededCount*100;
+            retval = (int) (percentLeft > 100 ? 100 : percentLeft);
+        }
+        return retval;
     }
 }

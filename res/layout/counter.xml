@@ -6,27 +6,32 @@
 			android:id="@+id/Count" 
 			android:text="COUNT" 
 			android:textSize="20pt" 
-			android:height="200px" 
+			android:height="300px" 
 			android:onClick="count" android:layout_width="fill_parent"></Button>
-	<LinearLayout android:layout_below="@id/Count" 
-					android:id="@+id/LinearLayout01" 
-					android:layout_height="wrap_content" 
-					android:layout_toLeftOf="@+id/TotalCount" 
-					android:layout_width="fill_parent">
+	<ProgressBar android:layout_height="wrap_content"
+						android:id="@+id/CountProgress" android:layout_width="fill_parent"
+						android:progress="0" style="?android:attr/progressBarStyleHorizontal"
+						android:layout_below="@id/Count" android:paddingTop="15dp" android:paddingBottom="15dp"/>
+	
 		<TextView android:id="@+id/TotalCount" 
 				android:text="0" 
 				android:textSize="20pt" 
 				android:layout_height="wrap_content"
-				android:layout_below="@id/Count"
+				android:layout_below="@id/CountProgress"
 				android:layout_alignParentBottom="true"
-				android:layout_width="wrap_content" android:gravity="bottom"></TextView>				
+				android:layout_width="wrap_content" android:gravity="bottom"
+				android:visibility="gone"
+				/>				
+		
 		<Button android:layout_height='fill_parent'
 				android:id="@+id/Done"
 				android:text="DONE"
 				android:onClick="done"
-				android:layout_width='wrap_content'
-				android:visibility="invisible" ></Button>
+				android:layout_width='fill_parent'
+				android:visibility="invisible" 
+				android:gravity="bottom"
+				android:layout_below="@id/TotalCount" />
 					
 	
-</LinearLayout>
+
 </RelativeLayout>

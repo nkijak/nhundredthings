@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.kinnack.nthings.activity.RestActivity;
 import com.kinnack.nthings.model.ExerciseSet;
+import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.level.Level;
@@ -34,6 +35,7 @@ public class Home extends Activity {
     private int day;
     private Level level;
     private Editor prefEditor;
+    private History history;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,11 @@ public class Home extends Activity {
         day = prefs.getInt(KEY_CURRENT_DAY, 0);
         level = Test.findLevelForWeekByIndex(week, prefs.getInt(KEY_CURRENT_LEVEL, 0));
         Log.i(TAG,"Loaded week "+week+", day "+day+" with level="+level);
+        
+        history = new History();
+        history.setDay(day);
+        history.setWeek(week);
+        history.setCurrentLevel(level);
         
         TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
         currentWeek.setText(""+week);
@@ -66,6 +73,7 @@ public class Home extends Activity {
         Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, set.next());
         counterIntent.putExtra(CounterActivity.SHOW_DONE, set.isMax());
+   
         Log.d(TAG, "Intent about to start");
         startActivityForResult(counterIntent, COUNTER_INTENT);
         Log.d(TAG, "Intent started and returned");

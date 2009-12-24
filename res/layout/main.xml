@@ -9,8 +9,8 @@
 <Button android:layout_height="wrap_content" android:id="@+id/SquatsButton" android:text="Squats" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
 <Button android:layout_height="wrap_content" android:id="@+id/SitupsButton" android:text="Sit Ups" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
 <Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton" android:text="Workout" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
-<RelativeLayout android:id="@+id/HomeSummary" android:layout_width="fill_parent" android:layout_height="fill_parent"><TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek" android:text="0" android:textSize="20pt" android:layout_height="fill_parent" android:gravity="top" android:textColor="@style/main"></TextView>
+<RelativeLayout android:id="@+id/HomeSummary" android:layout_width="fill_parent" android:layout_height="fill_parent"><TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek" android:text="0" android:textSize="20pt" android:layout_height="fill_parent" android:gravity="top" android:textColor="#CCC"></TextView>
 
-<TextView android:layout_toRightOf="@+id/HomeCurrentWeek" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/HomeWeekLabel" android:text="th Week" android:textColor="@style/main"></TextView>
+<TextView android:layout_toRightOf="@+id/HomeCurrentWeek" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/HomeWeekLabel" android:text="th Week" android:textColor="#CCC"></TextView>
 </RelativeLayout>
 </LinearLayout>
