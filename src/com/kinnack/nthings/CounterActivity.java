@@ -51,7 +51,9 @@ public class CounterActivity extends Activity {
         Log.d("nthings:CounterActivity", "Setting progress to "+progressPercent);
         progress.setProgress(progressPercent);
         if ((increment  == -1) && (count == 0)) {
-            setResult(RESULT_OK); 
+            Intent intent = new Intent();
+            intent.putExtra(MAX_COUNT, neededCount);
+            setResult(RESULT_OK,intent);
             finish();
         }
     }

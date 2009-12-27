@@ -1,5 +1,7 @@
 package com.kinnack.nthings;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,13 +31,12 @@ public class Home extends Activity {
     public static final String KEY_CURRENT_WEEK = "current_week";
     public static final String KEY_CURRENT_DAY = "current_day";
     public static final String KEY_CURRENT_LEVEL = "current_level";
+    public static final String KEY_HISTORY = "history";
     
     private ExerciseSet set;
-    private int week;
-    private int day;
-    private Level level;
+
     private Editor prefEditor;
-    private History history;
+    private History pushupHistory;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,24 +44,44 @@ public class Home extends Activity {
         setContentView(R.layout.main);
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
-        week = prefs.getInt(KEY_CURRENT_DAY, 1);
-        day = prefs.getInt(KEY_CURRENT_DAY, 0);
-        level = Test.findLevelForWeekByIndex(week, prefs.getInt(KEY_CURRENT_LEVEL, 0));
-        Log.i(TAG,"Loaded week "+week+", day "+day+" with level="+level);
         
-        history = new History();
-        history.setDay(day);
-        history.setWeek(week);
-        history.setCurrentLevel(level);
+        Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
+        try {
+            pushupHistory = new History(prefs.getString(KEY_HISTORY, null));
+        } catch (JSONException e) {
+            Log.e(TAG, "Couldn't unmarshal history", e);
+        } catch (NullPointerException npe) {
+            Log.i(TAG, "No history to load");
+        }
+        
+        setWeekText();
+        
+    }
+
+    /**
+     * 
+     */
+    private void setWeekText() {
         TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
-        currentWeek.setText(""+week);
-        
+        String value = (pushupHistory == null ? "1" : ""+pushupHistory.getWeek());
+        currentWeek.setText(value);
     }
     
     public void doPushups(View target_) {
-        if (day == 0) { startTestActivity(); return;}
-        set = Workout.getPushupSetFor(week, day, level);
+        if (pushupHistory == null) {
+            pushupHistory = new History();
+            pushupHistory.setDay(0);
+            pushupHistory.setWeek(1);
+            pushupHistory.setType(Workout.Type.PUSHUP);
+        }
+        if (pushupHistory.getDay() == 0) { startTestActivity(); return;}
+        History.Log newLog = pushupHistory.new Log(pushupHistory.getWeek(),pushupHistory.getDay());
+        
+        pushupHistory.getLogs().add(newLog);
+        set = Workout.getPushupSetFor(pushupHistory.getWeek(), pushupHistory.getDay(), pushupHistory.getCurrentLevel());
+        
+        
         startCounterActivity();
         
     }
@@ -101,7 +122,13 @@ public class Home extends Activity {
     protected void onActivityResult(int requestCode_, int resultCode_, Intent data_) {
         switch (requestCode_) {
         case COUNTER_INTENT:
-            if (!set.hasNext()) return;
+            int count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
+            pushupHistory.getCurrentLog().addCount(count);
+            if (!set.hasNext()) { 
+                advanceDate();
+                saveHistory(); 
+                return; 
+            }
             startRestActivity();
             break;
         case REST_INTENT:
@@ -109,16 +136,41 @@ public class Home extends Activity {
             break;
         case TEST_INTENT:
             int test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
-            level = Test.initialTestLevel(test_count);
+            Level level = Test.initialTestLevel(test_count);
+            pushupHistory.getTestResults().add(0,test_count);
+            pushupHistory.setCurrentLevel(level);
+            pushupHistory.setDay(1);
+            saveHistory();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
-            day = 1;
-            prefEditor.putInt(KEY_CURRENT_DAY, day);
-            prefEditor.putInt(KEY_CURRENT_LEVEL, level.getIndex());
-            prefEditor.commit();
             break;
         default:
             Log.d(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
             break;
         }
+        
+    }
+    
+    private void advanceDate() {
+        int day = pushupHistory.getDay();
+        if (day == 3) {
+            pushupHistory.setDay(1);
+            pushupHistory.setWeek(pushupHistory.getWeek()+1);
+            setWeekText();
+        } else {
+            pushupHistory.setDay(day+1);
+        }
+        
+    }
+    
+    private void saveHistory() {
+        
+        try {
+            prefEditor.putString(KEY_HISTORY, pushupHistory.toJSON().toString());
+            Log.d(TAG, "Saved history as "+pushupHistory.toJSON().toString());
+        } catch (JSONException e) {
+            Log.e(TAG,"Couldn't convert history to JSON! ",e);
+            Toast.makeText(this, "Error saving history", Toast.LENGTH_SHORT);
+        }
+        prefEditor.commit();
     }
 }

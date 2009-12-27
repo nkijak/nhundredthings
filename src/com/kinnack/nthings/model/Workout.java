@@ -8,7 +8,7 @@ public class Workout {
         SITUP,
         SQUAT
     }
-    public static final int[] STANDARD_REST = new int[]{15000};
+    public static final int[] STANDARD_REST = new int[]{60000};
     public static final int[] SHORT_REST = new int[]{45000};
     
     public static final int EASY = 0;

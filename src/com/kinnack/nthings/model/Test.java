@@ -31,7 +31,7 @@ public class Test {
     
     public static Level initialTestLevel(int count_) {
         for(Level level : INITIAL_TEST_LIST) {
-            if (level.checkLevel(count_)) return level;
+            if (level.checkLevel(count_)) {return level;}
         }
         return INITIAL_TEST_LIST.get(0);
     }

@@ -38,7 +38,7 @@ public class RestActivity extends Activity {
             public void onTick(long millisUntilFinished_) {
                 timeLeft.setText(millisUntilFinished_/1000+"s");
                 getWindow().setFeatureInt(Window.FEATURE_PROGRESS, (int)(1-millisUntilFinished_/(rest_milliseconds))*10000);
-                if (millisUntilFinished_ <= 10000 && !warned) {
+                if (millisUntilFinished_/1000 <= 10 && !warned) {
                     Log.i("nthings:RestActivity", "Ending in 10 seconds");
                     timeLeft.setTextColor(Color.RED);
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
