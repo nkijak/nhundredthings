@@ -2,16 +2,17 @@
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center_horizontal">
+	<ProgressBar android:layout_height="wrap_content"
+						android:id="@+id/CountProgress" android:layout_width="fill_parent"
+						android:progress="0" style="?android:attr/progressBarStyleHorizontal"
+						android:paddingTop="15dp" android:paddingBottom="15dp"/>
 	<Button android:layout_height="wrap_content" 
 			android:id="@+id/Count" 
 			android:text="COUNT" 
 			android:textSize="20pt" 
 			android:height="300px" 
-			android:onClick="count" android:layout_width="fill_parent"></Button>
-	<ProgressBar android:layout_height="wrap_content"
-						android:id="@+id/CountProgress" android:layout_width="fill_parent"
-						android:progress="0" style="?android:attr/progressBarStyleHorizontal"
-						android:layout_below="@id/Count" android:paddingTop="15dp" android:paddingBottom="15dp"/>
+			android:onClick="count" android:layout_width="fill_parent" android:layout_below="@id/CountProgress" />
+	
 	
 		<TextView android:id="@+id/TotalCount" 
 				android:text="0" 
@@ -30,7 +31,7 @@
 				android:layout_width='fill_parent'
 				android:visibility="invisible" 
 				android:gravity="bottom"
-				android:layout_below="@id/TotalCount" />
+				android:layout_below="@id/Count" />
 					
 	
 
