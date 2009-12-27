@@ -12,34 +12,47 @@ import com.kinnack.nthings.model.level.pushup.SecondHardLevel;
 import com.kinnack.nthings.model.level.pushup.SecondMidLevel;
 
 public class Test {
-    private static final List<Level> ALL_LEVELS = new ArrayList<Level>() {{
-        add(new InitialEasyLevel());
-        add(new InitialMidLevel());
-        add(new InitialHardLevel());
-        add(new SecondEasyLevel());
-        add(new SecondMidLevel());
-        add(new SecondHardLevel());
-    }};
+    private static final Level[] ALL_LEVELS = new Level[] {
+        new InitialEasyLevel(),
+        new InitialMidLevel(),
+        new InitialHardLevel(),
+        new SecondEasyLevel(),
+        new SecondMidLevel(),
+        new SecondHardLevel()
+    };
     
-    private static final List<Level> INITIAL_TEST_LIST = new ArrayList<Level>() {{
-        add(ALL_LEVELS.get(0));
-        add(ALL_LEVELS.get(1));
-        add(ALL_LEVELS.get(2));
-        add(ALL_LEVELS.get(4));
-        add(ALL_LEVELS.get(5));
-    }};
+    private static final Level[] INITIAL_TEST_LIST = new Level[]{
+        ALL_LEVELS[0],
+        ALL_LEVELS[1],
+        ALL_LEVELS[2],
+        ALL_LEVELS[4],
+        ALL_LEVELS[5]
+    };
+    
+    private static final Level[] SECOND_TEST_LIST = new Level[] {
+        ALL_LEVELS[3],
+        ALL_LEVELS[4],
+        ALL_LEVELS[5]
+    } ;
     
     public static Level initialTestLevel(int count_) {
         for(Level level : INITIAL_TEST_LIST) {
             if (level.checkLevel(count_)) {return level;}
         }
-        return INITIAL_TEST_LIST.get(0);
+        return INITIAL_TEST_LIST[0];
+    }
+    
+    public static Level secondTestLevel(int count_) {
+        for(Level level: SECOND_TEST_LIST) {
+            if (level.checkLevel(count_)) { return level;}
+        }
+        return SECOND_TEST_LIST[0];
     }
     
     public static Level findLevelForWeekByIndex(int week_, int index_) {
         for (Level level : ALL_LEVELS) {
             if (week_ >= level.getStartWeek() && index_ == level.getIndex()) return level;
         }
-        return ALL_LEVELS.get(0);
+        return ALL_LEVELS[0];
     }
 }

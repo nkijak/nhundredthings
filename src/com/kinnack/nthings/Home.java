@@ -136,8 +136,17 @@ public class Home extends Activity {
             break;
         case TEST_INTENT:
             int test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
-            Level level = Test.initialTestLevel(test_count);
-            pushupHistory.getTestResults().add(0,test_count);
+            
+            Level level;
+            switch(pushupHistory.getWeek()) {
+                case 1:
+                    level = Test.initialTestLevel(test_count);
+                    break;
+                default:
+                    level = Test.secondTestLevel(test_count);
+                    break;
+            }
+            pushupHistory.getTestResults().add(test_count);
             pushupHistory.setCurrentLevel(level);
             pushupHistory.setDay(1);
             saveHistory();
@@ -152,8 +161,11 @@ public class Home extends Activity {
     
     private void advanceDate() {
         int day = pushupHistory.getDay();
+        int week = pushupHistory.getWeek();
         if (day == 3) {
-            pushupHistory.setDay(1);
+            day = week%2;
+            Log.i(TAG, "Setting day to "+day+" because week%2="+(week%2));
+            pushupHistory.setDay(day);
             pushupHistory.setWeek(pushupHistory.getWeek()+1);
             setWeekText();
         } else {
