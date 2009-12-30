@@ -6,6 +6,8 @@ import com.kinnack.nthings.model.History;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +24,7 @@ public class CounterActivity extends Activity {
     private int count = 0;
     private int increment = 1;
     private int neededCount = 0;
+    private ToneGenerator toneGenerator;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class CounterActivity extends Activity {
             Button done = (Button) findViewById(R.id.Done);
             done.setVisibility(View.VISIBLE);
         }
+        toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME);
     }
     
     public void count(View target) {
@@ -54,8 +58,10 @@ public class CounterActivity extends Activity {
             Intent intent = new Intent();
             intent.putExtra(MAX_COUNT, neededCount);
             setResult(RESULT_OK,intent);
+            toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK);
             finish();
         }
+        toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
     }
     
     public void done(View target) {
@@ -64,6 +70,12 @@ public class CounterActivity extends Activity {
         setResult(RESULT_OK,intent);
         Log.d("nthings:CounterActivity","Set "+MAX_COUNT+" to "+count);
         finish();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        toneGenerator.release();
     }
     
     private int getProgressPercent() {
