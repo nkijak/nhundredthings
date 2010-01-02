@@ -1,6 +1,7 @@
 package com.kinnack.nthings.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -17,6 +18,7 @@ public class History {
     private int _week;
     private int _day;
     private Workout.Type _type;
+    private Date _lastWorkout;
     
     public History() {};
     
@@ -224,6 +226,20 @@ public class History {
      */
     public void setType(Workout.Type type_) {
         _type = type_;
+    }
+
+    /**
+     * @return the lastWorkout
+     */
+    public Date getLastWorkout() {
+        return _lastWorkout;
+    }
+
+    /**
+     * @param lastWorkout_ the lastWorkout to set
+     */
+    public void setLastWorkout(Date lastWorkout_) {
+        _lastWorkout = lastWorkout_;
     }
     
 }

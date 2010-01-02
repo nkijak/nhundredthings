@@ -1,5 +1,13 @@
 package com.kinnack.nthings;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.util.Date;
+
 import org.json.JSONException;
 
 import android.app.Activity;
@@ -8,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -26,6 +35,10 @@ public class Home extends Activity {
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;
     private static final int REST_INTENT = 200;
+    private static final String PUBLIC_FOLDER_PATH=Environment.getExternalStorageDirectory()+"/nhundredthings/";
+    private static final String PUBLIC_FILE_PATH=PUBLIC_FOLDER_PATH+"/prefs_config.xml";
+    private static final String PRIVATE_FILE_PATH = "/data/data/"+Home.class.getPackage().getName()+"/shared_prefs/prefs_config.xml";
+    
     
     public static final String PREFS = "prefs_config";
     public static final String KEY_CURRENT_WEEK = "current_week";
@@ -42,6 +55,7 @@ public class Home extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        copyFile(new File(PUBLIC_FILE_PATH),new File(PRIVATE_FILE_PATH));
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
         
@@ -58,6 +72,8 @@ public class Home extends Activity {
         setWeekText();
         
     }
+
+    
 
     /**
      * 
@@ -177,12 +193,43 @@ public class Home extends Activity {
     private void saveHistory() {
         
         try {
+            pushupHistory.setLastWorkout(new Date());
             prefEditor.putString(KEY_HISTORY, pushupHistory.toJSON().toString());
             Log.d(TAG, "Saved history as "+pushupHistory.toJSON().toString());
+            File externalFolder = new File(PUBLIC_FOLDER_PATH);
+            if (!externalFolder.exists()) { externalFolder.mkdir(); }
+            prefEditor.commit();
+            copyFile(new File(PRIVATE_FILE_PATH),new File(PUBLIC_FILE_PATH));
         } catch (JSONException e) {
             Log.e(TAG,"Couldn't convert history to JSON! ",e);
             Toast.makeText(this, "Error saving history", Toast.LENGTH_SHORT);
         }
-        prefEditor.commit();
+    }
+    
+    /**
+     * 
+     */
+    private void copyFile(File originalFile_, File copyFile_) {
+        try {
+            
+            FileOutputStream out = new FileOutputStream(copyFile_);
+            FileInputStream in = new FileInputStream(originalFile_);
+            
+            FileChannel inChannel = in.getChannel();
+            FileChannel outChannel = out.getChannel();
+
+            outChannel.transferFrom(inChannel, 0, inChannel.size());
+
+            inChannel.close();
+            outChannel.close();
+            in.close();
+            out.close();
+
+            
+        } catch (FileNotFoundException e1) {
+           Log.i(TAG,"Could nto find file shared_prefs/prefs_config.xml",e1);
+        } catch (IOException e) {
+            Log.w(TAG, "ERROR trying to write preferences to disk",e);
+        }
     }
 }
