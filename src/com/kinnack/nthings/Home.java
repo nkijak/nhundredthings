@@ -102,7 +102,7 @@ public class Home extends Activity {
         currentDay.setText(value);
         
         TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
-        value = (pushupHistory == null ? "TEST": pushupHistory.getCurrentLevel().getLabel());
+        value = (pushupHistory == null || value.equals("0") ? "TEST": pushupHistory.getCurrentLevel().getLabel());
         currentLevel.setText(value);
     }
     
@@ -164,6 +164,7 @@ public class Home extends Activity {
             if (!set.hasNext()) { 
                 advanceDate();
                 saveHistory(); 
+                setWeekText();
                 showProgress(pushupHistory);
                 return; 
             }
@@ -188,6 +189,7 @@ public class Home extends Activity {
             pushupHistory.setCurrentLevel(level);
             pushupHistory.setDay(1);
             saveHistory();
+            setWeekText();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             break;
         default:
