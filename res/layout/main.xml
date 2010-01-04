@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_gravity="center_horizontal" android:padding="20px" android:background="@drawable/background">
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:layout_gravity="center_horizontal"
+	android:padding="20px" android:background="@drawable/background">
 
-<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton" android:text="Push Ups" android:gravity="center_horizontal" android:layout_width="fill_parent" android:onClick="doPushups" android:textSize="15pt"></Button>
-<Button android:layout_height="wrap_content" android:id="@+id/SquatsButton" android:text="Squats" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
-<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton" android:text="Sit Ups" android:layout_width="fill_parent" android:gravity="center_horizontal" android:enabled="false" android:textSize="15pt"></Button>
-<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton" android:layout_width="fill_parent" android:gravity="center_horizontal" android:textSize="15pt" android:text="Progress" android:onClick="showProgress"></Button>
-<RelativeLayout android:id="@+id/HomeSummary" android:layout_width="fill_parent" android:layout_height="fill_parent"><TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek" android:text="0" android:textSize="20pt" android:layout_height="fill_parent" android:gravity="top" android:textColor="#CCC"></TextView>
+	<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton"
+		android:text="Push Ups" android:gravity="center_horizontal"
+		android:layout_width="fill_parent" android:onClick="doPushups"
+		android:textSize="15pt"></Button>
+	<Button android:layout_height="wrap_content" android:id="@+id/SquatsButton"
+		android:text="Squats" android:layout_width="fill_parent"
+		android:gravity="center_horizontal" android:enabled="false"
+		android:textSize="15pt"></Button>
+	<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton"
+		android:text="Sit Ups" android:layout_width="fill_parent"
+		android:gravity="center_horizontal" android:enabled="false"
+		android:textSize="15pt"></Button>
+	<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton"
+		android:layout_width="fill_parent" android:gravity="center_horizontal"
+		android:textSize="15pt" android:text="Progress" android:onClick="showProgress"></Button>
+	<RelativeLayout android:id="@+id/HomeSummary"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek"
+			android:text="0" android:textSize="20pt" android:layout_height="fill_parent"
+			android:gravity="top" android:textColor="#CCC"></TextView>
 
-<TextView android:layout_toRightOf="@+id/HomeCurrentWeek" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/HomeWeekLabel" android:text="th Week" android:textColor="#CCC"></TextView>
-</RelativeLayout>
+		<TextView android:layout_toRightOf="@+id/HomeCurrentWeek"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:id="@+id/HomeWeekLabel" android:text="th Week"
+			android:textColor="#CCC"></TextView>
+		
+		<TextView android:layout_toRightOf="@+id/HomeWeekLabel" android:layout_width="wrap_content" android:id="@+id/HomeCurrentDay"
+			android:text="0" android:textSize="20pt" android:layout_height="fill_parent"
+			android:gravity="top" android:textColor="#CCC"></TextView>
+
+		<TextView android:layout_toRightOf="@+id/HomeCurrentDay"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:id="@+id/HomeDayLabel" android:text="th Day"
+			android:textColor="#CCC"></TextView>
+		
+		<TextView android:layout_toRightOf="@+id/HomeDayLabel"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:textSize="20pt"
+			android:id="@+id/HomeCurrentLevel" android:text="Lv"
+			android:textColor="#CCC"></TextView>
+	</RelativeLayout>
 </LinearLayout>

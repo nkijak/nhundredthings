@@ -1,9 +1,7 @@
 package com.kinnack.nthings.model.level;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-public abstract class HardLevel implements Level {
+public abstract class HardLevel extends Level {
 
     @Override
     public int getIndex() {
@@ -15,12 +13,10 @@ public abstract class HardLevel implements Level {
         return "HARD on or after week "+getStartWeek();
     }
     
-    public JSONObject toJSON() throws JSONException {
-        JSONObject self = new JSONObject();
-        self.put("index", getIndex())
-            .put("label", "EASY")
-            .put("startWeek", getStartWeek());
-        return self;
+    @Override
+    public String getLabel() {
+        return "HARD";
     }
+
 
 }

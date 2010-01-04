@@ -1,14 +1,9 @@
 package com.kinnack.nthings;
 
-import com.kinnack.nthings.R;
-import com.kinnack.nthings.model.ExerciseSet;
-import com.kinnack.nthings.model.History;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

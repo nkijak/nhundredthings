@@ -96,6 +96,14 @@ public class Home extends Activity {
         TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
         String value = (pushupHistory == null ? "1" : ""+pushupHistory.getWeek());
         currentWeek.setText(value);
+        
+        TextView currentDay = (TextView)findViewById(R.id.HomeCurrentDay);
+        value = (pushupHistory == null ? "0": ""+pushupHistory.getDay());
+        currentDay.setText(value);
+        
+        TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
+        value = (pushupHistory == null ? "TEST": pushupHistory.getCurrentLevel().getLabel());
+        currentLevel.setText(value);
     }
     
     public void doPushups(View target_) {

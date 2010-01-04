@@ -3,7 +3,7 @@ package com.kinnack.nthings.model.level;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GenericLevel implements Level {
+public class GenericLevel extends Level {
     private int _index;
     private int _startWeek;
     private String _label;
@@ -37,12 +37,8 @@ public class GenericLevel implements Level {
     }
 
     @Override
-    public JSONObject toJSON() throws JSONException {
-        JSONObject self = new JSONObject();
-        self.put("index", getIndex())
-            .put("label", _label)
-            .put("startWeek", getStartWeek());
-        return self;
-    }
+    public String getLabel() {
+        return _label;
+    };
 
 }
