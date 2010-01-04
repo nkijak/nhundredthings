@@ -61,6 +61,17 @@ public class Home extends Activity {
         
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
+        loadPushupHistory(prefs);
+        setWeekText();
+        
+    }
+
+
+
+    /**
+     * @param prefs
+     */
+    private void loadPushupHistory(SharedPreferences prefs) {
         try {
             pushupHistory = new History(prefs.getString(KEY_HISTORY, null));
         } catch (JSONException e) {
@@ -68,9 +79,12 @@ public class Home extends Activity {
         } catch (NullPointerException npe) {
             Log.i(TAG, "No history to load");
         }
-        
-        setWeekText();
-        
+        if (pushupHistory == null) {
+            pushupHistory = new History();
+            pushupHistory.setDay(0);
+            pushupHistory.setWeek(1);
+            pushupHistory.setType(Workout.Type.PUSHUP);
+        }
     }
 
     
@@ -85,12 +99,7 @@ public class Home extends Activity {
     }
     
     public void doPushups(View target_) {
-        if (pushupHistory == null) {
-            pushupHistory = new History();
-            pushupHistory.setDay(0);
-            pushupHistory.setWeek(1);
-            pushupHistory.setType(Workout.Type.PUSHUP);
-        }
+        
         if (pushupHistory.getDay() == 0) { startTestActivity(); return;}
         History.Log newLog = pushupHistory.new Log(pushupHistory.getWeek(),pushupHistory.getDay());
         
@@ -100,6 +109,10 @@ public class Home extends Activity {
         
         startCounterActivity();
         
+    }
+    
+    public void showProgress(View target_) {
+        showProgress(pushupHistory);
     }
 
     /**
@@ -143,6 +156,7 @@ public class Home extends Activity {
             if (!set.hasNext()) { 
                 advanceDate();
                 saveHistory(); 
+                showProgress(pushupHistory);
                 return; 
             }
             startRestActivity();
@@ -204,6 +218,12 @@ public class Home extends Activity {
             Log.e(TAG,"Couldn't convert history to JSON! ",e);
             Toast.makeText(this, "Error saving history", Toast.LENGTH_SHORT);
         }
+    }
+    
+    private void showProgress(History history_) {
+        ProgressChart chart = new ProgressChart();
+        Intent progressIntent = chart.progressChart(history_, this);
+        startActivity(progressIntent);
     }
     
     /**
