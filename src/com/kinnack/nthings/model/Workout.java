@@ -30,7 +30,7 @@ public class Workout {
                 },
                 // hard
                 {
-                   { 6, 6, 4, 4, 5 }, STANDARD_REST
+                   { 10, 12, 7, 7, 9 }, STANDARD_REST
                 }
             },
             // day 2
@@ -45,7 +45,7 @@ public class Workout {
                 },
                 // hard
                 {
-                    { 6, 8, 6, 6, 7 }, STANDARD_REST
+                    { 10, 12, 8, 8, 12 }, STANDARD_REST
                 }
             },
             // day 3
@@ -60,7 +60,7 @@ public class Workout {
                 },
                 // hard
                 {                    
-                    { 8, 10, 7, 7, 10 }, STANDARD_REST
+                    { 11, 15, 9, 9, 13}, STANDARD_REST
                 }
             }
         },
@@ -78,7 +78,7 @@ public class Workout {
                 },
                 // hard
                 {
-                    { 9, 11, 8, 8, 1 }, STANDARD_REST
+                    { 14, 14, 10, 10, 15 }, STANDARD_REST
                 }
             },
             // day 2
@@ -93,7 +93,7 @@ public class Workout {
                 },
                 // hard
                 {
-                    { 10, 12, 9, 9, 1 }, STANDARD_REST
+                    { 14, 16, 12, 12, 17 }, STANDARD_REST
                 }
             },
             // day 3
@@ -108,7 +108,7 @@ public class Workout {
                 },
                 // hard
                 {                    
-                   { 12, 13, 10, 10, 15 }, STANDARD_REST
+                   { 16, 17, 14,14, 20  }, STANDARD_REST
                 }
             }
         },
@@ -126,7 +126,7 @@ public class Workout {
                 },
                 // hard
                 {
-                    { 12, 17, 13, 13, 1 }, STANDARD_REST
+                    { 14, 18, 14, 14, 20  }, STANDARD_REST
                 }
             },
             // day 2
@@ -141,7 +141,7 @@ public class Workout {
                 },
                 // hard
                 {
-                    { 14, 19, 14, 14, 1 }, STANDARD_REST
+                    { 20, 25, 15, 15, 25 }, STANDARD_REST
                 }
             },
             // day 3
@@ -156,7 +156,7 @@ public class Workout {
                 },
                 // hard
                 {                    
-                    { 16, 21, 15, 15, 2 }, STANDARD_REST
+                    { 22, 30, 20, 20, 28 }, STANDARD_REST
                 }
             }
         },
@@ -174,7 +174,7 @@ public class Workout {
                 },
                 // hard
                 {
-                    { 18, 22, 16, 16, 2 }, STANDARD_REST
+                    { 21, 25, 21, 21, 32 }, STANDARD_REST
                 }
             },
             // day 2
@@ -189,7 +189,7 @@ public class Workout {
                 },
                 // hard
                 {
-                    { 20, 25, 20, 20, 2 }, STANDARD_REST
+                    { 25, 29, 25, 25, 36 }, STANDARD_REST
                 }
             },
             // day 3
@@ -204,7 +204,7 @@ public class Workout {
                 },
                 // hard
                 {                   
-                    { 23, 28, 23, 23, 33 }, STANDARD_REST
+                    { 29, 33, 29, 29, 40 }, STANDARD_REST
                 }
             }
         },
