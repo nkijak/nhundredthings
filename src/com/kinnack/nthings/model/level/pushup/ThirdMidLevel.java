@@ -1,17 +1,17 @@
 package com.kinnack.nthings.model.level.pushup;
 
-import com.kinnack.nthings.model.level.EasyLevel;
+import com.kinnack.nthings.model.level.MidLevel;
 
-public class SecondEasyLevel extends EasyLevel {
+public class ThirdMidLevel extends MidLevel {
 
     @Override
     public boolean checkLevel(int count_) {
-        return (count_ > 15) && (count_ <=20);
+        return (count_ > 35) && (count_ <= 40);
     }
 
     @Override
     public int getStartWeek() {
-        return 3;
+        return 5;
     }
 
 }

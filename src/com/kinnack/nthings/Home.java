@@ -181,9 +181,17 @@ public class Home extends Activity {
                 case 1:
                     level = Test.initialTestLevel(test_count);
                     break;
-                default:
+                case 3:
                     level = Test.secondTestLevel(test_count);
                     break;
+                case 5:
+                    level = Test.thirdTestLevel(test_count);
+                case 6:
+                    level = Test.fourthTestLevel(test_count);
+                    break;
+                default:
+                    Log.w(TAG,"Don't know why user is taking test week="+pushupHistory.getWeek()+", day="+pushupHistory.getDay());
+                    return;
             }
             pushupHistory.getTestResults().add(test_count);
             pushupHistory.setCurrentLevel(level);
@@ -203,7 +211,7 @@ public class Home extends Activity {
         int day = pushupHistory.getDay();
         int week = pushupHistory.getWeek();
         if (day == 3) {
-            day = week%2;
+            day = (week==5 ? 0 : week%2);
             Log.i(TAG, "Setting day to "+day+" because week%2="+(week%2));
             pushupHistory.setDay(day);
             pushupHistory.setWeek(pushupHistory.getWeek()+1);

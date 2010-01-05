@@ -1,15 +1,18 @@
 package com.kinnack.nthings.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.kinnack.nthings.model.level.Level;
+import com.kinnack.nthings.model.level.pushup.FourthEasyLevel;
+import com.kinnack.nthings.model.level.pushup.FourthHardLevel;
+import com.kinnack.nthings.model.level.pushup.FourthMidLevel;
 import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
 import com.kinnack.nthings.model.level.pushup.InitialHardLevel;
 import com.kinnack.nthings.model.level.pushup.InitialMidLevel;
 import com.kinnack.nthings.model.level.pushup.SecondEasyLevel;
 import com.kinnack.nthings.model.level.pushup.SecondHardLevel;
 import com.kinnack.nthings.model.level.pushup.SecondMidLevel;
+import com.kinnack.nthings.model.level.pushup.ThirdEasyLevel;
+import com.kinnack.nthings.model.level.pushup.ThirdHardLevel;
+import com.kinnack.nthings.model.level.pushup.ThirdMidLevel;
 
 public class Test {
     private static final Level[] ALL_LEVELS = new Level[] {
@@ -18,7 +21,13 @@ public class Test {
         new InitialHardLevel(),
         new SecondEasyLevel(),
         new SecondMidLevel(),
-        new SecondHardLevel()
+        new SecondHardLevel(),
+        new ThirdEasyLevel(),
+        new ThirdMidLevel(),
+        new ThirdHardLevel(),
+        new FourthEasyLevel(),
+        new FourthMidLevel(),
+        new FourthHardLevel()
     };
     
     private static final Level[] INITIAL_TEST_LIST = new Level[]{
@@ -29,24 +38,44 @@ public class Test {
         ALL_LEVELS[5]
     };
     
-    private static final Level[] SECOND_TEST_LIST = new Level[] {
+    private static final Level[] WEEK_3_TEST_LIST = new Level[] {
         ALL_LEVELS[3],
         ALL_LEVELS[4],
         ALL_LEVELS[5]
     } ;
     
+    private static final Level[] WEEK_5_TEST_LIST = new Level[] {
+        ALL_LEVELS[6],
+        ALL_LEVELS[7],
+        ALL_LEVELS[8]
+    };
+    
+    private static final Level[] WEEK_6_TEST_LIST = new Level[] {
+        ALL_LEVELS[9],
+        ALL_LEVELS[10],
+        ALL_LEVELS[11]
+    };
+    
     public static Level initialTestLevel(int count_) {
-        for(Level level : INITIAL_TEST_LIST) {
-            if (level.checkLevel(count_)) {return level;}
-        }
-        return INITIAL_TEST_LIST[0];
+        return findLevel(INITIAL_TEST_LIST, count_);
     }
     
     public static Level secondTestLevel(int count_) {
-        for(Level level: SECOND_TEST_LIST) {
+        return findLevel(WEEK_3_TEST_LIST,count_);
+    }
+    
+    public static Level thirdTestLevel(int count_) {
+        return findLevel(WEEK_5_TEST_LIST, count_);
+    }
+    
+    public static Level fourthTestLevel(int count_) {
+        return findLevel(WEEK_6_TEST_LIST, count_);
+    }
+    protected static Level findLevel(Level[] testList_, int count_) {
+        for(Level level: testList_) {
             if (level.checkLevel(count_)) { return level;}
         }
-        return SECOND_TEST_LIST[0];
+        return testList_[0];
     }
     
     public static Level findLevelForWeekByIndex(int week_, int index_) {
