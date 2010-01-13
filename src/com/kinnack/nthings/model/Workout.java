@@ -74,7 +74,7 @@ public class Workout {
                 },
                 // med
                 {
-                    { 9, 11, 8, 8, 1 }, STANDARD_REST
+                    { 9, 11, 8, 8, 11 }, STANDARD_REST
                 },
                 // hard
                 {
@@ -89,7 +89,7 @@ public class Workout {
                 },
                 // med
                 {
-                    { 10, 12, 9, 9, 1 }, STANDARD_REST
+                    { 10, 12, 9, 9, 13 }, STANDARD_REST
                 },
                 // hard
                 {
@@ -122,7 +122,7 @@ public class Workout {
                 },
                 // med
                 {
-                    { 12, 17, 13, 13, 1 }, STANDARD_REST
+                    { 12, 17, 13, 13, 17 }, STANDARD_REST
                 },
                 // hard
                 {
@@ -133,11 +133,11 @@ public class Workout {
             {
                 // easy 
                 {
-                    { 10, 12, 8, 8, 1 }, STANDARD_REST
+                    { 10, 12, 8, 8, 12 }, STANDARD_REST
                 },
                 // med
                 {
-                    { 14, 19, 14, 14, 1 }, STANDARD_REST
+                    { 14, 19, 14, 14, 19 }, STANDARD_REST
                 },
                 // hard
                 {
@@ -148,11 +148,11 @@ public class Workout {
             {
                 // easy
                 {
-                    { 11, 13, 9, 9, 1 }, STANDARD_REST
+                    { 11, 13, 9, 9, 13 }, STANDARD_REST
                 },
                 // med
                 {
-                    { 16, 21, 15, 15, 2 }, STANDARD_REST
+                    { 16, 21, 15, 15, 21 }, STANDARD_REST
                 },
                 // hard
                 {                    
@@ -166,11 +166,11 @@ public class Workout {
             {
                 // easy 
                 {
-                    { 12, 14, 11, 10, 1 }, STANDARD_REST
+                    { 12, 14, 11, 10, 16 }, STANDARD_REST
                 },
                 // med
                 {
-                    { 18, 22, 16, 16, 2 }, STANDARD_REST
+                    { 18, 22, 16, 16, 25}, STANDARD_REST
                 },
                 // hard
                 {
@@ -181,11 +181,11 @@ public class Workout {
             {
                 // easy 
                 {
-                    { 14, 16, 12, 12, 1 }, STANDARD_REST
+                    { 14, 16, 12, 12, 18 }, STANDARD_REST
                 },
                 // med
                 {
-                    { 20, 25, 20, 20, 2 }, STANDARD_REST
+                    { 20, 25, 20, 20, 25 }, STANDARD_REST
                 },
                 // hard
                 {
