@@ -55,10 +55,14 @@ public class Home extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        copyFile(new File(PUBLIC_FILE_PATH),new File(PRIVATE_FILE_PATH));
+        boolean copiedFile = copyFile(new File(PUBLIC_FILE_PATH),new File(PRIVATE_FILE_PATH));
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
-        
+        if (!copiedFile) {
+            // if first time prefs won't exist and couldn' copy file in so commit to create file and try to copy again.
+            prefEditor.commit();
+            copyFile(new File(PUBLIC_FILE_PATH),new File(PRIVATE_FILE_PATH));
+        }
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
         loadPushupHistory(prefs);
@@ -245,9 +249,10 @@ public class Home extends Activity {
     }
     
     /**
+     * @return TODO
      * 
      */
-    private void copyFile(File originalFile_, File copyFile_) {
+    private boolean copyFile(File originalFile_, File copyFile_) {
         try {
             
             FileOutputStream out = new FileOutputStream(copyFile_);
@@ -263,11 +268,12 @@ public class Home extends Activity {
             in.close();
             out.close();
 
-            
+            return true;
         } catch (FileNotFoundException e1) {
            Log.i(TAG,"Could nto find file shared_prefs/prefs_config.xml",e1);
         } catch (IOException e) {
             Log.w(TAG, "ERROR trying to write preferences to disk",e);
-        }
+        } 
+        return false;
     }
 }

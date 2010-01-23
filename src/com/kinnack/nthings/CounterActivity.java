@@ -21,6 +21,7 @@ public class CounterActivity extends Activity {
     private int neededCount = 0;
     private ToneGenerator toneGenerator;
     
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
