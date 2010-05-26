@@ -27,6 +27,7 @@ import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
+import com.kinnack.nthings.model.History.Rep;
 import com.kinnack.nthings.model.level.Level;
 
 public class Home extends Activity {
@@ -164,7 +165,9 @@ public class Home extends Activity {
         switch (requestCode_) {
         case COUNTER_INTENT:
             int count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
-            pushupHistory.getCurrentLog().addCount(count);
+            long avgTime = data_.getExtras().getLong(CounterActivity.AVG_TIME);
+            pushupHistory.getCurrentLog().addCountAndTime(count, avgTime);
+           
             if (!set.hasNext()) { 
                 advanceDate();
                 saveHistory(); 

@@ -15,6 +15,8 @@ public class CounterActivity extends Activity {
     public static final String INIT_COUNT_KEY = "com.kinnack.nthings.init_count";
     public static final String SHOW_DONE = "com.kinnack.nthings.show_done";
     public static final String MAX_COUNT = "com.kinnack.nthing.max_count";
+    public static final String AVG_TIME = "com.kinnack.nthing.time.avg";
+    public static final String TOTAL_TIME = "com.kinnack.nthing.time.total";
     public static final String HISTORY = "com.kinnack.nthing.history";
     private int count = 0;
     private int increment = 1;
@@ -65,9 +67,7 @@ public class CounterActivity extends Activity {
         
         
         if ((increment  == -1) && (count == 0)) {
-            Intent intent = new Intent();
-            intent.putExtra(MAX_COUNT, neededCount);
-            setResult(RESULT_OK,intent);
+            setResult(RESULT_OK,createIntentWithStats(reps));
             toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK);
             finish();
         }
@@ -77,9 +77,7 @@ public class CounterActivity extends Activity {
     }
     
     public void done(View target) {
-        Intent intent = new Intent();
-        intent.putExtra(MAX_COUNT, count);
-        setResult(RESULT_OK,intent);
+        setResult(RESULT_OK,createIntentWithStats(count));
         Log.d("nthings:CounterActivity","Set "+MAX_COUNT+" to "+count);
         finish();
     }
@@ -100,5 +98,13 @@ public class CounterActivity extends Activity {
             retval = (int) (percentLeft > 100 ? 100 : percentLeft);
         }
         return retval;
+    }
+    
+    private Intent createIntentWithStats(int reps_) {
+        Intent intent = new Intent();
+        intent.putExtra(MAX_COUNT, neededCount);
+        intent.putExtra(AVG_TIME, sumTimeBetweenCounts/reps_);
+        intent.putExtra(TOTAL_TIME, sumTimeBetweenCounts);
+        return intent;
     }
 }

@@ -23,10 +23,9 @@ public class History {
     public History() {};
     
     public class Log {
-        private List<Integer> _counts = new ArrayList<Integer>();
+        private List<Rep> _counts = new ArrayList<Rep>();
         private int _week;
         private int _day;
-        
        
         
         public Log(int week_, int day_) {
@@ -58,28 +57,42 @@ public class History {
         public void setDay(int day_) {
             _day = day_;
         }
-        public void addCount(Integer count_) {
-            _counts.add(count_);
+        
+        public Rep addCountAndTime(int count_, long time_) {
+            Rep rep = new Rep(count_,time_);
+            _counts.add(rep);
+            return rep;
         }
+        
+        
         /**
          * @return the counts
          */
         public List<Integer> getCounts() {
-            return _counts;
+            List<Integer> counts = new ArrayList<Integer>();
+            for(Rep rep : _counts) { counts.add(rep._count); }
+            return counts;
         }
+        
 
         /**
          * @param counts_ the counts to set
          */
-        public void setCounts(List<Integer> counts_) {
+        public void setCounts(List<Rep> counts_) {
             _counts = counts_;
-        } 
+        }
+        
+        
         
         public JSONObject toJSON() throws JSONException {
             JSONObject self = new JSONObject();
             self.put("week", _week);
             self.put("day", _day);
-            self.put("counts", new JSONArray(_counts));
+            self.put("counts", new JSONArray());
+            for (Rep rep : _counts) {
+                self.accumulate("counts", rep.toJSON());
+            }
+            
             return self;
             
         }
@@ -89,10 +102,33 @@ public class History {
             _day = json_.getInt("day");
             JSONArray counts = json_.getJSONArray("counts");
             for(int i =0,len = counts.length(); i < len; i++){
-                _counts.add(counts.getInt(i));
+                _counts.add(new Rep(counts.getJSONObject(i)));
             }
         }
+
     
+    }
+    
+    public class Rep {
+        public int _count;
+        public long _avgTime;
+        
+        public Rep(int count_,long avgTime_) {
+            _count = count_;
+            _avgTime = avgTime_;
+        }
+        
+        public JSONObject toJSON() throws JSONException {
+            JSONObject self = new JSONObject();
+            self.put("count", _count)
+                .put("avgTime", _avgTime);
+            return self;
+        }
+        
+        public Rep(JSONObject json_) throws JSONException {
+            _count = json_.getInt("count");
+            _avgTime = json_.getLong("avgTime");
+        }
     }
 
     public JSONObject toJSON() throws JSONException {
