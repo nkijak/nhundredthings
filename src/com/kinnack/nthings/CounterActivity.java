@@ -20,7 +20,8 @@ public class CounterActivity extends Activity {
     private int increment = 1;
     private int neededCount = 0;
     private ToneGenerator toneGenerator;
-    
+    private StopWatch stopWatch;
+    private long sumTimeBetweenCounts = 0;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,10 @@ public class CounterActivity extends Activity {
             done.setVisibility(View.VISIBLE);
         }
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME);
+        stopWatch = new StopWatch();
+        stopWatch.start();
     }
+    
     
     public void count(View target) {
         TextView totalCount = (TextView) findViewById(R.id.TotalCount);
@@ -50,6 +54,16 @@ public class CounterActivity extends Activity {
         int progressPercent = getProgressPercent();
         Log.d("nthings:CounterActivity", "Setting progress to "+progressPercent);
         progress.setProgress(progressPercent);
+        
+        stopWatch.stop();
+        int reps = count;
+        if (increment == -1) {
+            reps = neededCount - count;
+        }
+        sumTimeBetweenCounts += stopWatch.getElapsedTime();
+        Log.d("NTHINGS:CounterActivity#count", "Avg Time: "+sumTimeBetweenCounts/reps);
+        
+        
         if ((increment  == -1) && (count == 0)) {
             Intent intent = new Intent();
             intent.putExtra(MAX_COUNT, neededCount);
@@ -57,6 +71,8 @@ public class CounterActivity extends Activity {
             toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK);
             finish();
         }
+        stopWatch.start();
+        Log.d("NTHINGS:CounterActivity#count","Started stop watch...");
         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
     }
     
