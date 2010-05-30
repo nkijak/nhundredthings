@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center_horizontal" >
+  android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center_horizontal" android:orientation="vertical" >
 	<ProgressBar android:layout_height="wrap_content"
 						android:id="@+id/CountProgress" android:layout_width="fill_parent"
-						android:progress="0" style="?android:attr/progressBarStyleHorizontal"
+						android:progress="0" style="@style/progressBar"
 						android:paddingTop="15dp" android:paddingBottom="15dp"
 						/>
 	<Button android:layout_height="wrap_content" 
@@ -12,28 +12,26 @@
 			android:text="COUNT" 
 			android:textSize="20pt" 
 			android:height="300px" 
-			android:onClick="count" android:layout_width="fill_parent" android:layout_below="@id/CountProgress" />
+			android:onClick="count" android:layout_width="fill_parent" 
+			android:background="@drawable/green_button"/>
 	
 	
-		<TextView android:id="@+id/TotalCount" 
-				android:text="0" 
-				android:textSize="20pt" 
-				android:layout_height="wrap_content"
-				android:layout_below="@id/CountProgress"
-				android:layout_alignParentBottom="true"
-				android:layout_width="wrap_content" android:gravity="bottom"
-				android:visibility="gone"
-				/>				
 		
-		<Button android:layout_height='fill_parent'
+		<Button android:layout_height='50dip'
 				android:id="@+id/Done"
 				android:text="DONE"
 				android:onClick="done"
 				android:layout_width='fill_parent'
-				android:visibility="invisible" 
-				android:gravity="bottom"
-				android:layout_below="@id/Count" />
+				android:gravity="center" android:textSize="10pt" android:layout_gravity="bottom" android:visibility="invisible"/>
+		<TextView android:id="@+id/TotalCount" 
+				android:text="0" 
+				android:textSize="20pt" 
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:layout_width="wrap_content" android:gravity="bottom"
+				android:visibility="gone"
+				/>				
 					
 	
 
-</RelativeLayout>
+</LinearLayout>

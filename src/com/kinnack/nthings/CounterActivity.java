@@ -1,7 +1,10 @@
 package com.kinnack.nthings;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ public class CounterActivity extends Activity {
     public static final String AVG_TIME = "com.kinnack.nthing.time.avg";
     public static final String TOTAL_TIME = "com.kinnack.nthing.time.total";
     public static final String HISTORY = "com.kinnack.nthing.history";
+    public static final String IS_TEST = "com.kinnack.nthing.is_test";
     private int count = 0;
     private int increment = 1;
     private int neededCount = 0;
@@ -44,6 +48,20 @@ public class CounterActivity extends Activity {
             done.setVisibility(View.VISIBLE);
         }
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME);
+        
+        if (extras.getBoolean(IS_TEST)) {
+            new AlertDialog.Builder(this)
+                .setTitle(R.string.is_test_title)
+                .setMessage(R.string.is_test_msg)
+                .setPositiveButton("Let's Do it!", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog_, int which_) {
+                        dialog_.dismiss();
+                    }
+                })
+                .show();
+        }
+        
         stopWatch = new StopWatch();
         stopWatch.start();
     }

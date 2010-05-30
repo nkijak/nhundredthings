@@ -147,6 +147,7 @@ public class Home extends Activity {
         Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 0);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
+        counterIntent.putExtra(CounterActivity.IS_TEST, true);
         Log.d(TAG, "Intent about to start");
         startActivityForResult(counterIntent, TEST_INTENT);
         Log.d(TAG, "Intent started and returned");

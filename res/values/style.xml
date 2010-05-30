@@ -5,4 +5,10 @@
     <item name="android:windowBackground">@drawable/background</item>
 </style>
 
+<style name="progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+	
+	<item name="android:progressDrawable">@drawable/green_progress_horizontal</item>
+</style>
+
+
 </resources>

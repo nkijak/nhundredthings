@@ -19,12 +19,13 @@ import android.content.Intent;
 import android.graphics.Color;
 
 public class ProgressChart {
+    final static int DARK_COLOR = Color.argb(255, 51, 51, 51);
+    final static int APPROVED_GREEN = Color.rgb(0, 204, 0);
+    
     public Intent progressChart(History history_, Context context_) {
-        int darkColor = Color.argb(255, 51, 51, 51);
-
         XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
         SimpleSeriesRenderer seriesRenderer = new SimpleSeriesRenderer();
-        seriesRenderer.setColor(Color.GREEN);
+        seriesRenderer.setColor(APPROVED_GREEN);
         renderer.addSeriesRenderer(seriesRenderer);
         renderer.setOrientation(Orientation.HORIZONTAL);
         
@@ -37,8 +38,8 @@ public class ProgressChart {
         renderer.setXAxisMax(18);
         renderer.setYAxisMin(0);
         renderer.setYAxisMax(150);
-        renderer.setAxesColor(darkColor);
-        renderer.setLabelsColor(darkColor);
+        renderer.setAxesColor(DARK_COLOR);
+        renderer.setLabelsColor(DARK_COLOR);
         
         renderer.setXLabels(18);
         renderer.setYLabels(15);
