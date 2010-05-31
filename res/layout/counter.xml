@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center_horizontal" android:orientation="vertical" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:gravity="center_horizontal" android:orientation="vertical">
 	<ProgressBar android:layout_height="wrap_content"
-						android:id="@+id/CountProgress" android:layout_width="fill_parent"
-						android:progress="0" android:layout_marginLeft="3dp" android:layout_marginRight="3dp"/>
-	<Button android:layout_height="wrap_content" 
-			android:id="@+id/Count" 
-			android:text="COUNT" 
-			android:textSize="20pt" 
-			android:height="300px" 
-			android:onClick="count" android:layout_width="fill_parent" />
-	
-	
-		
-		<TextView android:id="@+id/TotalCount" 
-				android:text="0" 
-				android:textSize="20pt" 
-				android:layout_height="wrap_content"
-				android:layout_alignParentBottom="true"
-				android:layout_width="wrap_content" android:gravity="bottom"
-				android:visibility="gone"
-				/>				
-		<Button android:layout_height='50dip'
-				android:id="@+id/Done"
-				android:text="DONE"
-				android:onClick="done"
-				android:layout_width='fill_parent'
-				android:gravity="center" android:textSize="10pt" android:layout_gravity="bottom" android:visibility="invisible"/>
-					
-	
+		android:id="@+id/CountProgress" android:layout_width="fill_parent"
+		android:progress="0" android:layout_marginLeft="3dp"
+		android:layout_marginRight="3dp" />
+	<Button android:layout_height="wrap_content" android:id="@+id/Count"
+		android:text="COUNT" android:textSize="20pt" android:height="300px"
+		android:onClick="count" android:layout_width="fill_parent"
+		android:layout_weight="1" />
+
+
+
+	<TextView android:id="@+id/TotalCount" android:text="0"
+		android:textSize="20pt" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:layout_width="wrap_content"
+		android:visibility="gone" />
+	<Button android:layout_height='50dip' android:id="@+id/Done"
+		android:text="DONE" android:onClick="done" android:gravity="center"
+		android:textSize="10pt" android:layout_gravity="bottom"
+		android:layout_width="fill_parent" android:visibility="invisible" />
+
+
 
 </LinearLayout>
