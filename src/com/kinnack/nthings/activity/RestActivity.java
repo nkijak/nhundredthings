@@ -1,7 +1,11 @@
 package com.kinnack.nthings.activity;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,9 +19,14 @@ import com.kinnack.nthings.R;
 public class RestActivity extends Activity {
     private int rest_milliseconds;
     private float warning_percent = 0.17f;
+    private long millisRestLeft = 0;
+    private CountDownTimer countDownTimer;
     
     public static final String REST_LENGTH = "com.kinnack.nthings.rest_length"; 
     public static final String WARNING_PERCENT = "com.kinnack.nthings.warning_percent";
+    
+    private static final String REST_DATA = "rest_data";
+    private static final String REST_RESUME_TIME_MILLIS = "rest_resume";
     
     @Override
     protected void onCreate(Bundle savedInstanceState_) {
@@ -30,13 +39,14 @@ public class RestActivity extends Activity {
         final TextView timeLeft = (TextView) findViewById(R.id.TimeLeft);
         timeLeft.setText(rest_milliseconds/1000+"s");
         
-        new CountDownTimer(rest_milliseconds,1000) {
+        countDownTimer = new CountDownTimer(rest_milliseconds,1000) {
             private boolean warned = false;
             @Override
             public void onTick(long millisUntilFinished_) {
-                timeLeft.setText(millisUntilFinished_/1000+"s");
-                getWindow().setFeatureInt(Window.FEATURE_PROGRESS, (int)(1-millisUntilFinished_/(rest_milliseconds))*10000);
-                if (millisUntilFinished_ <= 10999 && !warned) {
+                millisRestLeft = millisUntilFinished_;
+                timeLeft.setText(millisRestLeft/1000+"s");
+                getWindow().setFeatureInt(Window.FEATURE_PROGRESS, (int)(1-millisRestLeft/(rest_milliseconds))*10000);
+                if (millisRestLeft <= 10999 && !warned) {
                     Log.i("nthings:RestActivity", "Ending in 10 seconds");
                     timeLeft.setTextColor(Color.RED);
                     
@@ -51,5 +61,14 @@ public class RestActivity extends Activity {
                 finish();
             }
         }.start();
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Editor preferenceEditor = getSharedPreferences(REST_DATA, Context.MODE_PRIVATE).edit();
+        preferenceEditor.putLong(REST_RESUME_TIME_MILLIS, new Date().getTime()+millisRestLeft);
+        preferenceEditor.commit();
+        if (countDownTimer != null) { countDownTimer.cancel(); }
     }
 }
