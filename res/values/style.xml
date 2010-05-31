@@ -3,12 +3,21 @@
 
 <style name="GradientLight" parent="@android:style/Theme.Light">
     <item name="android:windowBackground">@drawable/background</item>
+    <item name="android:progressBarStyle">@style/progressBar</item>
+    <item name="android:buttonStyle">@style/greenButton</item>
+    <item name="android:buttonStyleSmall">@style/greenButton</item>
 </style>
 
 <style name="progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
-	
+	<!-- These margins are valid but do not work. Had to put on the element. -->
+	<item name="android:layout_marginLeft">3dp</item>
+	<item name="android:layout_marginRight">3dp</item>
+	<item name="android:paddingTop">15dp</item>
+	<item name="android:paddingBottom">15dp</item>
 	<item name="android:progressDrawable">@drawable/green_progress_horizontal</item>
 </style>
 
-
+<style name="greenButton" parent="@android:style/Widget.Button">
+	<item name="android:background">@drawable/green_button</item>
+</style>
 </resources>

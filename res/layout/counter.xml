@@ -4,25 +4,16 @@
   android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center_horizontal" android:orientation="vertical" >
 	<ProgressBar android:layout_height="wrap_content"
 						android:id="@+id/CountProgress" android:layout_width="fill_parent"
-						android:progress="0" style="@style/progressBar"
-						android:paddingTop="15dp" android:paddingBottom="15dp"
-						/>
+						android:progress="0" android:layout_marginLeft="3dp" android:layout_marginRight="3dp"/>
 	<Button android:layout_height="wrap_content" 
 			android:id="@+id/Count" 
 			android:text="COUNT" 
 			android:textSize="20pt" 
 			android:height="300px" 
-			android:onClick="count" android:layout_width="fill_parent" 
-			android:background="@drawable/green_button"/>
+			android:onClick="count" android:layout_width="fill_parent" />
 	
 	
 		
-		<Button android:layout_height='50dip'
-				android:id="@+id/Done"
-				android:text="DONE"
-				android:onClick="done"
-				android:layout_width='fill_parent'
-				android:gravity="center" android:textSize="10pt" android:layout_gravity="bottom" android:visibility="invisible"/>
 		<TextView android:id="@+id/TotalCount" 
 				android:text="0" 
 				android:textSize="20pt" 
@@ -31,6 +22,12 @@
 				android:layout_width="wrap_content" android:gravity="bottom"
 				android:visibility="gone"
 				/>				
+		<Button android:layout_height='50dip'
+				android:id="@+id/Done"
+				android:text="DONE"
+				android:onClick="done"
+				android:layout_width='fill_parent'
+				android:gravity="center" android:textSize="10pt" android:layout_gravity="bottom" android:visibility="invisible"/>
 					
 	
 
