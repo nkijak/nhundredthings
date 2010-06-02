@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.kinnack.nthings.R;
 
 public class RestActivity extends Activity {
-    private int rest_milliseconds;
+    private long rest_milliseconds = -1;
     private float warning_percent = 0.17f;
     private long millisRestLeft = 0;
     private CountDownTimer countDownTimer;
@@ -35,10 +35,33 @@ public class RestActivity extends Activity {
         setContentView(R.layout.rest);
         Bundle extras = getIntent().getExtras();
         rest_milliseconds = extras.getInt(REST_LENGTH);
-        if (rest_milliseconds == 0) { rest_milliseconds = 60000;}
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        determineRestTimeRemaining();
+
+        if (rest_milliseconds <= 0) { finish(); }
+        
         final TextView timeLeft = (TextView) findViewById(R.id.TimeLeft);
         timeLeft.setText(rest_milliseconds/1000+"s");
         
+        createAndStartCountDownTimer(timeLeft);
+    }
+
+    /**
+     * 
+     */
+    private void determineRestTimeRemaining() {
+        if (rest_milliseconds == 0) { rest_milliseconds = 60000;}
+        if (rest_milliseconds == -1) {loadRestMillisecondsFromStorage();}
+    }
+
+    /**
+     * @param timeLeft
+     */
+    private void createAndStartCountDownTimer(final TextView timeLeft) {
         countDownTimer = new CountDownTimer(rest_milliseconds,1000) {
             private boolean warned = false;
             @Override
@@ -66,9 +89,19 @@ public class RestActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("DGMT!RestActivity", "Pausing Rest activity");
         Editor preferenceEditor = getSharedPreferences(REST_DATA, Context.MODE_PRIVATE).edit();
         preferenceEditor.putLong(REST_RESUME_TIME_MILLIS, new Date().getTime()+millisRestLeft);
         preferenceEditor.commit();
         if (countDownTimer != null) { countDownTimer.cancel(); }
+        rest_milliseconds = -1;
+    }
+    
+    private void loadRestMillisecondsFromStorage() {
+        Log.d("DGMT!RestActivity", "Loading Rest time from storage");
+        SharedPreferences prefs = getSharedPreferences(REST_DATA, Context.MODE_PRIVATE);
+        long restEndTimeMillis = prefs.getLong(REST_RESUME_TIME_MILLIS, new Date().getTime()+60000);
+        rest_milliseconds = restEndTimeMillis - new Date().getTime();
+        
     }
 }

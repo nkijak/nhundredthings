@@ -114,9 +114,12 @@ public class Home extends Activity {
     public void doPushups(View target_) {
         
         if (pushupHistory.getDay() == 0) { startTestActivity(); return;}
-        History.Log newLog = pushupHistory.new Log(pushupHistory.getWeek(),pushupHistory.getDay());
+        History.Log currentLog = pushupHistory.getCurrentLog();
+        if (!currentLog.isFor(pushupHistory.getWeek(),pushupHistory.getDay())) {
+            currentLog = pushupHistory.new Log(pushupHistory.getWeek(),pushupHistory.getDay());
         
-        pushupHistory.getLogs().add(newLog);
+            pushupHistory.getLogs().add(currentLog);
+        }
         set = Workout.getPushupSetFor(pushupHistory.getWeek(), pushupHistory.getDay(), pushupHistory.getCurrentLevel());
         
         
@@ -165,8 +168,11 @@ public class Home extends Activity {
     protected void onActivityResult(int requestCode_, int resultCode_, Intent data_) {
         switch (requestCode_) {
         case COUNTER_INTENT:
-            int count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
-            long avgTime = data_.getExtras().getLong(CounterActivity.AVG_TIME);
+            // this was because the back button was pressed during a counter. FIXME do something better
+            if (data_ == null) { return; }
+            Bundle extras = data_.getExtras();
+            int count = extras.getInt(CounterActivity.MAX_COUNT);
+            long avgTime = extras.getLong(CounterActivity.AVG_TIME);
             pushupHistory.getCurrentLog().addCountAndTime(count, avgTime);
            
             if (!set.hasNext()) { 

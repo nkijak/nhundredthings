@@ -106,6 +106,10 @@ public class History {
             }
         }
 
+        public boolean isFor(int week_, int day_) {
+            return _week == week_ && _day == day_;
+        }
+
     
     }
     
