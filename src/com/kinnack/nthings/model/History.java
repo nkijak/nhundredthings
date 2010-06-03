@@ -74,6 +74,17 @@ public class History {
             return counts;
         }
         
+        public int getTotalCount() {
+            int total = 0;
+            for(Rep rep : _counts) { total += rep._count;}
+            return total;
+        }
+        
+        public long getOverallAverageTime() {
+            long totalAverage = 0;
+            for(Rep rep : _counts) { totalAverage += rep._avgTime; }
+            return totalAverage/_counts.size();
+        }
 
         /**
          * @param counts_ the counts to set

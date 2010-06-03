@@ -107,13 +107,20 @@ public class Home extends Activity {
         currentDay.setText(value);
         
         TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
-        value = (pushupHistory == null || value.equals("0") ? "TEST": pushupHistory.getCurrentLevel().getLabel());
+        if (pushupHistory == null || value.equals("0")) {
+            value = "TEST";
+        } else if (pushupHistory.getWeek() >= 7) {
+            value = "FINAL";
+        } else {
+            value = pushupHistory.getCurrentLevel().getLabel();
+        }
         currentLevel.setText(value);
     }
     
     public void doPushups(View target_) {
         
-        if (pushupHistory.getDay() == 0) { startTestActivity(); return;}
+        if (pushupHistory.getDay() == 0 && pushupHistory.getWeek() < 7) { startTestActivity(); return;}
+        if (pushupHistory.getDay() == 0 && pushupHistory.getWeek() >= 7) { startFinalTestActivity(); return;}
         History.Log currentLog = pushupHistory.getCurrentLog();
         if (!currentLog.isFor(pushupHistory.getWeek(),pushupHistory.getDay())) {
             currentLog = pushupHistory.new Log(pushupHistory.getWeek(),pushupHistory.getDay());
@@ -156,6 +163,18 @@ public class Home extends Activity {
         Log.d(TAG, "Intent started and returned");
     }
     
+    private void startFinalTestActivity() {
+        Intent counterIntent = new Intent(this, CounterActivity.class);
+        Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
+        counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 0);
+        counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
+        counterIntent.putExtra(CounterActivity.IS_TEST, true);
+        counterIntent.putExtra(CounterActivity.USE_SUBCOUNT, true);
+        Log.d(TAG, "Intent about to start");
+        startActivityForResult(counterIntent, TEST_INTENT);
+        Log.d(TAG, "Intent started and returned");
+    }
+    
     private void startRestActivity() {
         Intent restIntent = new Intent(this, RestActivity.class);
         Log.d(TAG, "About to launch intnet for "+RestActivity.class.getName());
@@ -173,16 +192,26 @@ public class Home extends Activity {
             Bundle extras = data_.getExtras();
             int count = extras.getInt(CounterActivity.MAX_COUNT);
             long avgTime = extras.getLong(CounterActivity.AVG_TIME);
-            pushupHistory.getCurrentLog().addCountAndTime(count, avgTime);
+            History.Log currentLog =pushupHistory.getCurrentLog();
+            currentLog.addCountAndTime(count, avgTime);
            
             if (!set.hasNext()) { 
                 advanceDate();
                 saveHistory(); 
                 setWeekText();
                 showProgress(pushupHistory);
+                
+                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Latest DMGT! Results");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "I just did "+currentLog.getTotalCount()+" pushups at "+(60000*currentLog.getTotalCount()/currentLog.getOverallAverageTime())+" pushups/min in #DMGT!");
+                startActivity(Intent.createChooser(shareIntent, "Share Results"));
                 return; 
             }
             startRestActivity();
+            
+            
+            
             break;
         case REST_INTENT:
             startCounterActivity();
@@ -200,7 +229,8 @@ public class Home extends Activity {
                     break;
                 case 5:
                     level = Test.thirdTestLevel(test_count);
-                case 6:
+                case 6:                   
+                case 7:
                     level = Test.fourthTestLevel(test_count);
                     break;
                 default:
@@ -218,6 +248,8 @@ public class Home extends Activity {
             Log.d(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
             break;
         }
+        
+        
         
     }
     

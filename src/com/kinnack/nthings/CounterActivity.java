@@ -22,6 +22,7 @@ public class CounterActivity extends Activity {
     public static final String TOTAL_TIME = "com.kinnack.nthing.time.total";
     public static final String HISTORY = "com.kinnack.nthing.history";
     public static final String IS_TEST = "com.kinnack.nthing.is_test";
+    public static final String USE_SUBCOUNT = "com.kinnack.nthing.use_subcount";
     private int count = 0;
     private int increment = 1;
     private int neededCount = 0;
