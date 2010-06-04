@@ -201,11 +201,7 @@ public class Home extends Activity {
                 setWeekText();
                 showProgress(pushupHistory);
                 
-                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Latest DMGT! Results");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "I just did "+currentLog.getTotalCount()+" pushups at "+(60000*currentLog.getTotalCount()/currentLog.getOverallAverageTime())+" pushups/min in #DMGT!");
-                startActivity(Intent.createChooser(shareIntent, "Share Results"));
+                shareResults(currentLog);
                 return; 
             }
             startRestActivity();
@@ -251,6 +247,20 @@ public class Home extends Activity {
         
         
         
+    }
+
+
+
+    /**
+     * @param currentLog
+     */
+    private void shareResults(History.Log currentLog) {
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Latest DGMT! Results");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "I just did "+currentLog.getTotalCount()+" pushups at "+(60000*currentLog.getTotalCount()/currentLog.getOverallAverageTime())+" pushups/min in #DGMT!");
+        startActivity(Intent.createChooser(shareIntent, "Share Results"));
+        return;
     }
     
     private void advanceDate() {

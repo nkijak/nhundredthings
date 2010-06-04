@@ -1,6 +1,5 @@
 package com.kinnack.nthings;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.achartengine.ChartFactory;
@@ -11,12 +10,12 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer.Orientation;
 
-import com.kinnack.nthings.model.History;
-import com.kinnack.nthings.model.History.Log;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+
+import com.kinnack.nthings.model.History;
+import com.kinnack.nthings.model.History.Log;
 
 public class ProgressChart {
     final static int DARK_COLOR = Color.argb(255, 51, 51, 51);
@@ -51,18 +50,12 @@ public class ProgressChart {
         List<Log> logs = history_.getLogs();
         for(int i = 0,len = logs.size(); i < len; i++) {
             Log log = logs.get(i);
-            series.add(sum(log.getCounts()));
+            series.add(log.getTotalCount());
         }
         data.addSeries(series.toXYSeries());
         
         return ChartFactory.getBarChartIntent(context_, data, renderer, Type.DEFAULT);
     }
     
-    protected long sum(Collection<Integer> values_) {
-        long sum = 0;
-        for (Integer value : values_) {
-            sum += value;
-        }
-        return sum;
-    }
+    
 }
