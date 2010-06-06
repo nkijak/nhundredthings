@@ -190,7 +190,10 @@ public class Home extends Activity {
         switch (requestCode_) {
         case COUNTER_INTENT:
             // this was because the back button was pressed during a counter. FIXME do something better
-            if (data_ == null) { return; }
+            if (data_ == null) { 
+                deleteAnyUnwantedLogs();
+                return; 
+            }
             Bundle extras = data_.getExtras();
             int count = extras.getInt(CounterActivity.MAX_COUNT);
             long avgTime = extras.getLong(CounterActivity.AVG_TIME);
@@ -249,6 +252,12 @@ public class Home extends Activity {
         
         
         
+    }
+
+
+
+    private void deleteAnyUnwantedLogs() {
+        pushupHistory.removeCurrentLog();
     }
 
 

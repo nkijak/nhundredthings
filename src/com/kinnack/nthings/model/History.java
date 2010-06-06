@@ -183,6 +183,13 @@ public class History {
         return _logs.get(_logs.size()-1);
     }
     
+    public Log removeCurrentLog() {
+        Log currentLog = null;
+        if (_logs.size() > 0) { 
+            currentLog = _logs.remove(_logs.size()-1);
+        }
+        return currentLog;
+    }
 
     /**
      * @return the testResults
