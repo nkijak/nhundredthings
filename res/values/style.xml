@@ -19,5 +19,6 @@
 
 <style name="greenButton" parent="@android:style/Widget.Button">
 	<item name="android:background">@drawable/green_button</item>
+	<item name="android:textSize">35sp</item>
 </style>
 </resources>
