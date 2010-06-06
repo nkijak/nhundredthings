@@ -24,9 +24,11 @@ public class RestActivity extends Activity {
     
     public static final String REST_LENGTH = "com.kinnack.nthings.rest_length"; 
     public static final String WARNING_PERCENT = "com.kinnack.nthings.warning_percent";
+    public static final String SETS_DONE = "com.kinnack.nthings.sets_done";
     
     private static final String REST_DATA = "rest_data";
     private static final String REST_RESUME_TIME_MILLIS = "rest_resume";
+    public static final String SETS_TO_GO = "com.kinnack.nthings.sets_to_go";
     
     @Override
     protected void onCreate(Bundle savedInstanceState_) {
@@ -35,6 +37,10 @@ public class RestActivity extends Activity {
         setContentView(R.layout.rest);
         Bundle extras = getIntent().getExtras();
         rest_milliseconds = extras.getInt(REST_LENGTH);
+        int setsToGo = extras.getInt(SETS_TO_GO);
+        ((TextView)findViewById(R.id.CompletionRatio)).setText(setsToGo
+                                                                +" more set"
+                                                                +(setsToGo > 1?"s":""));
     }
     
     @Override

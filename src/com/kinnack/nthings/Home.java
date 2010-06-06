@@ -179,6 +179,8 @@ public class Home extends Activity {
         Intent restIntent = new Intent(this, RestActivity.class);
         Log.d(TAG, "About to launch intnet for "+RestActivity.class.getName());
         restIntent.putExtra(RestActivity.REST_LENGTH, set.next());
+        restIntent.putExtra(RestActivity.SETS_DONE, set.getSetsDone());
+        restIntent.putExtra(RestActivity.SETS_TO_GO, set.getSetsToGo());
         Log.d(TAG, "Rest about to start");
         startActivityForResult(restIntent, REST_INTENT);
     }

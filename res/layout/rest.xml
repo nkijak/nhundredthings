@@ -8,6 +8,7 @@
 	<TextView android:text="Take this time to recover between sets."
 		android:id="@+id/restInstructions" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_gravity="center_horizontal"></TextView>
-
-
+	<TextView android:text="0 of 0 sets" android:id="@+id/CompletionRatio"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:layout_gravity="center_horizontal" />
 </LinearLayout>

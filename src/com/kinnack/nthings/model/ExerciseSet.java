@@ -54,6 +54,13 @@ public class ExerciseSet {
         return !onCount && countIndex == 0 && wrappedCounts;
     }
     
+    public int getSetsToGo() {
+        int totalSets = (counts.length > rests.length)? counts.length: rests.length+1;
+        return totalSets - getSetsDone();
+    }
     
+    public int getSetsDone() {
+        return countIndex;
+    }
     
 }
