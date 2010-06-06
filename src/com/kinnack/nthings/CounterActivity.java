@@ -56,20 +56,30 @@ public class CounterActivity extends Activity {
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME);
         
         if (extras.getBoolean(IS_TEST)) {
-            new AlertDialog.Builder(this)
-                .setTitle(R.string.is_test_title)
-                .setMessage(R.string.is_test_msg)
-                .setPositiveButton("Let's Do it!", new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog_, int which_) {
-                        dialog_.dismiss();
-                    }
-                })
-                .show();
+            dialogToUser(R.string.is_test_title,R.string.is_test_msg);
+        } else if (showDone) {
+            dialogToUser(R.string.is_unlimited_title,R.string.is_unlimited_msg);
         }
         
         stopWatch = new StopWatch();
         stopWatch.start();
+    }
+
+
+    /**
+     * 
+     */
+    private void dialogToUser(int title_, int message_) {
+        new AlertDialog.Builder(this)
+            .setTitle(title_)
+            .setMessage(message_)
+            .setPositiveButton("Let's Do it!", new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog_, int which_) {
+                    dialog_.dismiss();
+                }
+            })
+            .show();
     }
     
     
