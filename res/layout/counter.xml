@@ -3,6 +3,11 @@
 	android:layout_height="fill_parent" android:layout_width="fill_parent"
 	android:gravity="center_horizontal" android:orientation="vertical">
 	<ProgressBar android:layout_height="wrap_content"
+		android:id="@+id/SubCountProgress" android:layout_width="fill_parent"
+		android:progress="0" android:layout_marginLeft="3dp"
+		android:layout_marginRight="3dp"
+		android:visibility="gone" />
+	<ProgressBar android:layout_height="wrap_content"
 		android:id="@+id/CountProgress" android:layout_width="fill_parent"
 		android:progress="0" android:layout_marginLeft="3dp"
 		android:layout_marginRight="3dp" />

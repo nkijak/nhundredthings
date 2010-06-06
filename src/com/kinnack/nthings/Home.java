@@ -166,7 +166,7 @@ public class Home extends Activity {
     private void startFinalTestActivity() {
         Intent counterIntent = new Intent(this, CounterActivity.class);
         Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
-        counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 0);
+        counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 100);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
         counterIntent.putExtra(CounterActivity.IS_TEST, true);
         counterIntent.putExtra(CounterActivity.USE_SUBCOUNT, true);

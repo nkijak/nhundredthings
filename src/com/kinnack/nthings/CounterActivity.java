@@ -29,6 +29,7 @@ public class CounterActivity extends Activity {
     private ToneGenerator toneGenerator;
     private StopWatch stopWatch;
     private long sumTimeBetweenCounts = 0;
+    private boolean useSubcount = false;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class CounterActivity extends Activity {
         neededCount = extras.getInt(INIT_COUNT_KEY);
         count = neededCount;
         boolean showDone = extras.getBoolean(SHOW_DONE);
-
+        
         
         if (!showDone) { increment = -1; }
         if (showDone) { count = 0; }
@@ -47,6 +48,10 @@ public class CounterActivity extends Activity {
         if (showDone) {
             Button done = (Button) findViewById(R.id.Done);
             done.setVisibility(View.VISIBLE);
+        }
+        if (extras.getBoolean(USE_SUBCOUNT)) {
+            findViewById(R.id.SubCountProgress).setVisibility(View.VISIBLE);
+            useSubcount = true;
         }
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME);
         
@@ -69,12 +74,7 @@ public class CounterActivity extends Activity {
     
     
     public void count(View target) {
-        TextView totalCount = (TextView) findViewById(R.id.TotalCount);
-        ProgressBar progress = (ProgressBar) findViewById(R.id.CountProgress);
-        totalCount.setText(""+(count+=increment));
-        int progressPercent = getProgressPercent();
-        Log.d("nthings:CounterActivity", "Setting progress to "+progressPercent);
-        progress.setProgress(progressPercent);
+        incrementProgress();
         
         stopWatch.stop();
         int reps = count;
@@ -93,6 +93,27 @@ public class CounterActivity extends Activity {
         stopWatch.start();
         Log.d("NTHINGS:CounterActivity#count","Started stop watch...");
         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
+    }
+
+
+    /**
+     * 
+     */
+    private void incrementProgress() {
+        TextView totalCount = (TextView) findViewById(R.id.TotalCount);
+        totalCount.setText(""+(count+=increment));
+
+        ProgressBar progress = (ProgressBar) findViewById(R.id.CountProgress);
+        int progressPercent = getProgressPercent();
+        
+        Log.d("nthings:CounterActivity", "Setting progress to "+progressPercent);
+        if (useSubcount) {
+            ProgressBar subProgress = (ProgressBar)findViewById(R.id.SubCountProgress);
+            subProgress.setProgress((int)Math.floor(progressPercent));
+            progress.setProgress((progressPercent % 10)*10);
+        } else {
+            progress.setProgress(progressPercent);
+        }
     }
     
     public void done(View target) {
