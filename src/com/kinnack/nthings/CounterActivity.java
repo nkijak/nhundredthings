@@ -73,6 +73,7 @@ public class CounterActivity extends Activity {
         new AlertDialog.Builder(this)
             .setTitle(title_)
             .setMessage(message_)
+            .setIcon(R.drawable.dialog)
             .setPositiveButton("Let's Do it!", new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog_, int which_) {
@@ -127,6 +128,7 @@ public class CounterActivity extends Activity {
     }
     
     public void done(View target) {
+        stopWatch.stop();
         setResult(RESULT_OK,createIntentWithStats(count));
         Log.d("nthings:CounterActivity","Set "+MAX_COUNT+" to "+count);
         finish();
