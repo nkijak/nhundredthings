@@ -154,7 +154,7 @@ public class CounterActivity extends Activity {
     
     private Intent createIntentWithStats(int reps_) {
         Intent intent = new Intent();
-        intent.putExtra(MAX_COUNT, neededCount);
+        intent.putExtra(MAX_COUNT, reps_);
         intent.putExtra(AVG_TIME, sumTimeBetweenCounts/reps_);
         intent.putExtra(TOTAL_TIME, sumTimeBetweenCounts);
         return intent;
