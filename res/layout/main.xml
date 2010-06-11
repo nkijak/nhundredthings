@@ -7,15 +7,19 @@
 	<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton"
 		android:text="Push Ups" android:gravity="center_horizontal"
 		android:layout_width="fill_parent" android:onClick="doPushups"></Button>
-	<Button android:layout_height="wrap_content" android:id="@+id/SquatsButton"
-		android:text="Squats" android:layout_width="fill_parent"
-		android:gravity="center_horizontal" android:enabled="false"></Button>
+		
+	<Button android:layout_height="wrap_content" android:id="@+id/FinalButton"
+		android:text="Final Test" android:layout_width="fill_parent"
+		android:gravity="center_horizontal" android:onClick="doFinalTest"></Button>
+		
 	<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton"
 		android:text="Sit Ups" android:layout_width="fill_parent"
 		android:gravity="center_horizontal" android:enabled="false"></Button>
+		
 	<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton"
 		android:layout_width="fill_parent" android:gravity="center_horizontal"
 		android:text="Progress" android:onClick="showProgress"></Button>
+		
 	<RelativeLayout android:id="@+id/HomeSummary"
 		android:layout_width="fill_parent" android:layout_height="fill_parent">
 		<TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek"

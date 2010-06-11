@@ -19,6 +19,7 @@ public class History {
     private int _day;
     private Workout.Type _type;
     private Date _lastWorkout;
+    private boolean _finished;
     
     public History() {};
     
@@ -80,10 +81,16 @@ public class History {
             return total;
         }
         
-        public long getOverallAverageTime() {
+        public long getAverageMillisPerPushup() {
             long totalAverage = 0;
             for(Rep rep : _counts) { totalAverage += rep._avgTime; }
             return totalAverage/_counts.size();
+        }
+        
+        public double getAveragePushupFrequency() {
+            long totalAverage = 0;
+            for(Rep rep : _counts) { totalAverage += rep._avgTime; }
+            return _counts.size()*1.0/totalAverage;
         }
 
         /**
@@ -152,7 +159,8 @@ public class History {
             .put("day", _day)
             .put("level", _currentLevel.toJSON())
             .put("testResults", new JSONArray(_testResults))
-            .put("type", _type.toString());
+            .put("type", _type.toString())
+            .put("finished", _finished);
         self.put("logs", new JSONArray());
         for(Log log : _logs) {
             self.accumulate("logs", log.toJSON());
@@ -164,12 +172,14 @@ public class History {
         JSONObject json = new JSONObject(jsonHistory_);
         setDay(json.getInt("day"));
         setWeek(json.getInt("week"));
+        setType(Workout.Type.valueOf(json.getString("type")));
+        setCurrentLevel(new GenericLevel(json.getJSONObject("level")));
+        setFinished(json.getBoolean("finished"));
+        
         JSONArray testResults = json.getJSONArray("testResults");
         for(int i = 0,len = testResults.length(); i < len; i++) {
             getTestResults().add(testResults.getInt(i));
         }
-        setType(Workout.Type.valueOf(json.getString("type")));
-        setCurrentLevel(new GenericLevel(json.getJSONObject("level")));
         JSONArray logs = json.getJSONArray("logs");
         for (int i=0,len = logs.length(); i < len; i++) {
             getLogs().add(new Log(logs.getJSONObject(i)));
@@ -298,6 +308,20 @@ public class History {
      */
     public void setLastWorkout(Date lastWorkout_) {
         _lastWorkout = lastWorkout_;
+    }
+
+    /**
+     * @return the finished
+     */
+    public boolean isFinished() {
+        return _finished;
+    }
+
+    /**
+     * @param finished_ the finished to set
+     */
+    public void setFinished(boolean finished_) {
+        _finished = finished_;
     }
     
 }

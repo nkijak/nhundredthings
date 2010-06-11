@@ -11,7 +11,10 @@ import java.util.Date;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -27,7 +30,6 @@ import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
-import com.kinnack.nthings.model.History.Rep;
 import com.kinnack.nthings.model.level.Level;
 
 public class Home extends Activity {
@@ -36,6 +38,7 @@ public class Home extends Activity {
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;
     private static final int REST_INTENT = 200;
+    private static final int FINAL_TEST_INTENT=175;
     private static final String PUBLIC_FOLDER_PATH=Environment.getExternalStorageDirectory()+"/nhundredthings/";
     private static final String PUBLIC_FILE_PATH=PUBLIC_FOLDER_PATH+"/prefs_config.xml";
     private static final String PRIVATE_FILE_PATH = "/data/data/"+Home.class.getPackage().getName()+"/shared_prefs/prefs_config.xml";
@@ -134,6 +137,10 @@ public class Home extends Activity {
         
     }
     
+    public void doFinalTest(View target_) {
+        startFinalTestActivity();
+    }
+    
     public void showProgress(View target_) {
         showProgress(pushupHistory);
     }
@@ -171,7 +178,7 @@ public class Home extends Activity {
         counterIntent.putExtra(CounterActivity.IS_TEST, true);
         counterIntent.putExtra(CounterActivity.USE_SUBCOUNT, true);
         Log.d(TAG, "Intent about to start");
-        startActivityForResult(counterIntent, TEST_INTENT);
+        startActivityForResult(counterIntent, FINAL_TEST_INTENT);
         Log.d(TAG, "Intent started and returned");
     }
     
@@ -231,9 +238,10 @@ public class Home extends Activity {
                 case 5:
                     level = Test.thirdTestLevel(test_count);
                 case 6:                   
-                case 7:
                     level = Test.fourthTestLevel(test_count);
                     break;
+                case 7:
+                    //test until 100?
                 default:
                     Log.w(TAG,"Don't know why user is taking test week="+pushupHistory.getWeek()+", day="+pushupHistory.getDay());
                     return;
@@ -244,6 +252,20 @@ public class Home extends Activity {
             saveHistory();
             setWeekText();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
+            break;
+        case FINAL_TEST_INTENT:
+            test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
+            long totalTime = data_.getExtras().getLong(CounterActivity.TOTAL_TIME);
+            pushupHistory.getTestResults().add(test_count);
+            if (test_count >= 100) {
+                shareComplete(test_count, totalTime);
+                showUserDialog(R.string.final_complete_title, R.string.final_complete_msg);
+                pushupHistory.setFinished(true);
+            } else {
+                shareDNFFinal(test_count, totalTime);
+                showUserDialog(R.string.final_DNF_title, R.string.final_DNF_msg);
+            }
+            
             break;
         default:
             Log.d(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
@@ -261,18 +283,51 @@ public class Home extends Activity {
     }
 
 
-
+  
+    private void showUserDialog(int title_, int msg_) {
+        new AlertDialog.Builder(this)
+        .setTitle(title_)
+        .setMessage(msg_)
+        .setIcon(R.drawable.dialog)
+        .setPositiveButton(R.string.final_complete_OK, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog_, int which_) {
+                dialog_.dismiss();
+            }
+        }).show();
+    }
+    
     /**
      * @param currentLog
      */
     private void shareResults(History.Log currentLog) {
+        long roundedFrequency = Math.round(60000*currentLog.getAveragePushupFrequency());
+        launchSharingChooser("My Latest DGMT! Results",
+                "I just did "+currentLog.getTotalCount()+" pushups at "+roundedFrequency+" pushups/min in #DGMT!");
+
+    }
+    
+    private void shareComplete(int totalCount_, long totalTime_) {
+        long roundedFrequency = Math.round(60000.0*totalCount_/totalTime_);
+        launchSharingChooser("Mission Accomplished!",
+                "I finished the 100 pushup program using #DGMT! with "+totalCount_+" pushups IN A ROW at "+roundedFrequency+" pushups/min!");
+    }
+    
+    private void shareDNFFinal(int totalCount_, long totalTime_) {
+        long roundedFrequency = Math.round(60000.0*totalCount_/totalTime_);
+        launchSharingChooser("Almost There!",
+                "I just did "+totalCount_+" pushups IN A ROW at "+roundedFrequency+" pushups/min in #DGMT! Almost there!");
+    }
+    
+    
+    private void launchSharingChooser(String subject_, String text_) {
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Latest DGMT! Results");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "I just did "+currentLog.getTotalCount()+" pushups at "+(60000*currentLog.getTotalCount()/currentLog.getOverallAverageTime())+" pushups/min in #DGMT!");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject_);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text_);
         startActivity(Intent.createChooser(shareIntent, "Share Results"));
-        return;
     }
+    
     
     private void advanceDate() {
         int day = pushupHistory.getDay();
