@@ -9,10 +9,13 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
+
+import static android.os.PowerManager.*;
 
 import com.kinnack.nthings.R;
 
@@ -21,6 +24,7 @@ public class RestActivity extends Activity {
     private float warning_percent = 0.17f;
     private long millisRestLeft = 0;
     private CountDownTimer countDownTimer;
+    private PowerManager.WakeLock wakeLock;
     
     public static final String REST_LENGTH = "com.kinnack.nthings.rest_length"; 
     public static final String WARNING_PERCENT = "com.kinnack.nthings.warning_percent";
@@ -46,6 +50,9 @@ public class RestActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        
+        keepScreenAlive();
+        
         determineRestTimeRemaining();
 
         if (rest_milliseconds <= 0) { finish(); }
@@ -56,6 +63,12 @@ public class RestActivity extends Activity {
         createAndStartCountDownTimer(timeLeft);
     }
 
+    private void keepScreenAlive() {
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = pm.newWakeLock(SCREEN_DIM_WAKE_LOCK|ON_AFTER_RELEASE, "RestActivity.screenOn");
+        wakeLock.acquire();
+    }
+    
     /**
      * 
      */
@@ -100,6 +113,7 @@ public class RestActivity extends Activity {
         preferenceEditor.putLong(REST_RESUME_TIME_MILLIS, new Date().getTime()+millisRestLeft);
         preferenceEditor.commit();
         if (countDownTimer != null) { countDownTimer.cancel(); }
+        wakeLock.release();
         rest_milliseconds = -1;
     }
     
