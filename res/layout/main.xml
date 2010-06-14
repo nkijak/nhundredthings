@@ -13,35 +13,33 @@
 		android:gravity="center_horizontal" android:onClick="doFinalTest"
 		android:enabled="false"></Button>
 		
-	<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton"
-		android:text="Sit Ups" android:layout_width="fill_parent"
-		android:gravity="center_horizontal" android:enabled="false"></Button>
-		
 	<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton"
 		android:layout_width="fill_parent" android:gravity="center_horizontal"
 		android:text="Progress" android:onClick="showProgress"></Button>
 		
-	<RelativeLayout android:id="@+id/HomeSummary"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<LinearLayout android:id="@+id/HomeSummary"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:orientation="horizontal">
+
+		<TextView 
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:id="@+id/HomeWeekLabel" android:text="@string/week"></TextView>
+
 		<TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek"
 			android:text="0" android:layout_height="fill_parent" android:gravity="top"
 			android:textSize="40sp"></TextView>
 
-		<TextView android:layout_toRightOf="@+id/HomeCurrentWeek"
+		<TextView 
 			android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:id="@+id/HomeWeekLabel" android:text="th Week"></TextView>
+			android:id="@+id/HomeDayLabel" android:text="@string/day" android:paddingLeft="25dp"></TextView>
 
-		<TextView android:layout_toRightOf="@+id/HomeWeekLabel"
+		<TextView 
 			android:layout_width="wrap_content" android:id="@+id/HomeCurrentDay"
 			android:text="0" android:textSize="40sp" android:layout_height="fill_parent" android:gravity="top"></TextView>
 
-		<TextView android:layout_toRightOf="@+id/HomeCurrentDay"
-			android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:id="@+id/HomeDayLabel" android:text="th Day"></TextView>
-
-		<TextView android:layout_toRightOf="@+id/HomeDayLabel"
+		<TextView 
 			android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:textSize="40sp" android:id="@+id/HomeCurrentLevel"
-			android:text="Lv"></TextView>
-	</RelativeLayout>
+			android:text="Lv" android:paddingLeft="25dp"></TextView>
+	</LinearLayout>
 </LinearLayout>

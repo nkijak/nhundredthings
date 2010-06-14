@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -114,8 +115,16 @@ public class Home extends Activity {
         currentWeek.setText(value);
         
         TextView currentDay = (TextView)findViewById(R.id.HomeCurrentDay);
+        View currentDayLabel = findViewById(R.id.HomeDayLabel);
+        currentDay.setVisibility(View.VISIBLE);
+        currentDayLabel.setVisibility(View.VISIBLE);
+        
         value = (pushupHistory == null ? "0": ""+pushupHistory.getDay());
         currentDay.setText(value);
+        if (value.equals("0")) {
+            currentDay.setVisibility(View.INVISIBLE);
+            currentDayLabel.setVisibility(View.INVISIBLE);
+        }
         
         TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
         if (pushupHistory == null || value.equals("0") && pushupHistory.getWeek() != 7) {

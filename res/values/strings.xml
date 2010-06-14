@@ -11,4 +11,6 @@
 <string name="final_complete_OK">OK, Thanks</string>
 <string name="final_DNF_title">Congratulations!</string>
 <string name="final_DNF_msg">You didn\'t quite make it but don\'t give up. That was still a impressive effort!\nTo help you reach your goal week 6 has been reset so you can practice more\nOr you can retry this final test at any time!</string>
+<string name="week">week</string>
+<string name="day">day</string>
 </resources>
