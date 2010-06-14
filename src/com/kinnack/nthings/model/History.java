@@ -176,13 +176,8 @@ public class History {
         setWeek(json.getInt("week"));
         setType(Workout.Type.valueOf(json.getString("type")));
         setCurrentLevel(new GenericLevel(json.getJSONObject("level")));
-        setFinished(json.getBoolean("finished"));
-        try {
-            setFinalUnlocked(json.getBoolean("finalUnlocked"));
-        } catch (JSONException je) {
-            android.util.Log.w("DGMT!History.History", "Failure loading finalUnlocked from json file. Probably old version.",je);
-            setFinalUnlocked(false);
-        }
+        loadFinished(json);
+        loadFinalUnlocked(json);
         JSONArray testResults = json.getJSONArray("testResults");
         for(int i = 0,len = testResults.length(); i < len; i++) {
             getTestResults().add(testResults.getInt(i));
@@ -190,6 +185,30 @@ public class History {
         JSONArray logs = json.getJSONArray("logs");
         for (int i=0,len = logs.length(); i < len; i++) {
             getLogs().add(new Log(logs.getJSONObject(i)));
+        }
+    }
+
+    /**
+     * @param json
+     */
+    private void loadFinalUnlocked(JSONObject json) {
+        try {
+            setFinalUnlocked(json.getBoolean("finalUnlocked"));
+        } catch (JSONException je) {
+            android.util.Log.w("DGMT!History.History", "Failure loading finalUnlocked from json file. Probably old version.",je);
+            setFinalUnlocked(false);
+        }
+    }
+
+    /**
+     * @param json
+     */
+    private void loadFinished(JSONObject json) {
+        try {
+            setFinished(json.getBoolean("finished"));
+        } catch (JSONException je) {
+            android.util.Log.w("DGMT!History.History", "Failure loading finished from json file. Probably old version.",je);
+            setFinished(false);
         }
     }
     
