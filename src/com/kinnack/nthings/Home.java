@@ -253,8 +253,6 @@ public class Home extends Activity {
                 case 6:                   
                     level = Test.fourthTestLevel(test_count);
                     break;
-                case 7:
-                    //test until 100?
                 default:
                     Log.w(TAG,"Don't know why user is taking test week="+pushupHistory.getWeek()+", day="+pushupHistory.getDay());
                     return;
@@ -280,6 +278,7 @@ public class Home extends Activity {
             }
             pushupHistory.setWeek(6);
             pushupHistory.setDay(1);
+            saveHistory();
             break;
         default:
             Log.d(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
