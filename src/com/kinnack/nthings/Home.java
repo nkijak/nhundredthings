@@ -71,12 +71,16 @@ public class Home extends Activity {
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
         loadPushupHistory(prefs);
-        if (pushupHistory.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
-        setWeekText();
          
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configureMainView();
+        
+    }
+    
 
     /**
      * @param prefs
@@ -102,7 +106,9 @@ public class Home extends Activity {
     /**
      * 
      */
-    private void setWeekText() {
+    private void configureMainView() {
+        ((Button)findViewById(R.id.PushupsButton)).setEnabled(true);
+        ((Button)findViewById(R.id.FinalButton)).setEnabled(false);
         TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
         String value = (pushupHistory == null ? "1" : ""+pushupHistory.getWeek());
         currentWeek.setText(value);
@@ -112,15 +118,19 @@ public class Home extends Activity {
         currentDay.setText(value);
         
         TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
-        if (pushupHistory == null || value.equals("0")) {
+        if (pushupHistory == null || value.equals("0") && pushupHistory.getWeek() != 7) {
             value = "TEST";
         } else if (pushupHistory.getWeek() >= 7) {
             value = "FINAL";
+            ((Button)findViewById(R.id.PushupsButton)).setEnabled(false);
             pushupHistory.setFinalUnlocked(true);
         } else {
             value = pushupHistory.getCurrentLevel().getLabel();
         }
+        
         currentLevel.setText(value);
+        
+        if (pushupHistory.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
     }
     
     public void doPushups(View target_) {
@@ -213,7 +223,7 @@ public class Home extends Activity {
             if (!set.hasNext()) { 
                 advanceDate();
                 saveHistory(); 
-                setWeekText();
+                configureMainView();
                 showProgress(pushupHistory);
                 
                 shareResults(currentLog);
@@ -253,7 +263,7 @@ public class Home extends Activity {
             pushupHistory.setCurrentLevel(level);
             pushupHistory.setDay(1);
             saveHistory();
-            setWeekText();
+            configureMainView();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             break;
         case FINAL_TEST_INTENT:
@@ -341,7 +351,7 @@ public class Home extends Activity {
             Log.i(TAG, "Setting day to "+day+" because week%2="+(week%2));
             pushupHistory.setDay(day);
             pushupHistory.setWeek(pushupHistory.getWeek()+1);
-            setWeekText();
+            configureMainView();
         } else {
             pushupHistory.setDay(day+1);
         }
