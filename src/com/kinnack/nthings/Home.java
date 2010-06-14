@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,8 +71,9 @@ public class Home extends Activity {
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
         loadPushupHistory(prefs);
+        if (pushupHistory.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
         setWeekText();
-        
+         
     }
 
 
@@ -114,6 +116,7 @@ public class Home extends Activity {
             value = "TEST";
         } else if (pushupHistory.getWeek() >= 7) {
             value = "FINAL";
+            pushupHistory.setFinalUnlocked(true);
         } else {
             value = pushupHistory.getCurrentLevel().getLabel();
         }
@@ -265,7 +268,8 @@ public class Home extends Activity {
                 shareDNFFinal(test_count, totalTime);
                 showUserDialog(R.string.final_DNF_title, R.string.final_DNF_msg);
             }
-            
+            pushupHistory.setWeek(6);
+            pushupHistory.setDay(1);
             break;
         default:
             Log.d(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");

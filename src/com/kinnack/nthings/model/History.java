@@ -20,6 +20,7 @@ public class History {
     private Workout.Type _type;
     private Date _lastWorkout;
     private boolean _finished;
+    private boolean _finalUnlocked;
     
     public History() {};
     
@@ -160,7 +161,8 @@ public class History {
             .put("level", _currentLevel.toJSON())
             .put("testResults", new JSONArray(_testResults))
             .put("type", _type.toString())
-            .put("finished", _finished);
+            .put("finished", _finished)
+            .put("finalUnlocked", _finalUnlocked);
         self.put("logs", new JSONArray());
         for(Log log : _logs) {
             self.accumulate("logs", log.toJSON());
@@ -175,7 +177,12 @@ public class History {
         setType(Workout.Type.valueOf(json.getString("type")));
         setCurrentLevel(new GenericLevel(json.getJSONObject("level")));
         setFinished(json.getBoolean("finished"));
-        
+        try {
+            setFinalUnlocked(json.getBoolean("finalUnlocked"));
+        } catch (JSONException je) {
+            android.util.Log.w("DGMT!History.History", "Failure loading finalUnlocked from json file. Probably old version.",je);
+            setFinalUnlocked(false);
+        }
         JSONArray testResults = json.getJSONArray("testResults");
         for(int i = 0,len = testResults.length(); i < len; i++) {
             getTestResults().add(testResults.getInt(i));
@@ -323,5 +330,21 @@ public class History {
     public void setFinished(boolean finished_) {
         _finished = finished_;
     }
+
+    /**
+     * @return the finalUnlocked
+     */
+    public boolean isFinalUnlocked() {
+        return _finalUnlocked;
+    }
+
+    /**
+     * @param finalUnlocked_ the finalUnlocked to set
+     */
+    public void setFinalUnlocked(boolean finalUnlocked_) {
+        _finalUnlocked = finalUnlocked_;
+    }
+    
+    
     
 }
