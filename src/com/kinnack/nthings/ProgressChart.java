@@ -15,7 +15,7 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import com.kinnack.nthings.model.History;
-import com.kinnack.nthings.model.History.Log;
+import com.kinnack.nthings.model.Logg;
 
 public class ProgressChart {
     final static int DARK_COLOR = Color.argb(255, 51, 51, 51);
@@ -47,9 +47,9 @@ public class ProgressChart {
         
         XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
         CategorySeries series = new CategorySeries("Progress");
-        List<Log> logs = history_.getLogs();
+        List<Logg> logs = history_.getLogs();
         for(int i = 0,len = logs.size(); i < len; i++) {
-            Log log = logs.get(i);
+            Logg log = logs.get(i);
             series.add(log.getTotalCount());
         }
         data.addSeries(series.toXYSeries());

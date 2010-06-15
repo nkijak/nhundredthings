@@ -30,6 +30,7 @@ import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
+import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.level.Level;
@@ -146,9 +147,9 @@ public class Home extends Activity {
         
         if (pushupHistory.getDay() == 0 && pushupHistory.getWeek() < 7) { startTestActivity(); return;}
         if (pushupHistory.getDay() == 0 && pushupHistory.getWeek() >= 7) { startFinalTestActivity(); return;}
-        History.Log currentLog = pushupHistory.getCurrentLog();
+        Logg currentLog = pushupHistory.getCurrentLog();
         if (!currentLog.isFor(pushupHistory.getWeek(),pushupHistory.getDay())) {
-            currentLog = pushupHistory.new Log(pushupHistory.getWeek(),pushupHistory.getDay());
+            currentLog = new Logg(pushupHistory, pushupHistory.getWeek(),pushupHistory.getDay());
         
             pushupHistory.getLogs().add(currentLog);
         }
@@ -226,7 +227,7 @@ public class Home extends Activity {
             Bundle extras = data_.getExtras();
             int count = extras.getInt(CounterActivity.MAX_COUNT);
             long avgTime = extras.getLong(CounterActivity.AVG_TIME);
-            History.Log currentLog =pushupHistory.getCurrentLog();
+            Logg currentLog =pushupHistory.getCurrentLog();
             currentLog.addCountAndTime(count, avgTime);
            
             if (!set.hasNext()) { 
@@ -324,7 +325,7 @@ public class Home extends Activity {
     /**
      * @param currentLog
      */
-    private void shareResults(History.Log currentLog) {
+    private void shareResults(Logg currentLog) {
         long roundedFrequency = Math.round(60000*currentLog.getAveragePushupFrequency());
         launchSharingChooser("My Latest DGMT! Results",
                 "I just did "+currentLog.getTotalCount()+" pushups at "+roundedFrequency+" pushups/min in #DGMT!");
