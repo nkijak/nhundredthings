@@ -1,10 +1,10 @@
-package com.kinnack.nthings;
+package com.kinnack.nthings.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.kinnack.nthings.R;
+import com.kinnack.nthings.StopWatch;
 
 public class CounterActivity extends Activity {
     public static final String INIT_COUNT_KEY = "com.kinnack.nthings.init_count";

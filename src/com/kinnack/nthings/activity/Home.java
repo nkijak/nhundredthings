@@ -1,4 +1,4 @@
-package com.kinnack.nthings;
+package com.kinnack.nthings.activity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,12 +13,11 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -27,7 +26,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kinnack.nthings.activity.RestActivity;
+import com.kinnack.nthings.ProgressChart;
+import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Test;
