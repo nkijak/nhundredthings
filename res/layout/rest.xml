@@ -4,11 +4,15 @@
 	android:layout_width="fill_parent" android:orientation="vertical">
 	<TextView android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/TimeLeft"
-		android:text="Time Left" android:textSize="20pt" android:gravity="center_horizontal"></TextView>
+		android:text="Time Left" android:textSize="35sp" android:gravity="center" android:layout_gravity="center"></TextView>
+		
 	<TextView android:text="Take this time to recover between sets."
 		android:id="@+id/restInstructions" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_gravity="center_horizontal"></TextView>
+		android:layout_height="wrap_content" android:layout_gravity="center"
+		android:textSize="15sp"></TextView>
+		
 	<TextView android:text="0 of 0 sets" android:id="@+id/CompletionRatio"
 		android:layout_width="wrap_content" android:layout_height="wrap_content" 
-		android:layout_gravity="center_horizontal" />
+		android:layout_gravity="center" 
+		android:textSize="20sp"/>
 </LinearLayout>
