@@ -211,7 +211,6 @@ public class Home extends Activity {
         restIntent.putExtra(RestActivity.REST_LENGTH, set.next());
         restIntent.putExtra(RestActivity.SETS_DONE, set.getSetsDone());
         restIntent.putExtra(RestActivity.SETS_TO_GO, set.getSetsToGo());
-        Log.d(TAG, "Rest about to start");
         startActivityForResult(restIntent, REST_INTENT);
     }
     
@@ -293,7 +292,7 @@ public class Home extends Activity {
             saveHistory();
             break;
         default:
-            Log.d(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
+            Log.w(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
             break;
         }
         
@@ -359,7 +358,6 @@ public class Home extends Activity {
         int week = pushupHistory.getWeek();
         if (day == 3) {
             day = (week==5 ? 0 : week%2);
-            Log.i(TAG, "Setting day to "+day+" because week%2="+(week%2));
             pushupHistory.setDay(day);
             pushupHistory.setWeek(pushupHistory.getWeek()+1);
             configureMainView();
@@ -374,7 +372,6 @@ public class Home extends Activity {
         try {
             pushupHistory.setLastWorkout(new Date());
             prefEditor.putString(KEY_HISTORY, pushupHistory.toJSON().toString());
-            Log.d(TAG, "Saved history as "+pushupHistory.toJSON().toString());
             File externalFolder = new File(PUBLIC_FOLDER_PATH);
             if (!externalFolder.exists()) { externalFolder.mkdir(); }
             prefEditor.commit();

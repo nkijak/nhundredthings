@@ -96,7 +96,6 @@ public class CounterActivity extends Activity {
             reps = neededCount - count;
         }
         sumTimeBetweenCounts += stopWatch.getElapsedTime();
-        Log.d("NTHINGS:CounterActivity#count", "Avg Time: "+sumTimeBetweenCounts/reps);
         
         
         if ((increment  == -1) && (count == 0)) {
@@ -105,7 +104,6 @@ public class CounterActivity extends Activity {
             finish();
         }
         stopWatch.start();
-        Log.d("NTHINGS:CounterActivity#count","Started stop watch...");
         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
     }
 
@@ -120,7 +118,6 @@ public class CounterActivity extends Activity {
         ProgressBar progress = (ProgressBar) findViewById(R.id.CountProgress);
         int progressPercent = getProgressPercent();
         
-        Log.d("nthings:CounterActivity", "Setting progress to "+progressPercent);
         if (useSubcount) {
             ProgressBar subProgress = (ProgressBar)findViewById(R.id.SubCountProgress);
             subProgress.setProgress((int)Math.floor(progressPercent));
@@ -133,7 +130,6 @@ public class CounterActivity extends Activity {
     public void done(View target) {
         stopWatch.stop();
         setResult(RESULT_OK,createIntentWithStats(count));
-        Log.d("nthings:CounterActivity","Set "+MAX_COUNT+" to "+count);
         finish();
     }
     
