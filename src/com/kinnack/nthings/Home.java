@@ -247,6 +247,7 @@ public class Home extends Activity {
             startCounterActivity();
             break;
         case TEST_INTENT:
+            if (data_ == null) { return; }
             int test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             
             Level level;
@@ -274,6 +275,7 @@ public class Home extends Activity {
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             break;
         case FINAL_TEST_INTENT:
+            if(data_ == null) { return; }
             test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             long totalTime = data_.getExtras().getLong(CounterActivity.TOTAL_TIME);
             pushupHistory.getTestResults().add(test_count);
