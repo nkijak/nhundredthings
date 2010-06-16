@@ -77,7 +77,7 @@ public class CounterActivity extends Activity {
             .setTitle(title_)
             .setMessage(message_)
             .setIcon(R.drawable.dialog)
-            .setPositiveButton("Let's Do it!", new OnClickListener() {
+            .setPositiveButton(R.string.positive, new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog_, int which_) {
                     dialog_.dismiss();
