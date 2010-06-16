@@ -72,15 +72,15 @@ public class Home extends Activity {
         }
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
-        loadPushupHistory(prefs);
          
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        loadPushupHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         configureMainView();
-        
+        if (set == null) { getThisWeekAndDaySet(); }
     }
     
 
@@ -88,6 +88,7 @@ public class Home extends Activity {
      * @param prefs
      */
     private void loadPushupHistory(SharedPreferences prefs) {
+        if (pushupHistory != null) { return; }
         try {
             pushupHistory = new History(prefs.getString(KEY_HISTORY, null));
         } catch (JSONException e) {
@@ -153,11 +154,18 @@ public class Home extends Activity {
         
             pushupHistory.getLogs().add(currentLog);
         }
-        set = Workout.getPushupSetFor(pushupHistory.getWeek(), pushupHistory.getDay(), pushupHistory.getCurrentLevel());
+        getThisWeekAndDaySet();
         
         
         startCounterActivity();
         
+    }
+
+    /**
+     * 
+     */
+    private void getThisWeekAndDaySet() {
+        set = Workout.getPushupSetFor(pushupHistory.getWeek(), pushupHistory.getDay(), pushupHistory.getCurrentLevel());
     }
     
     public void doFinalTest(View target_) {
