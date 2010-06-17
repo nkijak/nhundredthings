@@ -14,4 +14,11 @@
 <string name="week">week</string>
 <string name="day">day</string>
 <string name="positive">Let\'s Do It!</string>
+
+<!-- SETTINGS -->
+<string name="settings">Settings</string>
+<string name="sound_on_msg">Sound On</string>
+<string name="sound_off_msg">Sound Off</string>
+<string name="sound_setting_key">SOUND_SETTING</string>
+<string name="sound_setting_title">Sound</string>
 </resources>

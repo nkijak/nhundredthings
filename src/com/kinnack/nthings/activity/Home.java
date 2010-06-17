@@ -20,7 +20,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Contacts.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -394,6 +397,13 @@ public class Home extends Activity {
         ProgressChart chart = new ProgressChart();
         Intent progressIntent = chart.progressChart(history_, this);
         startActivity(progressIntent);
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu_) {
+       getMenuInflater().inflate(R.menu.main,menu_);
+       menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
+       return true;
     }
     
     /**
