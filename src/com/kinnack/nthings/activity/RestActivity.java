@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import static android.os.PowerManager.*;
 
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.model.SoundAlert;
 
 public class RestActivity extends Activity {
     private long rest_milliseconds = -1;
@@ -25,6 +27,7 @@ public class RestActivity extends Activity {
     private long millisRestLeft = 0;
     private CountDownTimer countDownTimer;
     private PowerManager.WakeLock wakeLock;
+    private SoundAlert soundAlert;
     
     public static final String REST_LENGTH = "com.kinnack.nthings.rest_length"; 
     public static final String WARNING_PERCENT = "com.kinnack.nthings.warning_percent";
@@ -45,6 +48,7 @@ public class RestActivity extends Activity {
         ((TextView)findViewById(R.id.CompletionRatio)).setText(setsToGo
                                                                 +" more set"
                                                                 +(setsToGo > 1?"s":""));
+        soundAlert = new SoundAlert(PreferenceManager.getDefaultSharedPreferences(this),this);
     }
     
     @Override
@@ -92,14 +96,14 @@ public class RestActivity extends Activity {
                     Log.i("nthings:RestActivity", "Ending in 10 seconds");
                     timeLeft.setTextColor(Color.RED);
                     
-                    Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(new long[]{0,500,250,500}, -1);
+                    soundAlert.vibrate();
                     warned = true;
                 }
             }
             
             @Override
             public void onFinish() {
+                soundAlert.cleanup();
                 finish();
             }
         }.start();
