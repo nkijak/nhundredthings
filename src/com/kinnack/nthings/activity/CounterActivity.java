@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
+import com.kinnack.nthings.model.SoundAlert;
 
 public class CounterActivity extends Activity {
     public static final String INIT_COUNT_KEY = "com.kinnack.nthings.init_count";
@@ -29,10 +31,10 @@ public class CounterActivity extends Activity {
     private int count = 0;
     private int increment = 1;
     private int neededCount = 0;
-    private ToneGenerator toneGenerator;
     private StopWatch stopWatch;
     private long sumTimeBetweenCounts = 0;
     private boolean useSubcount = false;
+    private SoundAlert soundAlert;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class CounterActivity extends Activity {
             findViewById(R.id.SubCountProgress).setVisibility(View.VISIBLE);
             useSubcount = true;
         }
-        toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME);
+        soundAlert = new SoundAlert(PreferenceManager.getDefaultSharedPreferences(this), this);
         
         if (extras.getBoolean(IS_TEST)) {
             dialogToUser(R.string.is_test_title,R.string.is_test_msg);
@@ -100,11 +102,11 @@ public class CounterActivity extends Activity {
         
         if ((increment  == -1) && (count == 0)) {
             setResult(RESULT_OK,createIntentWithStats(reps));
-            toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK);
+            soundAlert.finishedBeep();
             finish();
         }
         stopWatch.start();
-        toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
+        soundAlert.progressBeep();
     }
 
 
@@ -136,7 +138,7 @@ public class CounterActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        toneGenerator.release();
+        soundAlert.cleanup();
     }
     
     private int getProgressPercent() {
