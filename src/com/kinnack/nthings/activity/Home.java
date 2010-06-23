@@ -403,6 +403,7 @@ public class Home extends Activity {
     public boolean onCreateOptionsMenu(Menu menu_) {
        getMenuInflater().inflate(R.menu.main,menu_);
        menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
+       menu_.findItem(R.id.history).setIntent(new Intent(this, HistoryActivity.class));
        return true;
     }
     
