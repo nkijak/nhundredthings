@@ -23,7 +23,7 @@
 	<item name="android:textSize">35sp</item>
 </style>
 
-<style name="listView" paren="@android:style/Widget.ListView.White">
+<style name="listView" parent="@android:style/Widget.ListView.White">
 	<item name="android:background">@drawable/background</item>
 </style>
 </resources>

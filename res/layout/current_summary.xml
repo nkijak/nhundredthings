@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:layout_gravity="center_horizontal"
-	android:padding="20dp">
-
-	<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton"
-		android:text="Push Ups" android:gravity="center_horizontal"
-		android:layout_width="fill_parent" android:onClick="doPushups"></Button>
-		
-	<Button android:layout_height="wrap_content" android:id="@+id/FinalButton"
-		android:text="Final Test" android:layout_width="fill_parent"
-		android:gravity="center_horizontal" android:onClick="doFinalTest"
-		android:enabled="false"></Button>
-		
-	<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton"
-		android:layout_width="fill_parent" android:gravity="center_horizontal"
-		android:text="Progress" android:onClick="showProgress"></Button>	
-	
-	<LinearLayout android:id="@+id/HomeSummary"
+		android:id="@+id/HomeSummary"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:onClick="listDayWeekOptions"
@@ -43,11 +26,4 @@
 			android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:textSize="40sp" android:id="@+id/HomeCurrentLevel"
 			android:text="Lv" android:paddingLeft="25dp"></TextView>
-	</LinearLayout>
-	<ListView android:id="@+id/dayWeekSelector"
-				 android:layout_width="fill_parent"
-				  android:layout_height="fill_parent"
-				  android:visibility="gone">
-	
-	</ListView>
 </LinearLayout>

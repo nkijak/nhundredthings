@@ -20,12 +20,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Contacts.Settings;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +36,7 @@ import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
+import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
 import com.kinnack.nthings.model.level.Level;
 
 public class Home extends Activity {
@@ -177,6 +178,18 @@ public class Home extends Activity {
     
     public void showProgress(View target_) {
         showProgress(pushupHistory);
+    }
+    
+    public void listDayWeekOptions(View target_) {
+        findViewById(R.id.HomeSummary).setVisibility(View.GONE);
+        
+        ListView dayWeekSelector = (ListView)findViewById(R.id.dayWeekSelector);
+        
+        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this);
+        dayWeekSelector.setAdapter(listAdapter);
+        dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(pushupHistory.getCurrentLog().getWeek(), pushupHistory.getCurrentLog().getDay()));
+        dayWeekSelector.setVisibility(View.VISIBLE);
+        
     }
 
     /**
