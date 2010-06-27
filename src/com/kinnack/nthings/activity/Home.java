@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
@@ -64,6 +66,7 @@ public class Home extends Activity {
 
     private Editor prefEditor;
     private History pushupHistory;
+    private CounterActivityManager counterActivityManager;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +83,6 @@ public class Home extends Activity {
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
         setDayWeekSelectorOnItemClick();
-         
     }
 
     /**
@@ -107,6 +109,7 @@ public class Home extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
         loadPushupHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         configureMainView();
         if (set == null && pushupHistory.getDay() != 0) { getThisWeekAndDaySet(); }
@@ -222,9 +225,7 @@ public class Home extends Activity {
      * 
      */
     private void startCounterActivity() {
-        //Intent counterIntent = new Intent(this, CounterActivity.class);
-        Intent counterIntent = new Intent(this, ManualEntryCounterActivity.class);
-        Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
+        Intent counterIntent = new Intent(this, counterActivityManager.getActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, set.next());
         counterIntent.putExtra(CounterActivity.SHOW_DONE, set.isMax());
    
@@ -234,8 +235,7 @@ public class Home extends Activity {
     }
     
     private void startTestActivity() {
-        Intent counterIntent = new Intent(this, CounterActivity.class);
-        Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
+        Intent counterIntent = new Intent(this, counterActivityManager.getActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 0);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
         counterIntent.putExtra(CounterActivity.IS_TEST, true);
@@ -245,8 +245,7 @@ public class Home extends Activity {
     }
     
     private void startFinalTestActivity() {
-        Intent counterIntent = new Intent(this, CounterActivity.class);
-        Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
+        Intent counterIntent = new Intent(this, counterActivityManager.getActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 100);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
         counterIntent.putExtra(CounterActivity.IS_TEST, true);

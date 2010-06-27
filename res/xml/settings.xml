@@ -3,4 +3,8 @@
 	<CheckBoxPreference android:summaryOff="@string/sound_off_msg"
 		android:key="@string/sound_setting_key" android:summaryOn="@string/sound_on_msg"
 		android:title="@string/sound_setting_title" android:defaultValue="true"></CheckBoxPreference>
+	
+	<CheckBoxPreference android:summaryOn="@string/manual_entry_msg"
+		android:key="@string/entry_type_key" android:summaryOff="@string/nose_entry_msg"
+		android:title="@string/entry_setting_title" ></CheckBoxPreference>
 </PreferenceScreen>

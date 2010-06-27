@@ -22,6 +22,10 @@
 <string name="sound_off_msg">Sound Off</string>
 <string name="sound_setting_key">SOUND_SETTING</string>
 <string name="sound_setting_title">Sound</string>
+<string name="manual_entry_msg">Timer only</string>
+<string name="nose_entry_msg">Count for me</string>
+<string name="entry_setting_title">Counter Method</string>
+<string name="entry_type_key">MANUAL_ENTRY</string>
 <!-- HISTORY -->
 <string name="history">History</string>
 <!-- Manual Entry -->
