@@ -26,4 +26,5 @@
 <style name="listView" parent="@android:style/Widget.ListView.White">
 	<item name="android:background">@drawable/background</item>
 </style>
+
 </resources>

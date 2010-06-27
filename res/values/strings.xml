@@ -14,6 +14,7 @@
 <string name="week">week</string>
 <string name="day">day</string>
 <string name="positive">Let\'s Do It!</string>
+<string name="done">DONE</string>
 
 <!-- SETTINGS -->
 <string name="settings">Settings</string>
@@ -23,4 +24,9 @@
 <string name="sound_setting_title">Sound</string>
 <!-- HISTORY -->
 <string name="history">History</string>
+<!-- Manual Entry -->
+<string name="start">START</string>
+<string name="end">END</string>
+<string name="manual_entry_label">Number of pushups</string>
+
 </resources>

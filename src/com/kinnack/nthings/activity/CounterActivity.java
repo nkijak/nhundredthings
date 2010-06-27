@@ -29,12 +29,12 @@ public class CounterActivity extends Activity {
     public static final String IS_TEST = "com.kinnack.nthing.is_test";
     public static final String USE_SUBCOUNT = "com.kinnack.nthing.use_subcount";
     private int count = 0;
-    private int increment = 1;
-    private int neededCount = 0;
-    private StopWatch stopWatch;
-    private long sumTimeBetweenCounts = 0;
+    protected int increment = 1;
+    protected int neededCount = 0;
+    protected StopWatch stopWatch;
+    protected long sumTimeBetweenCounts = 0;
     private boolean useSubcount = false;
-    private SoundAlert soundAlert;
+    protected SoundAlert soundAlert;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,12 +47,11 @@ public class CounterActivity extends Activity {
         
         if (!showDone) { increment = -1; }
         if (showDone) { count = 0; }
-        setContentView(R.layout.counter);
+        setContentView(getLayout());
         TextView totalCount = (TextView) findViewById(R.id.TotalCount);
         totalCount.setText(""+count);
         if (showDone) {
-            Button done = (Button) findViewById(R.id.Done);
-            done.setVisibility(View.VISIBLE);
+            showQuitingOptions();
         }
         if (extras.getBoolean(USE_SUBCOUNT)) {
             findViewById(R.id.SubCountProgress).setVisibility(View.VISIBLE);
@@ -74,6 +73,23 @@ public class CounterActivity extends Activity {
     /**
      * 
      */
+    protected void showQuitingOptions() {
+        Button done = (Button) findViewById(R.id.Done);
+        done.setVisibility(View.VISIBLE);
+    }
+
+
+    /**
+     * @return
+     */
+    protected int getLayout() {
+        return R.layout.counter;
+    }
+
+
+    /**
+     * 
+     */
     private void dialogToUser(int title_, int message_) {
         new AlertDialog.Builder(this)
             .setTitle(title_)
@@ -88,7 +104,7 @@ public class CounterActivity extends Activity {
             .show();
     }
     
-    
+    // ??? Is it necessary to stop the counter each time?
     public void count(View target) {
         incrementProgress();
         
@@ -153,7 +169,7 @@ public class CounterActivity extends Activity {
         return retval;
     }
     
-    private Intent createIntentWithStats(int reps_) {
+    protected Intent createIntentWithStats(int reps_) {
         Intent intent = new Intent();
         intent.putExtra(MAX_COUNT, reps_);
         intent.putExtra(AVG_TIME, sumTimeBetweenCounts/reps_);

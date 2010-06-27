@@ -222,7 +222,8 @@ public class Home extends Activity {
      * 
      */
     private void startCounterActivity() {
-        Intent counterIntent = new Intent(this, CounterActivity.class);
+        //Intent counterIntent = new Intent(this, CounterActivity.class);
+        Intent counterIntent = new Intent(this, ManualEntryCounterActivity.class);
         Log.d(TAG,"About to launch intent for "+CounterActivity.class.getName());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, set.next());
         counterIntent.putExtra(CounterActivity.SHOW_DONE, set.isMax());

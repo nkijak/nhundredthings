@@ -22,7 +22,7 @@
 		android:layout_alignParentBottom="true" android:layout_width="wrap_content"
 		android:visibility="gone" />
 	<Button android:layout_height='50dip' android:id="@+id/Done"
-		android:text="DONE" android:onClick="done" android:gravity="center" android:layout_gravity="bottom"
+		android:text="@string/done" android:onClick="done" android:gravity="center" android:layout_gravity="bottom"
 		android:layout_width="fill_parent" android:visibility="invisible" 
 		android:textSize="25sp" />
 
