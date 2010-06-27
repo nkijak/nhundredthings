@@ -23,7 +23,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -33,14 +32,13 @@ import android.widget.Toast;
 
 import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
-import com.kinnack.nthings.model.WorkoutSelectionViewAdapter.DayAndWeek;
-import com.kinnack.nthings.model.level.EasyLevel;
 import com.kinnack.nthings.model.level.Level;
 import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
 

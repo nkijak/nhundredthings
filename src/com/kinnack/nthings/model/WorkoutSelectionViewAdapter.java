@@ -35,7 +35,7 @@ public class WorkoutSelectionViewAdapter extends SimpleAdapter{
         return workoutMap;
     }
     
-    public int getPositionForWeekDay(int week_, int day_) {
+    public static int getPositionForWeekDay(int week_, int day_) {
         int position = 0;
         search:
         for (int week = 0; week < Workout.PUSHUPS.length; week++) {
@@ -60,22 +60,5 @@ public class WorkoutSelectionViewAdapter extends SimpleAdapter{
         return DayAndWeek.notFound();
     }
     
-    public static class DayAndWeek {
-        public int day;
-        public int week;
-        
-        public DayAndWeek(int day_,int week_) {
-            day = day_;
-            week = week_;
-        }
-        
-        
-        public static DayAndWeek notFound() {
-            return new DayAndWeek(-1,-1);
-        }
-        
-        public boolean wasFound() {
-            return day > 0 && week > 0;
-        }
-    }
+    
 }
