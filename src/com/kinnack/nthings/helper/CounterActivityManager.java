@@ -1,13 +1,11 @@
 package com.kinnack.nthings.helper;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.activity.CounterActivity;
 import com.kinnack.nthings.activity.ManualEntryCounterActivity;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 public class CounterActivityManager {
     public boolean manualEntry = false;
