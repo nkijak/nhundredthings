@@ -1,5 +1,7 @@
 package com.kinnack.nthings.model;
 
+import android.util.Log;
+
 import com.kinnack.nthings.model.level.Level;
 
 public class Workout {
@@ -313,6 +315,7 @@ public class Workout {
         
     public static ExerciseSet getPushupSetFor(int week, int day, Level level) {
         // TODO error handling, argument checking
+        Log.d("dgmt:Workout.getPushupSetFor", String.format("Getting pushups for week %d, day %d, level %s",week,day,level));
         int[][] countRest = PUSHUPS[week-1][day-1][level.getIndex()];
         return new ExerciseSet(countRest[0], countRest[1]);
     }

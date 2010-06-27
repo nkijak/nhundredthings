@@ -47,4 +47,35 @@ public class WorkoutSelectionViewAdapter extends SimpleAdapter{
         }
         return position;
     }
+    
+    public static DayAndWeek getDayAndWeekByPosition(int position_) {
+        int count = 0;
+        for (int week = 0; week < Workout.PUSHUPS.length; week++) {
+            int days = Workout.PUSHUPS[week].length;
+            for(int day = 0; day < days; day++){
+                count++;
+                if (count == position_) { return new DayAndWeek(day+1,week+1); }
+            }
+        }
+        return DayAndWeek.notFound();
+    }
+    
+    public static class DayAndWeek {
+        public int day;
+        public int week;
+        
+        public DayAndWeek(int day_,int week_) {
+            day = day_;
+            week = week_;
+        }
+        
+        
+        public static DayAndWeek notFound() {
+            return new DayAndWeek(-1,-1);
+        }
+        
+        public boolean wasFound() {
+            return day > 0 && week > 0;
+        }
+    }
 }

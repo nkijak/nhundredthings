@@ -24,6 +24,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,7 +39,10 @@ import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
+import com.kinnack.nthings.model.WorkoutSelectionViewAdapter.DayAndWeek;
+import com.kinnack.nthings.model.level.EasyLevel;
 import com.kinnack.nthings.model.level.Level;
+import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
 
 public class Home extends Activity {
     public static final String TAG = "nthings:HOME";
@@ -76,7 +81,29 @@ public class Home extends Activity {
         }
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
+        setDayWeekSelectorOnItemClick();
          
+    }
+
+    /**
+     * 
+     */
+    private void setDayWeekSelectorOnItemClick() {
+        ((ListView)findViewById(R.id.dayWeekSelector)).setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent_, View view_, int position_, long id_) {
+                parent_.setVisibility(View.GONE);
+                DayAndWeek dayAndWeek = WorkoutSelectionViewAdapter.getDayAndWeekByPosition(position_);
+                if (dayAndWeek.wasFound()) {
+                    pushupHistory.setDay(dayAndWeek.day);
+                    pushupHistory.setWeek(dayAndWeek.week);
+                    configureMainView();
+                }
+                findViewById(R.id.HomeSummary).setVisibility(View.VISIBLE);
+                
+            }
+            
+        });
     }
 
     @Override
@@ -84,7 +111,7 @@ public class Home extends Activity {
         super.onResume();
         loadPushupHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         configureMainView();
-        if (set == null) { getThisWeekAndDaySet(); }
+        if (set == null && pushupHistory.getDay() != 0) { getThisWeekAndDaySet(); }
     }
     
 
@@ -104,6 +131,7 @@ public class Home extends Activity {
             pushupHistory = new History();
             pushupHistory.setDay(0);
             pushupHistory.setWeek(1);
+            pushupHistory.setCurrentLevel(new InitialEasyLevel());
             pushupHistory.setType(Workout.Type.PUSHUP);
         }
     }
