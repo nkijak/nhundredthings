@@ -49,7 +49,9 @@ public class CounterActivity extends Activity {
         if (showDone) { count = 0; }
         setContentView(getLayout());
         TextView totalCount = (TextView) findViewById(R.id.TotalCount);
-        totalCount.setText(""+(count == 0 ? neededCount : count));
+        String countText = (count == 0 ? "at least "+neededCount : count+"");
+        if (count == 0 && neededCount == 0) countText = "as many as possible";
+        totalCount.setText(countText);
         if (showDone) {
             showQuitingOptions();
         }
