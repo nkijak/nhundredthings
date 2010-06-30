@@ -49,7 +49,7 @@ public class CounterActivity extends Activity {
         if (showDone) { count = 0; }
         setContentView(getLayout());
         TextView totalCount = (TextView) findViewById(R.id.TotalCount);
-        totalCount.setText(""+count);
+        totalCount.setText(""+(count == 0 ? neededCount : count));
         if (showDone) {
             showQuitingOptions();
         }

@@ -1,14 +1,12 @@
 package com.kinnack.nthings.model;
 
-import java.io.StringReader;
-
-import com.kinnack.nthings.R;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Vibrator;
+
+import com.kinnack.nthings.R;
 
 // XXX This is a total hack in need of the state(ful?) pattern
 public class SoundAlert {
@@ -39,13 +37,8 @@ public class SoundAlert {
     public void cleanup() {
         if (enabled) _toneGenerator.release();
         _context = null;
-    }
-    
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        if(_toneGenerator != null) _toneGenerator.release();
-        _context = null;
         _toneGenerator = null;
     }
+    
+    
 }
