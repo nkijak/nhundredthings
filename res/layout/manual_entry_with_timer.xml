@@ -23,7 +23,7 @@
 
 	<EditText android:text="" android:id="@+id/manualEntry"
 		android:layout_width="120dp" android:layout_height="wrap_content"
-		android:imeOptions="actionDone" android:imeActionLabel="@string/manual_entry_label"
+		android:imeOptions="actionDone" 
 		android:visibility="gone"
 		android:inputType="phone"
 		android:enabled="false"
