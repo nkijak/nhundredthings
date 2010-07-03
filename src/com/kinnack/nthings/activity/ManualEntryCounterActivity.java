@@ -7,8 +7,11 @@ import com.kinnack.nthings.helper.RangedIntTextWatcher;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class ManualEntryCounterActivity extends CounterActivity {
     private RangedIntTextWatcher rangedIntTextWatcher;
@@ -19,29 +22,16 @@ public class ManualEntryCounterActivity extends CounterActivity {
         rangedIntTextWatcher = new RangedIntTextWatcher(0, 300);
         EditText manualEntry = (EditText)findViewById(R.id.manualEntry);
         manualEntry.addTextChangedListener(rangedIntTextWatcher);
-        // XXX Hack that depends on TextChangedListeners to be called in the order they are added!!
-        manualEntry.addTextChangedListener(new TextWatcher() {
-            
+        manualEntry.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
-            public void onTextChanged(CharSequence s_, int start_, int before_, int count_) {
+            public boolean onEditorAction(TextView v_, int actionId_, KeyEvent event_) {
                 View endButton = findViewById(R.id.Done);
                 if (rangedIntTextWatcher.isValid()) {
-                    endButton.setEnabled(false);                    
+                    endButton.setEnabled(true);                    
                 } else {
-                    endButton.setEnabled(true);  
+                    endButton.setEnabled(false);  
                 }
-            }
-            
-            @Override
-            public void beforeTextChanged(CharSequence s_, int start_, int count_, int after_) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void afterTextChanged(Editable s_) {
-                // TODO Auto-generated method stub
-                
+                return false;
             }
         });
     }

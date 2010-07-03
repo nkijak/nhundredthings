@@ -6,11 +6,11 @@
 					android:padding="10dp">
 		<TextView android:text="complete " android:id="@+id/TotalCountLabel"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:textSize="15sp"></TextView>
+			android:textSize="25sp"></TextView>
 			
 		<TextView android:text="0" android:id="@+id/TotalCount"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:textSize="25sp"></TextView>	
+			android:textSize="35sp"></TextView>	
 	</LinearLayout>
 	<Button android:text="@string/start" android:id="@+id/startBtn"
 		android:layout_width="fill_parent" android:layout_height="100dp"
