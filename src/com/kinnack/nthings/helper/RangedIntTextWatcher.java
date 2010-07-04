@@ -1,9 +1,7 @@
 package com.kinnack.nthings.helper;
 
-import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Toast;
 
 public class RangedIntTextWatcher implements TextWatcher{
     private int start;
