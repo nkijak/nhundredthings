@@ -26,8 +26,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
+import com.kinnack.nthings.model.LevelSelectionViewAdapter;
 import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
@@ -83,29 +86,57 @@ public class Home extends Activity {
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
         setDayWeekSelectorOnItemClick();
+        setLevelSelectorOnItemSelect();
     }
 
     /**
      * 
      */
     private void setDayWeekSelectorOnItemClick() {
-        ((ListView)findViewById(R.id.dayWeekSelector)).setOnItemClickListener(new OnItemClickListener() {
+        ((Spinner)findViewById(R.id.dayWeekSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent_, View view_, int position_, long id_) {
-                parent_.setVisibility(View.GONE);
+            public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
+                // TODO Auto-generated method stub
                 DayAndWeek dayAndWeek = WorkoutSelectionViewAdapter.getDayAndWeekByPosition(position_);
                 if (dayAndWeek.wasFound()) {
                     pushupHistory.setDay(dayAndWeek.day);
                     pushupHistory.setWeek(dayAndWeek.week);
                     configureMainView();
                 }
-                findViewById(R.id.HomeSummary).setVisibility(View.VISIBLE);
                 
             }
-            
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0_) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        
+    }
+    
+    private void setLevelSelectorOnItemSelect(){
+        ((Spinner)findViewById(R.id.levelSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
+                // TODO Auto-generated method stub
+                Level level = LevelSelectionViewAdapter.getLevelByPosition(position_);
+                pushupHistory.setCurrentLevel(level);
+                configureMainView();
+                
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0_) {
+                // TODO Auto-generated method stub
+                
+            }
         });
     }
-
+    
+    
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,6 +144,8 @@ public class Home extends Activity {
         loadPushupHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         configureMainView();
         if (set == null && pushupHistory.getDay() != 0) { getThisWeekAndDaySet(); }
+        listDayWeekOptions();
+        loadLevelOptions();
     }
     
 
@@ -177,6 +210,24 @@ public class Home extends Activity {
         if (pushupHistory.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
     }
     
+    public void listDayWeekOptions() {
+        
+        Spinner dayWeekSelector = (Spinner)findViewById(R.id.dayWeekSelector);
+        
+        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this);
+        dayWeekSelector.setAdapter(listAdapter);
+        dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(pushupHistory.getWeek(), pushupHistory.getDay()));
+        
+    }
+    
+    public void loadLevelOptions() {
+        Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
+        
+        LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this);
+        levelSelector.setAdapter(viewAdapter);
+        levelSelector.setSelection(viewAdapter.getPositionForLevel(pushupHistory.getCurrentLevel()));
+    }
+    
     public void doPushups(View target_) {
         
         if (pushupHistory.getDay() == 0 && pushupHistory.getWeek() < 7) { startTestActivity(); return;}
@@ -209,17 +260,7 @@ public class Home extends Activity {
         showProgress(pushupHistory);
     }
     
-    public void listDayWeekOptions(View target_) {
-        findViewById(R.id.HomeSummary).setVisibility(View.GONE);
-        
-        ListView dayWeekSelector = (ListView)findViewById(R.id.dayWeekSelector);
-        
-        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this);
-        dayWeekSelector.setAdapter(listAdapter);
-        dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(pushupHistory.getCurrentLog().getWeek(), pushupHistory.getCurrentLog().getDay()));
-        dayWeekSelector.setVisibility(View.VISIBLE);
-        
-    }
+   
 
     /**
      * 

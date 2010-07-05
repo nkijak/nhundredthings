@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/HomeSummary"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:onClick="listDayWeekOptions"
-		android:clickable="true" >
+	android:id="@+id/HomeSummary" android:layout_width="fill_parent"
+	android:layout_height="56dp" android:orientation="horizontal">
 
-		<TextView 
-			android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:id="@+id/HomeWeekLabel" android:text="@string/week"></TextView>
+	<TextView android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:id="@+id/HomeWeekLabel"
+		android:text="@string/week"></TextView>
 
-		<TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek"
-			android:text="0" android:layout_height="fill_parent" android:gravity="top"
-			android:textSize="40sp"></TextView>
+	<TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentWeek"
+		android:text="0" android:layout_height="fill_parent" 
+		android:textSize="40sp"></TextView>
 
-		<TextView 
-			android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:id="@+id/HomeDayLabel" android:text="@string/day" android:paddingLeft="25dp"></TextView>
+	<TextView android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:id="@+id/HomeDayLabel"
+		android:text="@string/day" android:paddingLeft="25dp"></TextView>
 
-		<TextView 
-			android:layout_width="wrap_content" android:id="@+id/HomeCurrentDay"
-			android:text="0" android:textSize="40sp" android:layout_height="fill_parent" android:gravity="top"></TextView>
+	<TextView android:layout_width="wrap_content" android:id="@+id/HomeCurrentDay"
+		android:text="0" android:textSize="40sp" android:layout_height="fill_parent"></TextView>
 
-		<TextView 
-			android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textSize="40sp" android:id="@+id/HomeCurrentLevel"
-			android:text="Lv" android:paddingLeft="25dp"></TextView>
+
 </LinearLayout>
