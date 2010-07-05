@@ -23,6 +23,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -54,6 +55,7 @@ public class Home extends Activity {
     private static final int TEST_INTENT = 150;
     private static final int REST_INTENT = 200;
     private static final int FINAL_TEST_INTENT=175;
+    private static final int RESET_INTENT = 300;
     private static final String PUBLIC_FOLDER_PATH=Environment.getExternalStorageDirectory()+"/nhundredthings/";
     private static final String PUBLIC_FILE_PATH=PUBLIC_FOLDER_PATH+"/prefs_config.xml";
     private static final String PRIVATE_FILE_PATH = "/data/data/"+Home.class.getPackage().getName()+"/shared_prefs/prefs_config.xml";
@@ -124,6 +126,10 @@ public class Home extends Activity {
                 // TODO Auto-generated method stub
                 Level level = LevelSelectionViewAdapter.getLevelByPosition(position_);
                 pushupHistory.setCurrentLevel(level);
+                if (pushupHistory.getDay() == 0) {
+                    pushupHistory.setDay(1);
+                    findViewById(R.id.dayWeekSelector).setEnabled(true);
+                }
                 configureMainView();
                 
             }
@@ -143,7 +149,7 @@ public class Home extends Activity {
         counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
         loadPushupHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         configureMainView();
-        if (set == null && pushupHistory.getDay() != 0) { getThisWeekAndDaySet(); }
+        if (set == null && !pushupHistory.isTest()) { getThisWeekAndDaySet(); }
         listDayWeekOptions();
         loadLevelOptions();
     }
@@ -163,9 +169,6 @@ public class Home extends Activity {
         }
         if (pushupHistory == null) {
             pushupHistory = new History();
-            pushupHistory.setDay(0);
-            pushupHistory.setWeek(1);
-            pushupHistory.setCurrentLevel(new InitialEasyLevel());
             pushupHistory.setType(Workout.Type.PUSHUP);
         }
     }
@@ -195,9 +198,11 @@ public class Home extends Activity {
         }
         
         TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
-        if (pushupHistory == null || value.equals("0") && pushupHistory.getWeek() != 7) {
+        if (pushupHistory == null || pushupHistory.isTest()) {
+            findViewById(R.id.dayWeekSelector).setEnabled(false);
             value = "TEST";
-        } else if (pushupHistory.getWeek() >= 7) {
+        } else if (pushupHistory.isFinal()) {
+            findViewById(R.id.dayWeekSelector).setEnabled(false);
             value = "FINAL";
             ((Button)findViewById(R.id.PushupsButton)).setEnabled(false);
             pushupHistory.setFinalUnlocked(true);
@@ -222,16 +227,16 @@ public class Home extends Activity {
     
     public void loadLevelOptions() {
         Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
-        
-        LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this);
+        boolean showTest = (pushupHistory != null && pushupHistory.isTest());
+        LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this, showTest);
         levelSelector.setAdapter(viewAdapter);
-        levelSelector.setSelection(viewAdapter.getPositionForLevel(pushupHistory.getCurrentLevel()));
+        levelSelector.setSelection(showTest ? 3 :viewAdapter.getPositionForLevel(pushupHistory.getCurrentLevel()));
     }
     
     public void doPushups(View target_) {
         
-        if (pushupHistory.getDay() == 0 && pushupHistory.getWeek() < 7) { startTestActivity(); return;}
-        if (pushupHistory.getDay() == 0 && pushupHistory.getWeek() >= 7) { startFinalTestActivity(); return;}
+        if (pushupHistory.isTest()) { startTestActivity(); return;}
+        if (pushupHistory.isFinal()) { startFinalTestActivity(); return;}
         Logg currentLog = pushupHistory.getCurrentLog();
         if (!currentLog.isFor(pushupHistory.getWeek(),pushupHistory.getDay())) {
             currentLog = new Logg(pushupHistory, pushupHistory.getWeek(),pushupHistory.getDay());
@@ -382,6 +387,13 @@ public class Home extends Activity {
             pushupHistory.setDay(1);
             saveHistory();
             break;
+        case RESET_INTENT:
+            if (data_ == null) {return;}
+            if (data_.getExtras().getBoolean(ResetActivity.RESET,false)) {
+                pushupHistory = null;
+            }
+            
+            break;
         default:
             Log.w(TAG, "Got an unknown activity result. request["+requestCode_+"], result["+resultCode_+"]");
             break;
@@ -451,7 +463,6 @@ public class Home extends Activity {
             day = (week==5 ? 0 : week%2);
             pushupHistory.setDay(day);
             pushupHistory.setWeek(pushupHistory.getWeek()+1);
-            configureMainView();
         } else {
             pushupHistory.setDay(day+1);
         }
@@ -485,6 +496,17 @@ public class Home extends Activity {
        menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
        menu_.findItem(R.id.history).setIntent(new Intent(this, HistoryActivity.class));
        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item_) {
+        switch(item_.getItemId()) {
+        case R.id.reset:
+            startActivityForResult(new Intent(this,ResetActivity.class), RESET_INTENT);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item_);            
+        }
     }
     
     /**

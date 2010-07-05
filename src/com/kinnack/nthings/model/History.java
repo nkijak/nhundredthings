@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import com.kinnack.nthings.model.level.GenericLevel;
 import com.kinnack.nthings.model.level.Level;
+import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
 
 public class History {
     private List<Integer> _testResults = new ArrayList<Integer>();
@@ -21,8 +22,13 @@ public class History {
     private Date _lastWorkout;
     private boolean _finished;
     private boolean _finalUnlocked;
+
     
-    public History() {};
+    public History() {
+        _day = 0;
+        _week = 1;
+        _currentLevel = new InitialEasyLevel();
+    };
     
     
     public History(String jsonHistory_) throws JSONException {
@@ -237,7 +243,22 @@ public class History {
     public void setFinalUnlocked(boolean finalUnlocked_) {
         _finalUnlocked = finalUnlocked_;
     }
+
+
+    /**
+     * @return the test
+     */
+    public boolean isTest() {
+        return _day == 0 && _week != 7;
+    }
+
+    public void setTest() {
+        _day = 0;
+    }
     
-    
+    public boolean isFinal() {
+        return _week >= 7;
+    }
+
     
 }

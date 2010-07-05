@@ -36,11 +36,13 @@ public class WorkoutSelectionViewAdapter extends SimpleAdapter{
     }
     
     public static int getPositionForWeekDay(int searchedForWeek_, int searchedForDay_) {
+        boolean searchingForTest = (searchedForDay_ == 0);
         int position = 0;
         search:
         for (int week = 0; week < Workout.PUSHUPS.length; week++) {
             int days = Workout.PUSHUPS[week].length;
             for(int day = 0; day < days; day++){
+                if(searchingForTest && searchedForWeek_ == week+1) {break search;}
                 if (searchedForWeek_ == week+1 && searchedForDay_ == day+1) { break search; }
                 position++;
             }

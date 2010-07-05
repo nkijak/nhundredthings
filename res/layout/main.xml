@@ -20,7 +20,7 @@
 	<LinearLayout android:id="@+id/HomeSummary"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:visibility="gone">
+		>
 
 		<TextView 
 			android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -51,12 +51,14 @@
 	
 	<Spinner android:id="@+id/dayWeekSelector"
 				 android:choiceMode="singleChoice" 
-				 android:layout_width="fill_parent" android:layout_height="50dp">
+				 android:layout_width="fill_parent" android:layout_height="50dp"
+				 android:prompt="@string/week_day_select_msg"
+				 >
 	
 	</Spinner>
 	<Spinner android:id="@+id/levelSelector"
 			android:choiceMode="singleChoice"
 			android:layout_width="fill_parent"
 			android:layout_height="50dp" 
-			android:prompt="@string/app_name"/>
+			android:prompt="@string/level_select_msg"/>
 </LinearLayout>

@@ -16,7 +16,9 @@
 <string name="level">level</string>
 <string name="positive">Let\'s Do It!</string>
 <string name="done">DONE</string>
-
+<string name="week_day_select_msg">Select Week and Day</string>
+<string name="level_select_msg">Select Intensity Level</string>
+<string name="reset">Reset History</string>
 <!-- SETTINGS -->
 <string name="settings">Settings</string>
 <string name="sound_on_msg">Sound On</string>
@@ -34,4 +36,7 @@
 <string name="end">END</string>
 <string name="manual_entry_label">Number of pushups</string>
 
+<!-- Reset -->
+<string name="resetWarning">If you wish to reset your workout history long press on the screen and choose "Reset History".
+This cannot be undone!</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:longClickable="true" android:id="@+id/resetLayout"
+	android:padding="20dp" android:orientation="vertical">
+	<ImageView 
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:src="@android:drawable/ic_dialog_alert" android:layout_gravity="center_horizontal"></ImageView>
+		
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/resetWarning"
+		android:textSize="25sp" />
+
+</LinearLayout>

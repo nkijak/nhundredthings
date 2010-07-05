@@ -17,13 +17,13 @@ import android.widget.SimpleAdapter;
 public class LevelSelectionViewAdapter extends SimpleAdapter {
     private static final String LEVEL="level";
     
-    public LevelSelectionViewAdapter(Context context_) {
-        super(context_, levelsToViewMap(), R.layout.level_display, 
+    public LevelSelectionViewAdapter(Context context_, boolean showTest_) {
+        super(context_, levelsToViewMap(showTest_), R.layout.level_display, 
                 new String[]{LEVEL},
                 new int[]{R.id.HomeCurrentLevel});
     }
 
-    private static List<Map<String,Object>> levelsToViewMap() {
+    private static List<Map<String,Object>> levelsToViewMap(boolean showTest_) {
         List<Map<String,Object>> levelMap = new ArrayList<Map<String,Object>>();
         levelMap.add(new HashMap<String, Object>(){{
             put(LEVEL, "EASY" );
@@ -34,6 +34,11 @@ public class LevelSelectionViewAdapter extends SimpleAdapter {
         levelMap.add(new HashMap<String, Object>(){{
             put(LEVEL, "HARD" );
         }});
+        if (showTest_) {
+            levelMap.add(new HashMap<String,Object>(){{
+                put(LEVEL,"TEST");
+            }});
+        }
         return levelMap;
     }
     
