@@ -106,6 +106,10 @@ public class History {
         }
         return currentLog;
     }
+    
+    public boolean equals(DayAndWeek dayAndWeek_) {
+        return _day == dayAndWeek_.day && _week == dayAndWeek_.week;
+    }
 
     /**
      * @return the testResults

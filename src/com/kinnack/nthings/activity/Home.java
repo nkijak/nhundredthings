@@ -99,9 +99,10 @@ public class Home extends Activity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
-                // TODO Auto-generated method stub
+                Log.d("dgmt!dayWeekSelectorItemSelect","day and week changed to position "+position_);
                 DayAndWeek dayAndWeek = WorkoutSelectionViewAdapter.getDayAndWeekByPosition(position_);
-                if (dayAndWeek.wasFound()) {
+                if (dayAndWeek.wasFound() && !pushupHistory.isTest()) {
+                    Log.d("dgmt!dayWeekSelectorItemSelect","day and week has changed");
                     pushupHistory.setDay(dayAndWeek.day);
                     pushupHistory.setWeek(dayAndWeek.week);
                     configureMainView();
@@ -123,10 +124,11 @@ public class Home extends Activity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
-                // TODO Auto-generated method stub
+                Log.d("dgmt!levelSelectorItemSelect","Level changed to position "+position_);
                 Level level = LevelSelectionViewAdapter.getLevelByPosition(position_);
                 pushupHistory.setCurrentLevel(level);
-                if (pushupHistory.getDay() == 0) {
+                if (pushupHistory.getDay() == 0 && position_ != 3) {
+                    Log.d("dgmt!levelSelectorItemSelect", "Level has actually changed");
                     pushupHistory.setDay(1);
                     findViewById(R.id.dayWeekSelector).setEnabled(true);
                 }
@@ -221,6 +223,7 @@ public class Home extends Activity {
         
         WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this);
         dayWeekSelector.setAdapter(listAdapter);
+        Log.d("dgmt:listDayWeekOptions","Getting position for dayWeek with week="+pushupHistory.getWeek()+" and day="+pushupHistory.getDay());
         dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(pushupHistory.getWeek(), pushupHistory.getDay()));
         
     }
