@@ -2,8 +2,7 @@
 	<item android:id="@+id/settings" android:icon="@android:drawable/ic_menu_preferences"
 		android:title="@string/settings"></item>
 	
-	<item android:id="@+id/history" android:icon="@android:drawable/ic_menu_recent_history"
-		android:title="@string/history"></item>
+
 	<item android:id="@+id/reset" android:icon="@android:drawable/ic_menu_revert"
 		android:title="@string/reset" />
 </menu>
