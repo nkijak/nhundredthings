@@ -183,6 +183,8 @@ public class Home extends Activity {
     private void configureMainView() {
         ((Button)findViewById(R.id.PushupsButton)).setEnabled(true);
         ((Button)findViewById(R.id.FinalButton)).setEnabled(false);
+        findViewById(R.id.dayWeekSelector).setEnabled(true);
+        
         TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
         String value = (pushupHistory == null ? "1" : ""+pushupHistory.getWeek());
         currentWeek.setText(value);
