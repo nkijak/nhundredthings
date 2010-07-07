@@ -7,6 +7,8 @@
     <item name="android:buttonStyle">@style/greenButton</item>
     <item name="android:buttonStyleSmall">@style/greenButton</item>
     <item name="android:listViewStyle">@style/listView</item>
+    <item name="android:itemBackground">@drawable/menu_selector</item>
+    <item name="android:spinnerStyle">@style/spinner</item>
 </style>
 
 <style name="progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
@@ -26,6 +28,10 @@
 <style name="listView" parent="@android:style/Widget.ListView.White">
 	<item name="android:background">@drawable/background</item>
 	<item name="android:listSelector">@drawable/list_selector_background_green</item>
+</style>
+
+<style name="spinner" parent="@android:style/Widget.Spinner">
+	<item name="android:background">@drawable/btn_dropdown</item>
 </style>
 
 </resources>
