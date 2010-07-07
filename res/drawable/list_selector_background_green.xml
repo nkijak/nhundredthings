@@ -28,10 +28,10 @@
         android:drawable="@drawable/list_selector_background_disabled" />
 
     <item android:state_focused="true" android:state_pressed="true"
-        android:drawable="@drawable/list_selector_background_transition" />
+        android:drawable="@drawable/list_selector_background_transition_green" />
         
     <item android:state_focused="false" android:state_pressed="true"
-        android:drawable="@drawable/list_selector_background_transition" />
+        android:drawable="@drawable/list_selector_background_transition_green" />
 
     <item android:state_focused="true"
         android:drawable="@drawable/list_selector_background_focus" />

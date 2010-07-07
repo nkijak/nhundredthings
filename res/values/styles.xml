@@ -25,6 +25,7 @@
 
 <style name="listView" parent="@android:style/Widget.ListView.White">
 	<item name="android:background">@drawable/background</item>
+	<item name="android:listSelector">@drawable/list_selector_background_green</item>
 </style>
 
 </resources>
