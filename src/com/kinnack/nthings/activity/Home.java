@@ -183,6 +183,7 @@ public class Home extends Activity {
     private void configureMainView() {
         ((Button)findViewById(R.id.PushupsButton)).setEnabled(true);
         ((Button)findViewById(R.id.FinalButton)).setEnabled(false);
+        findViewById(R.id.levelSelector).setEnabled(true);
         findViewById(R.id.dayWeekSelector).setEnabled(true);
         
         TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
@@ -207,6 +208,7 @@ public class Home extends Activity {
             value = "TEST";
         } else if (pushupHistory.isFinal()) {
             findViewById(R.id.dayWeekSelector).setEnabled(false);
+            findViewById(R.id.levelSelector).setEnabled(false);
             value = "FINAL";
             ((Button)findViewById(R.id.PushupsButton)).setEnabled(false);
             pushupHistory.setFinalUnlocked(true);
