@@ -151,7 +151,7 @@ public class Home extends Activity {
         counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
         loadPushupHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         configureMainView();
-        if (set == null && !pushupHistory.isTest()) { getThisWeekAndDaySet(); }
+        if (set == null && !pushupHistory.isTest() && !pushupHistory.isFinal()) { getThisWeekAndDaySet(); }
         listDayWeekOptions();
         loadLevelOptions();
     }
@@ -232,7 +232,7 @@ public class Home extends Activity {
     
     public void loadLevelOptions() {
         Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
-        boolean showTest = (pushupHistory != null && pushupHistory.isTest());
+        boolean showTest = (pushupHistory != null && (pushupHistory.isTest() || pushupHistory.isFinal()));
         LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this, showTest);
         levelSelector.setAdapter(viewAdapter);
         levelSelector.setSelection(showTest ? 3 :viewAdapter.getPositionForLevel(pushupHistory.getCurrentLevel()));

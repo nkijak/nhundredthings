@@ -55,10 +55,7 @@ public class CounterActivity extends Activity {
         if (showDone) {
             showQuitingOptions();
         }
-        if (extras.getBoolean(USE_SUBCOUNT)) {
-            findViewById(R.id.SubCountProgress).setVisibility(View.VISIBLE);
-            useSubcount = true;
-        }
+        additionalViewConfiguration(extras);
         soundAlert = new SoundAlert(PreferenceManager.getDefaultSharedPreferences(this), this);
         
         if (extras.getBoolean(IS_TEST)) {
@@ -69,6 +66,17 @@ public class CounterActivity extends Activity {
         
         stopWatch = new StopWatch();
         stopWatch.start();
+    }
+
+
+    /**
+     * @param extras
+     */
+    protected void additionalViewConfiguration(Bundle extras) {
+        if (extras.getBoolean(USE_SUBCOUNT)) {
+            findViewById(R.id.SubCountProgress).setVisibility(View.VISIBLE);
+            useSubcount = true;
+        }
     }
 
 

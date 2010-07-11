@@ -32,6 +32,10 @@ public class WorkoutSelectionViewAdapter extends SimpleAdapter{
                 workoutMap.add(entry);
             }
         }
+        Map<String,Object> entry = new HashMap<String,Object>();
+        entry.put(WEEK,7);
+        entry.put(DAY,"Final");
+        workoutMap.add(entry);
         return workoutMap;
     }
     

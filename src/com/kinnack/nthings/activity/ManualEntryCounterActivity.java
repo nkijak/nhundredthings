@@ -36,6 +36,10 @@ public class ManualEntryCounterActivity extends CounterActivity {
         });
     }
     
+    @Override
+    protected void additionalViewConfiguration(Bundle extras_) {
+    }
+    
     public void startTimer(View target_) {
         findViewById(R.id.startBtn).setEnabled(false);
         stopWatch.start();
