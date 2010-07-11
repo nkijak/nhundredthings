@@ -34,24 +34,28 @@ public class ProgressChart {
         renderer.setXTitle("Workout");
         renderer.setYTitle("Count");
         renderer.setXAxisMin(1);
-        renderer.setXAxisMax(18);
         renderer.setYAxisMin(0);
-        renderer.setYAxisMax(150);
         renderer.setAxesColor(DARK_COLOR);
         renderer.setLabelsColor(DARK_COLOR);
         
-        renderer.setXLabels(18);
-        renderer.setYLabels(15);
         renderer.setShowLegend(false);
         renderer.setDisplayChartValues(true);
         
         XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
         CategorySeries series = new CategorySeries("Progress");
         List<Logg> logs = history_.getLogs();
+        int maxCount = 100;
         for(int i = 0,len = logs.size(); i < len; i++) {
             Logg log = logs.get(i);
-            series.add(log.getTotalCount());
+            int total = log.getTotalCount();
+            if (maxCount < total) {maxCount = total;}
+            series.add(total);
         }
+        int numberOfWorkouts = Math.max(logs.size()+1,10);
+        renderer.setXAxisMax(numberOfWorkouts);
+        renderer.setXLabels(numberOfWorkouts);
+        renderer.setYAxisMax(maxCount+10);
+        renderer.setYLabels(15);
         data.addSeries(series.toXYSeries());
         
         return ChartFactory.getBarChartIntent(context_, data, renderer, Type.DEFAULT);
