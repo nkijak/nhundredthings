@@ -225,7 +225,7 @@ public class Home extends Activity {
         
         Spinner dayWeekSelector = (Spinner)findViewById(R.id.dayWeekSelector);
         
-        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this);
+        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this, pushupHistory.isFinal());
         dayWeekSelector.setAdapter(listAdapter);
         Log.d("dgmt:listDayWeekOptions","Getting position for dayWeek with week="+pushupHistory.getWeek()+" and day="+pushupHistory.getDay());
         dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(pushupHistory.getWeek(), pushupHistory.getDay()));

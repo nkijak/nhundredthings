@@ -15,13 +15,13 @@ public class WorkoutSelectionViewAdapter extends SimpleAdapter{
     public static final String WEEK="week";
     public static final String DAY="day";
     
-    public WorkoutSelectionViewAdapter(Context context_) {
-        super(context_, workoutToViewMap(),R.layout.current_summary ,
+    public WorkoutSelectionViewAdapter(Context context_, boolean showFinal_) {
+        super(context_, workoutToViewMap(showFinal_),R.layout.current_summary ,
                     new String[]{WEEK,DAY},
                     new int[]{R.id.HomeCurrentWeek,R.id.HomeCurrentDay});
     }
     
-    private static List<Map<String, Object>> workoutToViewMap() {
+    private static List<Map<String, Object>> workoutToViewMap(boolean showFinal_) {
         List<Map<String,Object>> workoutMap = new ArrayList<Map<String,Object>>();
         for (int week = 0; week < Workout.PUSHUPS.length; week++) {
             int days = Workout.PUSHUPS[week].length;
@@ -32,10 +32,12 @@ public class WorkoutSelectionViewAdapter extends SimpleAdapter{
                 workoutMap.add(entry);
             }
         }
-        Map<String,Object> entry = new HashMap<String,Object>();
-        entry.put(WEEK,7);
-        entry.put(DAY,"Final");
-        workoutMap.add(entry);
+        if (showFinal_) {
+            Map<String,Object> entry = new HashMap<String,Object>();
+            entry.put(WEEK,7);
+            entry.put(DAY,"Final");
+            workoutMap.add(entry);
+        }
         return workoutMap;
     }
     
