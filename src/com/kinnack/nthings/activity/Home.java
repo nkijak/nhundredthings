@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
@@ -58,7 +59,7 @@ public class Home extends Activity {
     private static final int RESET_INTENT = 300;
     private static final String PUBLIC_FOLDER_PATH=Environment.getExternalStorageDirectory()+"/nhundredthings/";
     private static final String PUBLIC_FILE_PATH=PUBLIC_FOLDER_PATH+"/prefs_config.xml";
-    private static final String PRIVATE_FILE_PATH = "/data/data/"+Home.class.getPackage().getName()+"/shared_prefs/prefs_config.xml";
+    private static final String PRIVATE_FILE_PATH = "/data/data/"+StopWatch.class.getPackage().getName()+"/shared_prefs/prefs_config.xml";
     
     
     public static final String PREFS = "prefs_config";
