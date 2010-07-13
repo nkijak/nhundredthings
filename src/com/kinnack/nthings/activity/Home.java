@@ -84,7 +84,13 @@ public class Home extends Activity {
         if (!copiedFile) {
             // if first time prefs won't exist and couldn' copy file in so commit to create file and try to copy again.
             prefEditor.commit();
+            
+            
             copyFile(new File(PUBLIC_FILE_PATH),new File(PRIVATE_FILE_PATH));
+            Log.d("dgmt!Home.onCreate","Prefs now exists?"+new File(PRIVATE_FILE_PATH).exists());
+            prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+            
+            Log.d("dgmt!Home.onCreate",""+prefs.contains(KEY_HISTORY));
         }
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
@@ -522,26 +528,39 @@ public class Home extends Activity {
      */
     private boolean copyFile(File originalFile_, File copyFile_) {
         try {
+            Log.i("DGMT!Home.copyFile","Copying "+originalFile_+"(exists?"+originalFile_.exists()+") to "+copyFile_+" (exists?"+copyFile_.exists()+")");
+            
+            if (!copyFile_.exists()) {
+                copyFile_.getParentFile().mkdirs();
+                copyFile_.createNewFile();
+            }
             
             FileOutputStream out = new FileOutputStream(copyFile_);
             FileInputStream in = new FileInputStream(originalFile_);
             
+            
             FileChannel inChannel = in.getChannel();
             FileChannel outChannel = out.getChannel();
 
-            outChannel.transferFrom(inChannel, 0, inChannel.size());
+            long transferedBytes = outChannel.transferFrom(inChannel, 0, inChannel.size());
 
             inChannel.close();
             outChannel.close();
             in.close();
             out.close();
 
-            return true;
+            return transferedBytes > 0;
         } catch (FileNotFoundException e1) {
            Log.i(TAG,"Could nto find file shared_prefs/prefs_config.xml",e1);
         } catch (IOException e) {
             Log.w(TAG, "ERROR trying to write preferences to disk",e);
         } 
         return false;
+    }
+    
+    private boolean createFile(File file_) throws IOException{
+        if (file_.exists()) { return true; }
+        if (!file_.getParentFile().exists()) { createFile(file_.getParentFile()); }
+        return file_.createNewFile();
     }
 }
