@@ -78,20 +78,9 @@ public class Home extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        boolean copiedFile = copyFile(new File(PUBLIC_FILE_PATH),new File(PRIVATE_FILE_PATH));
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
-        if (!copiedFile) {
-            // if first time prefs won't exist and couldn' copy file in so commit to create file and try to copy again.
-            prefEditor.commit();
-            
-            
-            copyFile(new File(PUBLIC_FILE_PATH),new File(PRIVATE_FILE_PATH));
-            Log.d("dgmt!Home.onCreate","Prefs now exists?"+new File(PRIVATE_FILE_PATH).exists());
-            prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-            
-            Log.d("dgmt!Home.onCreate",""+prefs.contains(KEY_HISTORY));
-        }
+        
         Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         
         setDayWeekSelectorOnItemClick();
