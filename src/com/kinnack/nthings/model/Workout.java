@@ -10,6 +10,8 @@ public class Workout {
         SITUP,
         SQUAT
     }
+    public static final int[] LONG_REST = new int[]{120000};
+    public static final int[] MEDIUM_REST = new int[]{90000};
     public static final int[] STANDARD_REST = new int[]{60000};
     public static final int[] SHORT_REST = new int[]{45000};
     
@@ -39,30 +41,30 @@ public class Workout {
             {
                 // easy 
                 {
-                    { 3, 4, 2, 3, 4 }, STANDARD_REST
+                    { 3, 4, 2, 3, 4 }, MEDIUM_REST
                 },
                 // med
                 {
-                    { 6, 8, 6, 6, 7 }, STANDARD_REST
+                    { 6, 8, 6, 6, 7 }, MEDIUM_REST
                 },
                 // hard
                 {
-                    { 10, 12, 8, 8, 12 }, STANDARD_REST
+                    { 10, 12, 8, 8, 12 }, MEDIUM_REST
                 }
             },
             // day 3
             {
                 // easy
                 {
-                    { 4, 5, 4, 4, 5 }, STANDARD_REST                  
+                    { 4, 5, 4, 4, 5 }, LONG_REST                  
                 },
                 // med
                 {
-                    { 8, 10, 7, 7, 10 }, STANDARD_REST
+                    { 8, 10, 7, 7, 10 }, LONG_REST
                 },
                 // hard
                 {                    
-                    { 11, 15, 9, 9, 13}, STANDARD_REST
+                    { 11, 15, 9, 9, 13}, LONG_REST
                 }
             }
         },
@@ -87,30 +89,30 @@ public class Workout {
             {
                 // easy 
                 {
-                    { 5, 6, 4, 4, 7 }, STANDARD_REST
+                    { 5, 6, 4, 4, 7 }, MEDIUM_REST
                 },
                 // med
                 {
-                    { 10, 12, 9, 9, 13 }, STANDARD_REST
+                    { 10, 12, 9, 9, 13 }, MEDIUM_REST
                 },
                 // hard
                 {
-                    { 14, 16, 12, 12, 17 }, STANDARD_REST
+                    { 14, 16, 12, 12, 17 }, MEDIUM_REST
                 }
             },
             // day 3
             {
                 // easy
                 {
-                    { 5, 7, 5, 5, 8 }, STANDARD_REST
+                    { 5, 7, 5, 5, 8 }, LONG_REST
                 },
                 // med
                 {
-                    { 12, 13, 10, 10, 15 }, STANDARD_REST
+                    { 12, 13, 10, 10, 15 }, LONG_REST
                 },
                 // hard
                 {                    
-                   { 16, 17, 14,14, 20  }, STANDARD_REST
+                   { 16, 17, 14,14, 20  }, LONG_REST
                 }
             }
         },
@@ -135,30 +137,30 @@ public class Workout {
             {
                 // easy 
                 {
-                    { 10, 12, 8, 8, 12 }, STANDARD_REST
+                    { 10, 12, 8, 8, 12 }, MEDIUM_REST
                 },
                 // med
                 {
-                    { 14, 19, 14, 14, 19 }, STANDARD_REST
+                    { 14, 19, 14, 14, 19 }, MEDIUM_REST
                 },
                 // hard
                 {
-                    { 20, 25, 15, 15, 25 }, STANDARD_REST
+                    { 20, 25, 15, 15, 25 }, MEDIUM_REST
                 }
             },
             // day 3
             {
                 // easy
                 {
-                    { 11, 13, 9, 9, 13 }, STANDARD_REST
+                    { 11, 13, 9, 9, 13 }, LONG_REST
                 },
                 // med
                 {
-                    { 16, 21, 15, 15, 21 }, STANDARD_REST
+                    { 16, 21, 15, 15, 21 }, LONG_REST
                 },
                 // hard
                 {                    
-                    { 22, 30, 20, 20, 28 }, STANDARD_REST
+                    { 22, 30, 20, 20, 28 }, LONG_REST
                 }
             }
         },
@@ -183,30 +185,30 @@ public class Workout {
             {
                 // easy 
                 {
-                    { 14, 16, 12, 12, 18 }, STANDARD_REST
+                    { 14, 16, 12, 12, 18 }, MEDIUM_REST
                 },
                 // med
                 {
-                    { 20, 25, 20, 20, 25 }, STANDARD_REST
+                    { 20, 25, 20, 20, 25 }, MEDIUM_REST
                 },
                 // hard
                 {
-                    { 25, 29, 25, 25, 36 }, STANDARD_REST
+                    { 25, 29, 25, 25, 36 }, MEDIUM_REST
                 }
             },
             // day 3
             {
                 // easy
                 {
-                    { 16, 18, 13, 13, 20 }, STANDARD_REST
+                    { 16, 18, 13, 13, 20 }, LONG_REST
                 },
                 // med
                 {
-                    { 23, 28, 23, 23, 33 }, STANDARD_REST
+                    { 23, 28, 23, 23, 33 }, LONG_REST
                 },
                 // hard
                 {                   
-                    { 29, 33, 29, 29, 40 }, STANDARD_REST
+                    { 29, 33, 29, 29, 40 }, LONG_REST
                 }
             }
         },
