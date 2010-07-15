@@ -3,13 +3,10 @@ package com.kinnack.nthings.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -114,8 +111,14 @@ public class CounterActivity extends Activity {
             .show();
     }
     
+    public void countButtonClick(View target)
+    {
+        count();
+        soundAlert.progressBeep();
+    }
+    
     // ??? Is it necessary to stop the counter each time?
-    public void count(View target) {
+    protected void count() {
         incrementProgress();
         
         stopWatch.stop();
@@ -132,7 +135,6 @@ public class CounterActivity extends Activity {
             finish();
         }
         stopWatch.start();
-        soundAlert.progressBeep();
     }
 
 

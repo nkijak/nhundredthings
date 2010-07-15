@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string-array name="input_mode">
+		<item>@string/manual_entry_msg</item>
+		<item>@string/nose_entry_msg</item>
+		<item>@string/proximity_entry_msg</item>
+	</string-array>
+	<string-array name="input_mode_keys">
+		<item>MANUAL</item>
+		<item>COUNT</item>
+		<item>PROXIMITY</item>
+	</string-array>
+
+</resources>

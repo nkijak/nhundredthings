@@ -20,6 +20,10 @@
 <string name="level_select_msg">Select Intensity Level</string>
 <string name="reset">Reset History...</string>
 <string name="actual_reset">Reset History</string>
+
+<!-- Proximity Errors -->
+<string name="prox_err_title">No Sensor!</string>
+<string name="prox_err_msg">Can not find proximity sensor.</string>
 <!-- SETTINGS -->
 <string name="settings">Settings</string>
 <string name="sound_on_msg">Sound On</string>
@@ -27,9 +31,13 @@
 <string name="sound_setting_key">SOUND_SETTING</string>
 <string name="sound_setting_title">Sound</string>
 <string name="manual_entry_msg">Timer only</string>
-<string name="nose_entry_msg">Count for me</string>
+<string name="nose_entry_msg">Use my nose</string>
+<string name="proximity_entry_msg">Count by proximity</string>
 <string name="entry_setting_title">Manual Count Entry</string>
 <string name="entry_type_key">MANUAL_ENTRY</string>
+<string name="input_mode_title">Input Method</string>
+<string name="input_mode_key">INPUT_MODE</string>
+
 <!-- HISTORY -->
 <string name="history">History</string>
 <!-- Manual Entry -->

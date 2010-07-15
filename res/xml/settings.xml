@@ -4,7 +4,12 @@
 		android:key="@string/sound_setting_key" android:summaryOn="@string/sound_on_msg"
 		android:title="@string/sound_setting_title" android:defaultValue="true"></CheckBoxPreference>
 	
-	<CheckBoxPreference android:summaryOn="@string/manual_entry_msg"
-		android:key="@string/entry_type_key" android:summaryOff="@string/nose_entry_msg"
-		android:title="@string/entry_setting_title"></CheckBoxPreference>
+		
+	<ListPreference android:key="@string/input_mode_key" 
+		android:title="@string/input_mode_title" 
+		android:entryValues="@array/input_mode_keys" 
+		android:entries="@array/input_mode" 
+		android:dialogTitle="@string/input_mode_title"
+		android:defaultValue="COUNT"
+		android:dialogIcon="@drawable/dialog" />
 </PreferenceScreen>
