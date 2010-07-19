@@ -16,16 +16,27 @@ import com.kinnack.nthings.R;
 
 public class ProximityCounterActivity extends CounterActivity implements SensorEventListener {
     int current = 0;
+    private boolean screenLoading = true;
     @Override
     public void onCreate(Bundle savedInstanceState_) {
         super.onCreate(savedInstanceState_);
         registerSensors();
     }
+    
     @Override
-    protected void onDestroy() {
-        unRegisterSensors();
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        registerSensors();
+        screenLoading = true;
     }
+    
+   
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unRegisterSensors();
+    }
+    
     @Override
     protected int getLayout() {
         return R.layout.proximity_count;
@@ -59,6 +70,7 @@ public class ProximityCounterActivity extends CounterActivity implements SensorE
     @Override
     public void onSensorChanged(SensorEvent event_) {
         if (event_.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            if (screenLoading) { screenLoading = false; return; }
             float value = event_.values[0];
             float max = event_.sensor.getMaximumRange();
             boolean prox_is_far = value >= max;
