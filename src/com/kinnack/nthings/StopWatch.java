@@ -1,6 +1,5 @@
 package com.kinnack.nthings;
 
-
 /*
     Copyright (c) 2005, Corey Goldberg
 
@@ -10,7 +9,6 @@ package com.kinnack.nthings;
     (at your option) any later version.
 */
 
-
 public class StopWatch {
     
     private long startTime = 0;
@@ -18,53 +16,57 @@ public class StopWatch {
     private boolean running = false;
     
     public void start() {
-        this.startTime = System.currentTimeMillis();
-        this.running = true;
+        startTime = System.currentTimeMillis();
+        running = true;
     }
-
     
     public void stop() {
-        this.stopTime = System.currentTimeMillis();
-        this.running = false;
+        stopTime = System.currentTimeMillis();
+        running = false;
     }
-
     
-    //elaspsed time in milliseconds
     public long getElapsedTime() {
-        long elapsed;
-        if (running) {
-             elapsed = (System.currentTimeMillis() - startTime);
-        }
-        else {
-            elapsed = (stopTime - startTime);
-        }
-        return elapsed;
+        long start = running ? System.currentTimeMillis() : startTime;
+        return stopTime - start;
     }
     
-    
-    //elaspsed time in seconds
     public long getElapsedTimeSecs() {
-        long elapsed;
-        if (running) {
-            elapsed = ((System.currentTimeMillis() - startTime) / 1000);
-        }
-        else {
-            elapsed = ((stopTime - startTime) / 1000);
-        }
-        return elapsed;
+        return getElapsedTime() / 1000L;
     }
-
     
-    
-    
-    //sample usage
+    /** Sample usage. */
     public static void main(String[] args) {
         StopWatch s = new StopWatch();
         s.start();
-        //code you want to time goes here
+        // code you want to time goes here
         s.stop();
         System.out.println("elapsed time in milliseconds: " + s.getElapsedTime());
     }
-}
-        
 
+    //~ Accessors (mostly for testing)
+    
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getStopTime() {
+        return stopTime;
+    }
+
+    public void setStopTime(long stopTime) {
+        this.stopTime = stopTime;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+}
