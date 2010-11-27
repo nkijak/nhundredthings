@@ -10,12 +10,12 @@ public abstract class MidLevel extends Level {
     
     @Override
     public String toString() {
-        return "MID on or after week "+getStartWeek();
+        return "MEDIUM on or after week "+getStartWeek();
     }
     
     @Override
     public String getLabel() {
-        return "MID";
+        return "MEDIUM";
     }
 
     
