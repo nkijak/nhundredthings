@@ -115,6 +115,15 @@ public class CounterActivity extends Activity {
     {
         count();
         soundAlert.progressBeep();
+        final Button c = (Button) findViewById(R.id.Count);
+        //Disable the count button, and re-enable in 250 milliseconds.
+        c.setClickable(false);
+        c.getHandler().postDelayed(new Runnable(){
+           	public void run()
+           	{
+          		c.setClickable(true);
+        	}
+        }, 250);
     }
     
     // ??? Is it necessary to stop the counter each time?
