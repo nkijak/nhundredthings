@@ -240,15 +240,11 @@ public class Home extends Activity {
         
         if (pushupHistory.isTest()) { startTestActivity(); return;}
         if (pushupHistory.isFinal()) { startFinalTestActivity(); return;}
-        Logg currentLog = pushupHistory.getCurrentLog();
-        if (!currentLog.isFor(pushupHistory.getWeek(),pushupHistory.getDay())) {
-            currentLog = new Logg(pushupHistory, pushupHistory.getWeek(),pushupHistory.getDay());
-        
-            pushupHistory.getLogs().add(currentLog);
-        }
+
+        Logg currentLog = new Logg(pushupHistory, pushupHistory.getWeek(),pushupHistory.getDay());
+        pushupHistory.getLogs().add(currentLog);
+
         getThisWeekAndDaySet();
-        
-        
         startCounterActivity();
         
     }
