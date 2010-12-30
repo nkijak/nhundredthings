@@ -36,9 +36,9 @@ import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.controller.PushupWorkoutController;
+import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
-import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.LevelSelectionViewAdapter;
 import com.kinnack.nthings.model.Logg;
@@ -65,7 +65,7 @@ public class Home extends Activity {
 
     private Editor prefEditor;
     private CounterActivityManager counterActivityManager;
-    private PushupWorkoutController workoutController;
+    private WorkoutController workoutController;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
