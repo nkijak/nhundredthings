@@ -20,11 +20,7 @@ import com.kinnack.nthings.model.level.Level;
 public class PushupWorkoutController {
     public static final String TAG = "nthings:PUSHUP-CONTROL";
     private CounterActivityManager counterActivityManager;
-    private static final int COUNTER_INTENT = 100;
-    private static final int TEST_INTENT = 150;
-    private static final int REST_INTENT = 200;
-    private static final int FINAL_TEST_INTENT=175;
-    private static final int RESET_INTENT = 300;
+
     public static final String KEY_HISTORY = "history";
     
     private History pushupHistory;
@@ -52,6 +48,7 @@ public class PushupWorkoutController {
         if (pushupHistory != null) { return; }
         try {
             pushupHistory = new History(prefs.getString(KEY_HISTORY, null));
+            Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
         } catch (JSONException e) {
             Log.e(TAG, "Couldn't unmarshal history", e);
         } catch (NullPointerException npe) {

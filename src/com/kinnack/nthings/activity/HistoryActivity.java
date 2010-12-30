@@ -11,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.model.HistoricViewAdapter;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Workout;
@@ -37,7 +38,7 @@ public class HistoryActivity extends ListActivity {
     private void loadPushupHistory(SharedPreferences prefs) {
         if (pushupHistory != null) { return; }
         try {
-            pushupHistory = new History(prefs.getString(Home.KEY_HISTORY, null));
+            pushupHistory = new History(prefs.getString(PushupWorkoutController.KEY_HISTORY, null));
         } catch (JSONException e) {
             Log.e(TAG, "Couldn't unmarshal history", e);
         } catch (NullPointerException npe) {

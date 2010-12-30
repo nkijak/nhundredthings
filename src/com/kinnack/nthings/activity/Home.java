@@ -60,10 +60,7 @@ public class Home extends Activity {
     
     
     public static final String PREFS = "prefs_config";
-    public static final String KEY_CURRENT_WEEK = "current_week";
-    public static final String KEY_CURRENT_DAY = "current_day";
-    public static final String KEY_CURRENT_LEVEL = "current_level";
-    public static final String KEY_HISTORY = "history";
+
     
 
     private Editor prefEditor;
@@ -78,7 +75,7 @@ public class Home extends Activity {
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
         
-        Log.d(TAG,"Loaded history as "+prefs.getString(KEY_HISTORY, "[Not found]"));
+        
         
         setDayWeekSelectorOnItemClick();
         setLevelSelectorOnItemSelect();
@@ -408,7 +405,7 @@ public class Home extends Activity {
         
         try {
             workoutController.setLastWorkout(new Date());
-            prefEditor.putString(KEY_HISTORY, workoutController.toJSON().toString());
+            prefEditor.putString(PushupWorkoutController.KEY_HISTORY, workoutController.toJSON().toString());
             File externalFolder = new File(PUBLIC_FOLDER_PATH);
             if (!externalFolder.exists()) { externalFolder.mkdir(); }
             prefEditor.commit();
