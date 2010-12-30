@@ -26,10 +26,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +35,7 @@ import android.widget.Toast;
 import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
+import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
@@ -44,10 +43,8 @@ import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.LevelSelectionViewAdapter;
 import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Test;
-import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
 import com.kinnack.nthings.model.level.Level;
-import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
 
 public class Home extends Activity {
     public static final String TAG = "nthings:HOME";
@@ -68,16 +65,16 @@ public class Home extends Activity {
     public static final String KEY_CURRENT_LEVEL = "current_level";
     public static final String KEY_HISTORY = "history";
     
-    private ExerciseSet set;
 
     private Editor prefEditor;
-    private History pushupHistory;
     private CounterActivityManager counterActivityManager;
+    private PushupWorkoutController workoutController;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        workoutController = new PushupWorkoutController();
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
         
@@ -97,10 +94,9 @@ public class Home extends Activity {
             public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
                 Log.d("dgmt!dayWeekSelectorItemSelect","day and week changed to position "+position_);
                 DayAndWeek dayAndWeek = WorkoutSelectionViewAdapter.getDayAndWeekByPosition(position_);
-                if (dayAndWeek.wasFound() && !pushupHistory.isTest()) {
+                if (dayAndWeek.wasFound() && !workoutController.isTest()) {
                     Log.d("dgmt!dayWeekSelectorItemSelect","day and week has changed");
-                    pushupHistory.setDay(dayAndWeek.day);
-                    pushupHistory.setWeek(dayAndWeek.week);
+                    workoutController.setDayAndWeek(dayAndWeek);
                     configureMainView();
                 }
                 
@@ -122,11 +118,10 @@ public class Home extends Activity {
             public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
                 Log.d("dgmt!levelSelectorItemSelect","Level changed to position "+position_);
                 Level level = LevelSelectionViewAdapter.getLevelByPosition(position_);
-                pushupHistory.setCurrentLevel(level);
-                if (pushupHistory.getDay() == 0 && position_ != 3) {
+                if(position_ != 3 && workoutController.setCurrentLevel(level)) {
                     Log.d("dgmt!levelSelectorItemSelect", "Level has actually changed");
-                    pushupHistory.setDay(1);
                     findViewById(R.id.dayWeekSelector).setEnabled(true);
+                    
                 }
                 configureMainView();
                 
@@ -145,31 +140,16 @@ public class Home extends Activity {
     protected void onResume() {
         super.onResume();
         counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
-        loadPushupHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
+        workoutController.setCounterActivityManager(counterActivityManager);
+        workoutController.loadHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         configureMainView();
-        if (set == null && !pushupHistory.isTest() && !pushupHistory.isFinal()) { getThisWeekAndDaySet(); }
+        
         listDayWeekOptions();
         loadLevelOptions();
     }
     
 
-    /**
-     * @param prefs
-     */
-    private void loadPushupHistory(SharedPreferences prefs) {
-        if (pushupHistory != null) { return; }
-        try {
-            pushupHistory = new History(prefs.getString(KEY_HISTORY, null));
-        } catch (JSONException e) {
-            Log.e(TAG, "Couldn't unmarshal history", e);
-        } catch (NullPointerException npe) {
-            Log.i(TAG, "No history to load");
-        }
-        if (pushupHistory == null) {
-            pushupHistory = new History();
-            pushupHistory.setType(Workout.Type.PUSHUP);
-        }
-    }
+    
 
     
 
@@ -183,15 +163,14 @@ public class Home extends Activity {
         findViewById(R.id.dayWeekSelector).setEnabled(true);
         
         TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
-        String value = (pushupHistory == null ? "1" : ""+pushupHistory.getWeek());
-        currentWeek.setText(value);
+        currentWeek.setText(""+workoutController.getWeek());
         
         TextView currentDay = (TextView)findViewById(R.id.HomeCurrentDay);
         View currentDayLabel = findViewById(R.id.HomeDayLabel);
         currentDay.setVisibility(View.VISIBLE);
         currentDayLabel.setVisibility(View.VISIBLE);
         
-        value = (pushupHistory == null ? "0": ""+pushupHistory.getDay());
+        String value = ""+workoutController.getDay();
         currentDay.setText(value);
         if (value.equals("0")) {
             currentDay.setVisibility(View.INVISIBLE);
@@ -199,69 +178,57 @@ public class Home extends Activity {
         }
         
         TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
-        if (pushupHistory == null || pushupHistory.isTest()) {
+        if (workoutController.isTest()) {
             findViewById(R.id.dayWeekSelector).setEnabled(false);
             value = "TEST";
-        } else if (pushupHistory.isFinal()) {
+        } else if (workoutController.isFinal()) {
             findViewById(R.id.dayWeekSelector).setEnabled(false);
             findViewById(R.id.levelSelector).setEnabled(false);
             value = "FINAL";
             ((Button)findViewById(R.id.PushupsButton)).setEnabled(false);
-            pushupHistory.setFinalUnlocked(true);
         } else {
-            value = pushupHistory.getCurrentLevel().getLabel();
+            value = workoutController.getLevelForDisplay();
         }
         
         currentLevel.setText(value);
         
-        if (pushupHistory.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
+        if (workoutController.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
     }
     
     public void listDayWeekOptions() {
         
         Spinner dayWeekSelector = (Spinner)findViewById(R.id.dayWeekSelector);
         
-        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this, pushupHistory.isFinal());
+        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this, workoutController.isFinal());
         dayWeekSelector.setAdapter(listAdapter);
-        Log.d("dgmt:listDayWeekOptions","Getting position for dayWeek with week="+pushupHistory.getWeek()+" and day="+pushupHistory.getDay());
-        dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(pushupHistory.getWeek(), pushupHistory.getDay()));
+        Log.d("dgmt:listDayWeekOptions","Getting position for dayWeek with week="+workoutController.getWeek()+" and day="+workoutController.getDay());
+        dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(workoutController.getWeek(), workoutController.getDay()));
         
     }
     
     public void loadLevelOptions() {
         Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
-        boolean showTest = (pushupHistory != null && (pushupHistory.isTest() || pushupHistory.isFinal()));
+        boolean showTest = workoutController.shouldDisplayDayAsTest();
         LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this, showTest);
         levelSelector.setAdapter(viewAdapter);
-        levelSelector.setSelection(showTest ? 3 :viewAdapter.getPositionForLevel(pushupHistory.getCurrentLevel()));
+        levelSelector.setSelection(showTest ? 3 :viewAdapter.getPositionForLevel(workoutController.getCurrentLevel()));
     }
     
     public void doPushups(View target_) {
-        
-        if (pushupHistory.isTest()) { startTestActivity(); return;}
-        if (pushupHistory.isFinal()) { startFinalTestActivity(); return;}
-
-        Logg currentLog = new Logg(pushupHistory, pushupHistory.getWeek(),pushupHistory.getDay());
-        pushupHistory.getLogs().add(currentLog);
-
-        getThisWeekAndDaySet();
+        if (workoutController.isTest()) { startTestActivity();}
+        if (workoutController.isFinal()) { startFinalTestActivity(); }
+        workoutController.beginExercise(target_);
         startCounterActivity();
-        
     }
 
-    /**
-     * 
-     */
-    private void getThisWeekAndDaySet() {
-        set = Workout.getPushupSetFor(pushupHistory.getWeek(), pushupHistory.getDay(), pushupHistory.getCurrentLevel());
-    }
+    
     
     public void doFinalTest(View target_) {
         startFinalTestActivity();
     }
     
     public void showProgress(View target_) {
-        showProgress(pushupHistory);
+        showProgress(workoutController.getHistory());
     }
     
    
@@ -271,8 +238,8 @@ public class Home extends Activity {
      */
     private void startCounterActivity() {
         Intent counterIntent = new Intent(this, counterActivityManager.getActivity());
-        counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, set.next());
-        counterIntent.putExtra(CounterActivity.SHOW_DONE, set.isMax());
+        counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, workoutController.nextSet());
+        counterIntent.putExtra(CounterActivity.SHOW_DONE, workoutController.isMaxSet());
    
         Log.d(TAG, "Intent about to start");
         startActivityForResult(counterIntent, COUNTER_INTENT);
@@ -300,18 +267,18 @@ public class Home extends Activity {
         Log.d(TAG, "Intent started and returned");
     }
     
-    private void startRestActivity() {
+	private void startRestActivity() {
         Intent restIntent = new Intent(this, RestActivity.class);
         Log.d(TAG, "About to launch intnet for "+RestActivity.class.getName());
-        restIntent.putExtra(RestActivity.REST_LENGTH, set.next());
-        restIntent.putExtra(RestActivity.SETS_DONE, set.getSetsDone());
-        restIntent.putExtra(RestActivity.SETS_TO_GO, set.getSetsToGo());
+        restIntent.putExtra(RestActivity.REST_LENGTH, workoutController.nextSet());
+        restIntent.putExtra(RestActivity.SETS_DONE, workoutController.completedSets());
+        restIntent.putExtra(RestActivity.SETS_TO_GO, workoutController.incompleteSets());
         startActivityForResult(restIntent, REST_INTENT);
     }
     
     @Override
     protected void onActivityResult(int requestCode_, int resultCode_, Intent data_) {
-        switch (requestCode_) {
+       switch (requestCode_) {
         case COUNTER_INTENT:
             // this was because the back button was pressed during a counter. FIXME do something better
             if (data_ == null) { 
@@ -321,21 +288,19 @@ public class Home extends Activity {
             Bundle extras = data_.getExtras();
             int count = extras.getInt(CounterActivity.MAX_COUNT);
             long avgTime = extras.getLong(CounterActivity.AVG_TIME);
-            Logg currentLog =pushupHistory.getCurrentLog();
+            Logg currentLog =workoutController.getCurrentLog();
             currentLog.addCountAndTime(count, avgTime);
            
-            if (!set.hasNext()) { 
-                advanceDate();
+            if (!workoutController.hasNext()) { 
+                workoutController.advanceDate();
                 saveHistory(); 
                 configureMainView();
-                showProgress(pushupHistory);
+                showProgress(workoutController.getHistory());
                 
                 shareResults(currentLog);
                 return; 
             }
             startRestActivity();
-            
-            
             
             break;
         case REST_INTENT:
@@ -345,26 +310,9 @@ public class Home extends Activity {
             if (data_ == null) { return; }
             int test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             
-            Level level;
-            switch(pushupHistory.getWeek()) {
-                case 1:
-                    level = Test.initialTestLevel(test_count);
-                    break;
-                case 3:
-                    level = Test.secondTestLevel(test_count);
-                    break;
-                case 5:
-                    level = Test.thirdTestLevel(test_count);
-                case 6:                   
-                    level = Test.fourthTestLevel(test_count);
-                    break;
-                default:
-                    Log.w(TAG,"Don't know why user is taking test week="+pushupHistory.getWeek()+", day="+pushupHistory.getDay());
-                    return;
-            }
-            pushupHistory.getTestResults().add(test_count);
-            pushupHistory.setCurrentLevel(level);
-            pushupHistory.setDay(1);
+            Level level = Test.getLevelForTestResultsByWeek(test_count, workoutController.getWeek());
+            if (level == null) { return; }
+            workoutController.addTestResult(test_count).resetDay().setCurrentLevel(level);
             saveHistory();
             configureMainView();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
@@ -373,23 +321,22 @@ public class Home extends Activity {
             if(data_ == null) { return; }
             test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             long totalTime = data_.getExtras().getLong(CounterActivity.TOTAL_TIME);
-            pushupHistory.getTestResults().add(test_count);
+            workoutController.addTestResult(test_count);
             if (test_count >= 100) {
                 shareComplete(test_count, totalTime);
                 showUserDialog(R.string.final_complete_title, R.string.final_complete_msg);
-                pushupHistory.setFinished(true);
+                workoutController.markFinalComplete();
             } else {
                 shareDNFFinal(test_count, totalTime);
                 showUserDialog(R.string.final_DNF_title, R.string.final_DNF_msg);
             }
-            pushupHistory.setWeek(6);
-            pushupHistory.setDay(1);
+            workoutController.resetToWorkoutForFinal();
             saveHistory();
             break;
         case RESET_INTENT:
             if (data_ == null) {return;}
             if (data_.getExtras().getBoolean(ResetActivity.RESET,false)) {
-                pushupHistory = null;
+                workoutController = null;
             }
             
             break;
@@ -405,7 +352,7 @@ public class Home extends Activity {
 
 
     private void deleteAnyUnwantedLogs() {
-        pushupHistory.removeCurrentLog();
+        workoutController.removeCurrentLog();
     }
 
 
@@ -455,24 +402,13 @@ public class Home extends Activity {
     }
     
     
-    private void advanceDate() {
-        int day = pushupHistory.getDay();
-        int week = pushupHistory.getWeek();
-        if (day == 3) {
-            day = (week==5 ? 0 : week%2);
-            pushupHistory.setDay(day);
-            pushupHistory.setWeek(pushupHistory.getWeek()+1);
-        } else {
-            pushupHistory.setDay(day+1);
-        }
-        
-    }
     
+    // TODO move this out of here!
     private void saveHistory() {
         
         try {
-            pushupHistory.setLastWorkout(new Date());
-            prefEditor.putString(KEY_HISTORY, pushupHistory.toJSON().toString());
+            workoutController.setLastWorkout(new Date());
+            prefEditor.putString(KEY_HISTORY, workoutController.toJSON().toString());
             File externalFolder = new File(PUBLIC_FOLDER_PATH);
             if (!externalFolder.exists()) { externalFolder.mkdir(); }
             prefEditor.commit();

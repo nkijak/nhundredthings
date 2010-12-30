@@ -261,7 +261,11 @@ public class History {
     }
     
     public boolean isFinal() {
-        return _week >= 7;
+        if( _week >= 7) {
+            setFinalUnlocked(true);
+            return true;
+        }
+        return false;
     }
 
     

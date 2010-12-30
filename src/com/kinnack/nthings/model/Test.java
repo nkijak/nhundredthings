@@ -1,5 +1,7 @@
 package com.kinnack.nthings.model;
 
+import android.util.Log;
+
 import com.kinnack.nthings.model.level.Level;
 import com.kinnack.nthings.model.level.pushup.FourthEasyLevel;
 import com.kinnack.nthings.model.level.pushup.FourthHardLevel;
@@ -55,6 +57,24 @@ public class Test {
         ALL_LEVELS[10],
         ALL_LEVELS[11]
     };
+    
+    public static Level getLevelForTestResultsByWeek(int results_,int week_) {
+        Level level = null;
+        switch(week_) {
+            case 1:
+                level = Test.initialTestLevel(results_);
+                break;
+            case 3:
+                level = Test.secondTestLevel(results_);
+                break;
+            case 5:
+                level = Test.thirdTestLevel(results_);
+            case 6:                   
+                level = Test.fourthTestLevel(results_);
+                break;
+        }
+        return level;
+    }
     
     public static Level initialTestLevel(int count_) {
         return findLevel(INITIAL_TEST_LIST, count_);
