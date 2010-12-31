@@ -4,8 +4,10 @@
 	<LinearLayout 
 		android:orientation="vertical" android:layout_width="match_parent"
 		android:layout_height="match_parent" android:layout_gravity="center_horizontal"
-		android:padding="20dp">
+		android:paddingLeft="20dp" android:paddingRight="20dp">
 	
+		<ImageView android:id="@+id/InAppLogo" android:layout_width="wrap_content" android:paddingLeft="8dp" android:layout_height="wrap_content" android:src="@drawable/inapp_logo"></ImageView>
+		
 		<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton"
 			android:text="Push Ups" android:gravity="center_horizontal"
 			android:layout_width="fill_parent" android:onClick="doPushups"></Button>
@@ -67,5 +69,6 @@
 				android:layout_width="fill_parent"
 				android:layout_height="50dp" 
 				android:prompt="@string/level_select_msg"/>
-	</LinearLayout>
+	
+</LinearLayout>
 </ScrollView>
