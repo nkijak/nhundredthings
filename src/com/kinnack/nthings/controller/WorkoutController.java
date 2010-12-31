@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 
+import com.kinnack.nthings.activity.CounterActivity;
 import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
@@ -87,6 +88,10 @@ public abstract class WorkoutController {
         
         return new DayAndWeek(day, week);
         
+    }
+    
+    public Class<? extends CounterActivity> getCounterActivity() {
+        return counterActivityManager.getActivity(getWorkoutType());
     }
 
     public int getWeek() {

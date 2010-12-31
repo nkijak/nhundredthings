@@ -1,13 +1,23 @@
 package com.kinnack.nthings.activity;
 
+import com.kinnack.nthings.R;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class SitupAccelCounterActivity extends CounterActivity  implements SensorEventListener {
     private boolean layDown, satUp;
+    private TextView directions;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState_) {
+        super.onCreate(savedInstanceState_);
+        directions = (TextView)findViewById(R.id.Directions);
+    }
     
     @Override
     protected void onResume() {
@@ -20,6 +30,11 @@ public class SitupAccelCounterActivity extends CounterActivity  implements Senso
     protected void onPause() {
         super.onPause();
         ((SensorManager)getSystemService(SENSOR_SERVICE)).unregisterListener(this);
+    }
+    
+    @Override
+    protected int getLayout() {
+        return R.layout.accelerometer_count;
     }
     
     @Override
@@ -36,11 +51,12 @@ public class SitupAccelCounterActivity extends CounterActivity  implements Senso
         
         
         if (y > 8 && z < 2) satUp = true;
-        if (z > 8 && y < 2) {layDown = true; satUp = false; } //reset
+        if (z > 8 && y < 2) {layDown = true; satUp = false; directions.setText("UP");} //reset
         
         if (layDown && satUp) {
             count();
             layDown = false;
+            directions.setText("DOWN");
             soundAlert.progressBeep();
         }
         

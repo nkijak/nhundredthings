@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:gravity="center_horizontal" android:orientation="vertical">
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:gravity="center_horizontal">
 	<ProgressBar android:layout_height="wrap_content"
 		android:id="@+id/SubCountProgress" android:layout_width="fill_parent"
 		android:progress="0" android:layout_marginLeft="3dp"
 		android:layout_marginRight="3dp"
 		android:visibility="gone" />
-	<ProgressBar android:layout_height="wrap_content"
+  	<ProgressBar android:layout_height="wrap_content"
 		android:id="@+id/CountProgress" android:layout_width="fill_parent"
 		android:progress="0" android:layout_marginLeft="3dp"
 		android:layout_marginRight="3dp" />
-	<TextView android:id="@+id/CurrentCount"
+	<TextView android:id="@+id/Directions"
 		android:textColor="#FFFFFF"
-		android:textSize="150dp"
+		android:textSize="75dp"
 		android:gravity="center"
-		android:text="0" 
+		android:text="DOWN" 
 		android:height="300dp"
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent"
@@ -26,8 +29,5 @@
 	<Button android:layout_height='50dip' android:id="@+id/Done"
 		android:text="@string/done" android:onClick="done" android:gravity="center" android:layout_gravity="bottom"
 		android:layout_width="fill_parent" android:visibility="invisible" 
-		android:textSize="25sp" />
-
-
-
+		android:textSize="25sp" />	
 </LinearLayout>

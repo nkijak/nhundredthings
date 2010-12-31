@@ -244,7 +244,7 @@ public class Home extends Activity {
      * 
      */
     private void startCounterActivity() {
-        Intent counterIntent = new Intent(this, counterActivityManager.getActivity());
+        Intent counterIntent = new Intent(this, workoutController.getCounterActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, workoutController.nextSet());
         counterIntent.putExtra(CounterActivity.SHOW_DONE, workoutController.isMaxSet());
    
@@ -254,7 +254,7 @@ public class Home extends Activity {
     }
     
     private void startTestActivity() {
-        Intent counterIntent = new Intent(this, counterActivityManager.getActivity());
+        Intent counterIntent = new Intent(this, workoutController.getCounterActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 0);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
         counterIntent.putExtra(CounterActivity.IS_TEST, true);
@@ -264,7 +264,7 @@ public class Home extends Activity {
     }
     
     private void startFinalTestActivity() {
-        Intent counterIntent = new Intent(this, counterActivityManager.getActivity());
+        Intent counterIntent = new Intent(this, workoutController.getCounterActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 100);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
         counterIntent.putExtra(CounterActivity.IS_TEST, true);
