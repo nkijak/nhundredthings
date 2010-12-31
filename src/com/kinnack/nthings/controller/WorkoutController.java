@@ -25,7 +25,8 @@ public abstract class WorkoutController {
     protected abstract String getTag();
     protected abstract String getKeyForHistory();
     protected abstract Type getWorkoutType();
-
+    protected abstract void getThisWeekAndDaySet();
+    
     protected History history;
     protected ExerciseSet set;
 
@@ -40,9 +41,7 @@ public abstract class WorkoutController {
         getThisWeekAndDaySet();
     }
     
-    protected void getThisWeekAndDaySet() {
-        set = Workout.getPushupSetFor(history.getWeek(), history.getDay(), history.getCurrentLevel());
-    }
+    
 
     /**
      * @param prefs
@@ -103,7 +102,7 @@ public abstract class WorkoutController {
     }
 
     public boolean isFinal() {
-        return history.isFinal();
+        return history != null && history.isFinal();
     }
 
     public String getLevelForDisplay() {

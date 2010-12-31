@@ -36,6 +36,7 @@ import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.controller.PushupWorkoutController;
+import com.kinnack.nthings.controller.SitupWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
@@ -212,13 +213,22 @@ public class Home extends Activity {
     }
     
     public void doPushups(View target_) {
-        if (workoutController.isTest()) { startTestActivity();}
-        if (workoutController.isFinal()) { startFinalTestActivity(); }
+        workoutController = new PushupWorkoutController();
+        doExercise(target_);
+    }
+
+    public void doSitups(View target_) {
+        workoutController = new SitupWorkoutController();
+        doExercise(target_);
+    }
+    
+    protected void doExercise(View target_) {
+        onResume();
+        if (workoutController.isTest()) {startTestActivity(); return;}
+        if (workoutController.isFinal()) { startFinalTestActivity(); return;}
         workoutController.beginExercise(target_);
         startCounterActivity();
     }
-
-    
     
     public void doFinalTest(View target_) {
         startFinalTestActivity();

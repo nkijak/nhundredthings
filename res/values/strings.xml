@@ -20,6 +20,7 @@
 <string name="level_select_msg">Select Intensity Level</string>
 <string name="reset">Reset History...</string>
 <string name="actual_reset">Reset History</string>
+<string name="situps_label">Situps</string>
 
 <!-- Proximity Errors -->
 <string name="prox_err_title">No Sensor!</string>

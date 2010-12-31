@@ -2,6 +2,7 @@ package com.kinnack.nthings.controller;
 
 
 
+import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.Workout.Type;
 
 public class PushupWorkoutController extends WorkoutController {
@@ -23,5 +24,8 @@ public class PushupWorkoutController extends WorkoutController {
         return Type.PUSHUP;
     }
 
+    protected void getThisWeekAndDaySet() {
+        set = Workout.getPushupSetFor(history.getWeek(), history.getDay(), history.getCurrentLevel());
+    }
     
 }
