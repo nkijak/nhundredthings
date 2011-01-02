@@ -15,4 +15,8 @@ public abstract class Level {
             .put("startWeek", getStartWeek());
         return self;
     }
+    
+    protected boolean isCountBetween(int count_, int start_, int end_) {
+        return count_ >= start_ && count_ <= end_;
+    }
 }
