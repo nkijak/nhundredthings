@@ -1,5 +1,6 @@
 package com.kinnack.nthings.controller;
 
+import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.Workout.Type;
 
@@ -22,6 +23,16 @@ public class SitupWorkoutController extends WorkoutController {
     
     protected void getThisWeekAndDaySet() {
         set = Workout.getSitupSetFor(history.getWeek(), history.getDay(), history.getCurrentLevel());
+    }
+
+    @Override
+    public int getFinalTestCount() {
+        return 200;
+    }
+
+    @Override
+    public int getLabelResource() {
+        return R.string.situps_label;
     }
 
 }

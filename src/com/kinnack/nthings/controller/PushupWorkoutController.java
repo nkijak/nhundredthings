@@ -2,6 +2,7 @@ package com.kinnack.nthings.controller;
 
 
 
+import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.Workout.Type;
 
@@ -26,6 +27,16 @@ public class PushupWorkoutController extends WorkoutController {
 
     protected void getThisWeekAndDaySet() {
         set = Workout.getPushupSetFor(history.getWeek(), history.getDay(), history.getCurrentLevel());
+    }
+
+    @Override
+    public int getFinalTestCount() {
+        return 100;
+    }
+
+    @Override
+    public int getLabelResource() {
+        return R.string.pushups_label;
     }
     
 }

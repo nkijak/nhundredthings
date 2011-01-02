@@ -2,12 +2,12 @@
 <resources>
     <string name="app_short_name">DGMT!</string>
     <string name="app_name">Drop and Give Me Twenty!</string>
-	<string name="is_test_msg">This will be a test.  Perform as many pushups as you can without stopping.\nDon\'t over do it!</string>
+	<string name="is_test_msg">This will be a test.  Perform as many as you can without stopping.\nDon\'t over do it!</string>
 <string name="is_test_title">Get Ready</string>
 <string name="is_unlimited_title">Stop When you Drop</string>
 <string name="is_unlimited_msg">This is the last set. Fill the bar and then do as many more as you can.</string>
 <string name="final_complete_title">Outstanding!</string>
-<string name="final_complete_msg">You just completed 100 pushups in a row! Share this with your friends!</string>
+<string name="final_complete_msg">You just completed %1$d %2$s in a row! Share this with your friends!</string>
 <string name="final_complete_OK">OK, Thanks</string>
 <string name="final_DNF_title">Congratulations!</string>
 <string name="final_DNF_msg">You didn\'t quite make it but don\'t give up. That was still a impressive effort!\nTo help you reach your goal week 6 has been reset so you can practice more\nOr you can retry this final test at any time!</string>
@@ -20,8 +20,12 @@
 <string name="level_select_msg">Select Intensity Level</string>
 <string name="reset">Reset History...</string>
 <string name="actual_reset">Reset History</string>
-<string name="situps_label">Situps</string>
-
+<string name="situps_button_txt">Situps</string>
+<string name="situps_label">situps</string>
+<string name="pushups_label">pushups</string>
+<string name="share_results_msg">I just did %1$d %2$s at %3$d %2$s/min in #DGMT!</string>
+<string name="share_complete_msg">I finished the %1$d %2$s program using #DGMT! with %3$d IN A ROW at %4$d %2$s/min!</string>
+<string name="share_dnf_final_msg">"I just did %1$d %2$s IN A ROW at %3$d %2$s/min in #DGMT! Almost there!"</string>
 <!-- Proximity Errors -->
 <string name="prox_err_title">No Sensor!</string>
 <string name="prox_err_msg">Can not find proximity sensor.</string>
@@ -34,10 +38,13 @@
 <string name="manual_entry_msg">Timer only</string>
 <string name="nose_entry_msg">Use my nose</string>
 <string name="proximity_entry_msg">Count by proximity</string>
+<string name="situp_accelerometer_entry_msg">Hold the phone on my chest</string>
 <string name="entry_setting_title">Manual Count Entry</string>
 <string name="entry_type_key">MANUAL_ENTRY</string>
-<string name="input_mode_title">Input Method</string>
+<string name="input_mode_title">Pushup Input Method</string>
 <string name="input_mode_key">INPUT_MODE</string>
+<string name="situp_input_mode_title">Situp Input Method</string>
+<string name="situp_input_mode_key">SITUP_INPUT_MODE</string>
 
 <!-- HISTORY -->
 <string name="history">History</string>

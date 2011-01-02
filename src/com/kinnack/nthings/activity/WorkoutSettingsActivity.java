@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -281,6 +282,7 @@ public class WorkoutSettingsActivity extends Activity {
     
     @Override
     protected void onActivityResult(int requestCode_, int resultCode_, Intent data_) {
+       Resources resources = getResources();
        switch (requestCode_) {
         case COUNTER_INTENT:
             // this was because the back button was pressed during a counter. FIXME do something better
@@ -327,11 +329,14 @@ public class WorkoutSettingsActivity extends Activity {
             workoutController.addTestResult(test_count);
             if (test_count >= 100) {
                 shareComplete(test_count, totalTime);
-                showUserDialog(R.string.final_complete_title, R.string.final_complete_msg);
+                String msg = String.format(resources.getString(R.string.final_complete_msg), 
+                                            workoutController.getFinalTestCount(), 
+                                            resources.getString(workoutController.getLabelResource()));
+                showUserDialog(R.string.final_complete_title, msg);
                 workoutController.markFinalComplete();
             } else {
                 shareDNFFinal(test_count, totalTime);
-                showUserDialog(R.string.final_DNF_title, R.string.final_DNF_msg);
+                showUserDialog(R.string.final_DNF_title, resources.getString(R.string.final_DNF_msg));
             }
             workoutController.resetToWorkoutForFinal();
             saveHistory();
@@ -360,7 +365,8 @@ public class WorkoutSettingsActivity extends Activity {
 
 
   
-    private void showUserDialog(int title_, int msg_) {
+    private void showUserDialog(int title_, String msg_) {
+        
         new AlertDialog.Builder(this)
         .setTitle(title_)
         .setMessage(msg_)
@@ -378,21 +384,32 @@ public class WorkoutSettingsActivity extends Activity {
      */
     private void shareResults(Logg currentLog) {
         long roundedFrequency = Math.round(60000*currentLog.getAveragePushupFrequency());
+        String typeLabel = getResources().getString(workoutController.getLabelResource());
         launchSharingChooser("My Latest DGMT! Results",
-                "I just did "+currentLog.getTotalCount()+" pushups at "+roundedFrequency+" pushups/min in #DGMT!");
+                getResources().getString(R.string.share_results_msg, currentLog.getTotalCount(), typeLabel ,roundedFrequency));
+                
 
     }
     
     private void shareComplete(int totalCount_, long totalTime_) {
         long roundedFrequency = Math.round(60000.0*totalCount_/totalTime_);
+        String typeLabel = getResources().getString(workoutController.getLabelResource());
         launchSharingChooser("Mission Accomplished!",
-                "I finished the 100 pushup program using #DGMT! with "+totalCount_+" pushups IN A ROW at "+roundedFrequency+" pushups/min!");
+                getResources().getString(R.string.share_complete_msg, 
+                                            workoutController.getFinalTestCount(),
+                                            typeLabel,
+                                            totalCount_, 
+                                            roundedFrequency));
     }
     
     private void shareDNFFinal(int totalCount_, long totalTime_) {
         long roundedFrequency = Math.round(60000.0*totalCount_/totalTime_);
+        String typeLabel = getResources().getString(workoutController.getLabelResource());
         launchSharingChooser("Almost There!",
-                "I just did "+totalCount_+" pushups IN A ROW at "+roundedFrequency+" pushups/min in #DGMT! Almost there!");
+                getResources().getString(R.string.share_dnf_final_msg, 
+                        totalCount_,
+                        typeLabel,
+                        roundedFrequency));
     }
     
     

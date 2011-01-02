@@ -27,6 +27,8 @@ public abstract class WorkoutController {
     protected abstract String getKeyForHistory();
     protected abstract Type getWorkoutType();
     protected abstract void getThisWeekAndDaySet();
+    public abstract int getFinalTestCount();
+    public abstract int getLabelResource();
     
     protected History history;
     protected ExerciseSet set;

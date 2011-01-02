@@ -14,7 +14,7 @@
 		
 		
 		<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton"
-			android:text="@string/situps_label" android:gravity="center_horizontal"
+			android:text="@string/situps_button_txt" android:gravity="center_horizontal"
 			android:layout_width="fill_parent" android:onClick="doSitups"></Button>
 			
 		
