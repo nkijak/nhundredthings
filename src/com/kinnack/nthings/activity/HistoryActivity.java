@@ -24,7 +24,7 @@ public class HistoryActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState_) {
         super.onCreate(savedInstanceState_);
         
-        SharedPreferences prefs = getSharedPreferences(Home.PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(WorkoutSettingsActivity.PREFS, Context.MODE_PRIVATE);
         loadPushupHistory(prefs);
         
         ListAdapter adapter = new HistoricViewAdapter(this, pushupHistory);

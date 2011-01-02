@@ -10,7 +10,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+		<activity android:name=".activity.WorkoutSettingsActivity" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation"></activity>
 	    <activity android:name=".activity.CounterActivity" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation"></activity>
 		<activity android:name=".activity.RestActivity" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation"></activity>
 		<activity android:name="org.achartengine.GraphicalActivity" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation"/>
