@@ -9,13 +9,13 @@
 		
 		<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton"
 			android:text="Push Ups" android:gravity="center_horizontal"
-			android:layout_width="fill_parent" android:onClick="doPushups"></Button>
+			android:layout_width="fill_parent" android:onClick="doPushups" ></Button>
 			
 		
 		
 		<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton"
 			android:text="@string/situps_button_txt" android:gravity="center_horizontal"
-			android:layout_width="fill_parent" android:onClick="doSitups"></Button>
+			android:layout_width="fill_parent" android:onClick="doSitups" ></Button>
 			
 		
 		

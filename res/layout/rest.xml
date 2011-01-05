@@ -7,7 +7,8 @@
 		android:background="@drawable/btn_default_normal_disable" >
 		<TextView android:layout_height="wrap_content"
 			android:layout_width="fill_parent" android:id="@+id/TimeLeft"
-			android:text="Time Left" android:textSize="35sp" android:gravity="center" android:layout_gravity="center"></TextView>
+			android:text="Time Left" android:textSize="35sp" android:gravity="center" android:layout_gravity="center"
+			style="@style/whiteDropShadow"></TextView>
 			
 		<TextView android:text="Take this time to recover between sets."
 			android:id="@+id/restInstructions" android:layout_width="wrap_content"
@@ -17,6 +18,7 @@
 		<TextView android:text="0 of 0 sets" android:id="@+id/CompletionRatio"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" 
 			android:layout_gravity="center" 
-			android:textSize="20sp"/>
+			android:textSize="20sp"
+			style="@style/whiteDropShadow"/>
 	</LinearLayout>
 </LinearLayout>

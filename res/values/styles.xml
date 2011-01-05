@@ -23,6 +23,9 @@
 <style name="greenButton" parent="@android:style/Widget.Button">
 	<item name="android:background">@drawable/green_button</item>
 	<item name="android:textSize">35sp</item>
+	<item name="android:shadowRadius">1</item>
+	<item name="android:shadowColor">#ffff</item>
+	<item name="android:shadowDy">1</item>
 </style>
 
 <style name="listView" parent="@android:style/Widget.ListView.White">
@@ -32,6 +35,12 @@
 
 <style name="spinner" parent="@android:style/Widget.Spinner">
 	<item name="android:background">@drawable/btn_dropdown</item>
+</style>
+
+<style name="whiteDropShadow">
+	<item name="android:shadowRadius">1</item>
+	<item name="android:shadowColor">#ffff</item>
+	<item name="android:shadowDy">1</item>
 </style>
 
 </resources>
