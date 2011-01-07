@@ -20,5 +20,16 @@
 			android:layout_gravity="center" 
 			android:textSize="20sp"
 			style="@style/whiteDropShadow"/>
+			
+		<TextView android:text="@string/count_to_go" android:id="@+id/CountToGo"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" 
+			android:layout_gravity="center" 
+			android:textSize="20sp"
+			style="@style/whiteDropShadow"/>
+			
 	</LinearLayout>
+			<TextView android:text="@string/skip_rest_msg" android:layout_width="fill_parent" android:layout_height="fill_parent" 
+					android:textSize="15sp"
+					android:gravity="center_horizontal|bottom"
+					/>
 </LinearLayout>

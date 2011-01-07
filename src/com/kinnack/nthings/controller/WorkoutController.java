@@ -167,6 +167,10 @@ public abstract class WorkoutController {
     public int incompleteSets() {
         return set.getSetsToGo();
     }
+    
+    public int totalCountLeft() {
+        return set.getCountLeft();
+    }
 
     public void setLastWorkout(Date lastWorkoutDate_) {
         history.setLastWorkout(lastWorkoutDate_);

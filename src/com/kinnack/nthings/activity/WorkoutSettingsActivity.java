@@ -274,6 +274,7 @@ public class WorkoutSettingsActivity extends Activity {
         restIntent.putExtra(RestActivity.REST_LENGTH, workoutController.nextSet());
         restIntent.putExtra(RestActivity.SETS_DONE, workoutController.completedSets());
         restIntent.putExtra(RestActivity.SETS_TO_GO, workoutController.incompleteSets());
+        restIntent.putExtra(RestActivity.COUNT_TO_GO, workoutController.totalCountLeft());
         startActivityForResult(restIntent, REST_INTENT);
     }
     

@@ -63,4 +63,12 @@ public class ExerciseSet {
         return countIndex;
     }
     
+    public int getCountLeft() {
+        int totalCount = 0;
+        for (int i = countIndex; i < counts.length; i++) {
+            totalCount += counts[i];
+        }
+        return totalCount;
+    }
+    
 }

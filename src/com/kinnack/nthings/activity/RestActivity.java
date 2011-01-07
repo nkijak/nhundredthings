@@ -36,6 +36,7 @@ public class RestActivity extends Activity {
     private static final String REST_DATA = "rest_data";
     private static final String REST_RESUME_TIME_MILLIS = "rest_resume";
     public static final String SETS_TO_GO = "com.kinnack.nthings.sets_to_go";
+    public static final String COUNT_TO_GO = "com.kinnack.nthings.count_to_go";
     
     @Override
     protected void onCreate(Bundle savedInstanceState_) {
@@ -48,6 +49,8 @@ public class RestActivity extends Activity {
         ((TextView)findViewById(R.id.CompletionRatio)).setText(setsToGo
                                                                 +" more set"
                                                                 +(setsToGo > 1?"s":""));
+        int countToGo = extras.getInt(COUNT_TO_GO);
+        ((TextView)findViewById(R.id.CountToGo)).setText(getResources().getString(R.string.count_to_go,countToGo));
         soundAlert = new SoundAlert(PreferenceManager.getDefaultSharedPreferences(this),this);
     }
     
