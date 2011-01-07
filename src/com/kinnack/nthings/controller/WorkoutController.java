@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.View;
 
@@ -92,6 +93,11 @@ public abstract class WorkoutController {
         
     }
     
+    public void saveHistory(Editor prefEditor_) throws JSONException{
+        setLastWorkout(new Date());
+        prefEditor_.putString(getKeyForHistory(), history.toJSON().toString());
+    }
+    
     public Class<? extends CounterActivity> getCounterActivity() {
         return counterActivityManager.getActivity(getWorkoutType());
     }
@@ -166,9 +172,7 @@ public abstract class WorkoutController {
         history.setLastWorkout(lastWorkoutDate_);
     }
 
-    public JSONObject toJSON() throws JSONException {
-        return history.toJSON();
-    }
+ 
 
     public void setDayAndWeek(DayAndWeek dayAndWeek_) {
         history.setDay(dayAndWeek_.day);

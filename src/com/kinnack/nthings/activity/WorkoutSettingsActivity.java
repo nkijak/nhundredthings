@@ -84,9 +84,6 @@ public class WorkoutSettingsActivity extends Activity {
         }
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
-        
-        
-        
         setDayWeekSelectorOnItemClick();
         setLevelSelectorOnItemSelect();
     }
@@ -427,8 +424,8 @@ public class WorkoutSettingsActivity extends Activity {
     private void saveHistory() {
         
         try {
-            workoutController.setLastWorkout(new Date());
-            prefEditor.putString(PushupWorkoutController.KEY_HISTORY, workoutController.toJSON().toString());
+            workoutController.saveHistory(prefEditor);
+           
             File externalFolder = new File(PUBLIC_FOLDER_PATH);
             if (!externalFolder.exists()) { externalFolder.mkdir(); }
             prefEditor.commit();
