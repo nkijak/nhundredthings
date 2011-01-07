@@ -105,6 +105,7 @@ public class WorkoutSettingsActivity extends Activity {
                     workoutController.setDayAndWeek(dayAndWeek);
                 }
                 
+                
             }
 
             @Override
@@ -147,7 +148,7 @@ public class WorkoutSettingsActivity extends Activity {
         counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
         workoutController.setCounterActivityManager(counterActivityManager);
         workoutController.loadHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
-  
+        ((TextView)findViewById(R.id.OverallTotalCount)).setText(workoutController.getTotalCount()+" TOTAL");
         
         listDayWeekOptions();
         loadLevelOptions();
@@ -163,22 +164,7 @@ public class WorkoutSettingsActivity extends Activity {
         findViewById(R.id.levelSelector).setEnabled(true);
         findViewById(R.id.dayWeekSelector).setEnabled(true);
         
-        TextView currentWeek = (TextView)findViewById(R.id.HomeCurrentWeek);
-        currentWeek.setText(""+workoutController.getWeek());
-        
-        TextView currentDay = (TextView)findViewById(R.id.HomeCurrentDay);
-        View currentDayLabel = findViewById(R.id.HomeDayLabel);
-        currentDay.setVisibility(View.VISIBLE);
-        currentDayLabel.setVisibility(View.VISIBLE);
-        
-        String value = ""+workoutController.getDay();
-        currentDay.setText(value);
-        if (value.equals("0")) {
-            currentDay.setVisibility(View.INVISIBLE);
-            currentDayLabel.setVisibility(View.INVISIBLE);
-        }
-        
-        TextView currentLevel = (TextView)findViewById(R.id.HomeCurrentLevel);
+        String value = "";
         if (workoutController.isTest()) {
             findViewById(R.id.dayWeekSelector).setEnabled(false);
             value = "TEST";
@@ -191,7 +177,8 @@ public class WorkoutSettingsActivity extends Activity {
             value = workoutController.getLevelForDisplay();
         }
         
-        currentLevel.setText(value);
+        
+        
         
         if (workoutController.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
     }

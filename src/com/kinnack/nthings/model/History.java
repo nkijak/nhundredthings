@@ -110,6 +110,17 @@ public class History {
     public boolean equals(DayAndWeek dayAndWeek_) {
         return _day == dayAndWeek_.day && _week == dayAndWeek_.week;
     }
+    
+    public int getTotalCount() {
+        int totalCount = 0;
+        for(Logg log : _logs) {
+            totalCount += log.getTotalCount();
+        }
+        for(Integer integer : _testResults) {
+            totalCount += integer;
+        }
+        return totalCount;
+    }
 
     /**
      * @return the testResults

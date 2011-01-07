@@ -147,6 +147,10 @@ public abstract class WorkoutController {
         history.setWeek(6);
         resetDay();
     }
+    
+    public int getTotalCount() {
+        return history.getTotalCount();
+    }
 
     public int nextSet() {
         return set.next();
