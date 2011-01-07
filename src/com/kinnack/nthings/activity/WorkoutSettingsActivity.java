@@ -103,7 +103,6 @@ public class WorkoutSettingsActivity extends Activity {
                 if (dayAndWeek.wasFound() && !workoutController.isTest()) {
                     Log.d("dgmt!dayWeekSelectorItemSelect","day and week has changed");
                     workoutController.setDayAndWeek(dayAndWeek);
-                    configureMainView();
                 }
                 
             }
@@ -129,7 +128,7 @@ public class WorkoutSettingsActivity extends Activity {
                     findViewById(R.id.dayWeekSelector).setEnabled(true);
                     
                 }
-                configureMainView();
+                
                 
             }
 
@@ -148,17 +147,18 @@ public class WorkoutSettingsActivity extends Activity {
         counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
         workoutController.setCounterActivityManager(counterActivityManager);
         workoutController.loadHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
-        configureMainView();
+  
         
         listDayWeekOptions();
         loadLevelOptions();
+        configureMainView();
     }
     
     /**
      * 
      */
     private void configureMainView() {
-        
+        ((Button)findViewById(R.id.ActivityButton)).setEnabled(true);
         ((Button)findViewById(R.id.FinalButton)).setEnabled(false);
         findViewById(R.id.levelSelector).setEnabled(true);
         findViewById(R.id.dayWeekSelector).setEnabled(true);
@@ -186,7 +186,7 @@ public class WorkoutSettingsActivity extends Activity {
             findViewById(R.id.dayWeekSelector).setEnabled(false);
             findViewById(R.id.levelSelector).setEnabled(false);
             value = "FINAL";
-            ((Button)findViewById(R.id.PushupsButton)).setEnabled(false);
+            ((Button)findViewById(R.id.ActivityButton)).setEnabled(false);
         } else {
             value = workoutController.getLevelForDisplay();
         }
