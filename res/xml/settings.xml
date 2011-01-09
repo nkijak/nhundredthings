@@ -12,4 +12,12 @@
 		android:dialogTitle="@string/input_mode_title"
 		android:defaultValue="COUNT"
 		android:dialogIcon="@drawable/dialog" />
+		
+	<ListPreference android:key="@string/situp_input_mode_key"
+		android:title="@string/situp_input_mode_title"
+		android:entryValues="@array/situp_input_mode_keys"
+		android:entries="@array/situp_input_mode" 
+		android:dialogTitle="@string/situp_input_mode_title" 
+		android:defaultValue="ACCELEROMETER"
+		android:dialogIcon="@drawable/dialog" />
 </PreferenceScreen>

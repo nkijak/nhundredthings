@@ -39,6 +39,7 @@
 	<string name="nose_entry_msg">Use my nose</string>
 	<string name="proximity_entry_msg">Count by proximity</string>
 	<string name="situp_accelerometer_entry_msg">Hold the phone on my chest</string>
+	<string name="situp_counter_entry_msg">Giant counter button</string>
 	<string name="entry_setting_title">Manual Count Entry</string>
 	<string name="entry_type_key">MANUAL_ENTRY</string>
 	<string name="input_mode_title">Pushup Input Method</string>
