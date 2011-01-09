@@ -3,6 +3,8 @@ package com.kinnack.nthings.model.level;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public abstract class Level {
     public abstract boolean checkLevel(int count_);
     public abstract int getStartWeek();
@@ -17,6 +19,7 @@ public abstract class Level {
     }
     
     protected boolean isCountBetween(int count_, int start_, int end_) {
+        Log.d("", "Checking if "+count_+" is >="+start_+" and <="+end_+" "+((count_ >= start_) && (count_ <= end_)));
         return count_ >= start_ && count_ <= end_;
     }
 }

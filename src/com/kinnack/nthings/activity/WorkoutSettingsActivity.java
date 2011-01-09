@@ -298,29 +298,29 @@ public class WorkoutSettingsActivity extends Activity {
             break;
         case TEST_INTENT:
             if (data_ == null) { return; }
-            int test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
+            int testCount = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             
-            Level level = Test.getLevelForTestResultsByWeek(test_count, workoutController.getWeek());
+            Level level = workoutController.getLevelForTestResult(testCount);
             if (level == null) { return; }
-            workoutController.addTestResult(test_count).resetDay().setCurrentLevel(level);
+            workoutController.addTestResult(testCount).resetDay().setCurrentLevel(level);
             saveHistory();
             configureMainView();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             break;
         case FINAL_TEST_INTENT:
             if(data_ == null) { return; }
-            test_count = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
+            testCount = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             long totalTime = data_.getExtras().getLong(CounterActivity.TOTAL_TIME);
-            workoutController.addTestResult(test_count);
-            if (test_count >= 100) {
-                shareComplete(test_count, totalTime);
+            workoutController.addTestResult(testCount);
+            if (testCount >= 100) {
+                shareComplete(testCount, totalTime);
                 String msg = String.format(resources.getString(R.string.final_complete_msg), 
                                             workoutController.getFinalTestCount(), 
                                             resources.getString(workoutController.getLabelResource()));
                 showUserDialog(R.string.final_complete_title, msg);
                 workoutController.markFinalComplete();
             } else {
-                shareDNFFinal(test_count, totalTime);
+                shareDNFFinal(testCount, totalTime);
                 showUserDialog(R.string.final_DNF_title, resources.getString(R.string.final_DNF_msg));
             }
             workoutController.resetToWorkoutForFinal();

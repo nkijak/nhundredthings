@@ -3,8 +3,10 @@ package com.kinnack.nthings.controller;
 
 
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.Workout.Type;
+import com.kinnack.nthings.model.level.Level;
 
 public class PushupWorkoutController extends WorkoutController {
     public static final String TAG = "nthings:PUSHUP-CONTROL";
@@ -37,6 +39,11 @@ public class PushupWorkoutController extends WorkoutController {
     @Override
     public int getLabelResource() {
         return R.string.pushups_label;
+    }
+
+    @Override
+    public Level getLevelForTestResult(int testCount_) {
+        return Test.getLevelForTestResultsByWeek(testCount_, getWeek());
     }
     
 }

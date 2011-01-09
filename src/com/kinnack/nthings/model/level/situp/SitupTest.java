@@ -1,26 +1,13 @@
-package com.kinnack.nthings.model;
-
-import android.util.Log;
+package com.kinnack.nthings.model.level.situp;
 
 import com.kinnack.nthings.model.level.Level;
-import com.kinnack.nthings.model.level.pushup.FourthEasyLevel;
-import com.kinnack.nthings.model.level.pushup.FourthHardLevel;
-import com.kinnack.nthings.model.level.pushup.FourthMidLevel;
-import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
-import com.kinnack.nthings.model.level.pushup.InitialHardLevel;
-import com.kinnack.nthings.model.level.pushup.InitialMidLevel;
-import com.kinnack.nthings.model.level.pushup.SecondEasyLevel;
-import com.kinnack.nthings.model.level.pushup.SecondHardLevel;
-import com.kinnack.nthings.model.level.pushup.SecondMidLevel;
-import com.kinnack.nthings.model.level.pushup.ThirdEasyLevel;
-import com.kinnack.nthings.model.level.pushup.ThirdHardLevel;
-import com.kinnack.nthings.model.level.pushup.ThirdMidLevel;
 
-public class Test {
+public class SitupTest {
     private static final Level[] ALL_LEVELS = new Level[] {
         new InitialEasyLevel(),
         new InitialMidLevel(),
         new InitialHardLevel(),
+        new InitialSkipWeekHardLevel(),
         new SecondEasyLevel(),
         new SecondMidLevel(),
         new SecondHardLevel(),
@@ -36,41 +23,40 @@ public class Test {
         ALL_LEVELS[0],
         ALL_LEVELS[1],
         ALL_LEVELS[2],
-        ALL_LEVELS[4],
-        ALL_LEVELS[5]
+        ALL_LEVELS[3]
     };
     
     private static final Level[] WEEK_3_TEST_LIST = new Level[] {
-        ALL_LEVELS[3],
         ALL_LEVELS[4],
-        ALL_LEVELS[5]
+        ALL_LEVELS[5],
+        ALL_LEVELS[6]
     } ;
     
     private static final Level[] WEEK_5_TEST_LIST = new Level[] {
-        ALL_LEVELS[6],
         ALL_LEVELS[7],
-        ALL_LEVELS[8]
+        ALL_LEVELS[8],
+        ALL_LEVELS[9]
     };
     
     private static final Level[] WEEK_6_TEST_LIST = new Level[] {
-        ALL_LEVELS[9],
         ALL_LEVELS[10],
-        ALL_LEVELS[11]
+        ALL_LEVELS[11],
+        ALL_LEVELS[12]
     };
     
     public static Level getLevelForTestResultsByWeek(int results_,int week_) {
         Level level = null;
         switch(week_) {
             case 1:
-                level = Test.initialTestLevel(results_);
+                level = initialTestLevel(results_);
                 break;
             case 3:
-                level = Test.secondTestLevel(results_);
+                level = secondTestLevel(results_);
                 break;
             case 5:
-                level = Test.thirdTestLevel(results_);
+                level = thirdTestLevel(results_);
             case 6:                   
-                level = Test.fourthTestLevel(results_);
+                level = fourthTestLevel(results_);
                 break;
         }
         return level;
@@ -99,4 +85,5 @@ public class Test {
     }
     
    
+
 }

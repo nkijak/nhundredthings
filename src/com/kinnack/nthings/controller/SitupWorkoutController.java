@@ -1,8 +1,13 @@
 package com.kinnack.nthings.controller;
 
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.Workout.Type;
+import com.kinnack.nthings.model.level.EasyLevel;
+import com.kinnack.nthings.model.level.Level;
+import com.kinnack.nthings.model.level.situp.InitialEasyLevel;
+import com.kinnack.nthings.model.level.situp.SitupTest;
 
 public class SitupWorkoutController extends WorkoutController {
 
@@ -33,6 +38,11 @@ public class SitupWorkoutController extends WorkoutController {
     @Override
     public int getLabelResource() {
         return R.string.situps_label;
+    }
+
+    @Override
+    public Level getLevelForTestResult(int testCount_) {
+        return SitupTest.getLevelForTestResultsByWeek(testCount_, getWeek());
     }
 
 }

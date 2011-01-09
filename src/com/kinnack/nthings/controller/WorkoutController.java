@@ -30,6 +30,7 @@ public abstract class WorkoutController {
     protected abstract void getThisWeekAndDaySet();
     public abstract int getFinalTestCount();
     public abstract int getLabelResource();
+    public abstract Level getLevelForTestResult(int testCount_);
     
     protected History history;
     protected ExerciseSet set;
