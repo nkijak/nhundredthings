@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<style name="GradientLight" parent="@android:style/Theme.Light">
+<style name="GradientLight" parent="@android:style/Theme.Light.NoTitleBar">
     <item name="android:windowBackground">@drawable/background</item>
     <item name="android:progressBarStyle">@style/progressBar</item>
     <item name="android:buttonStyle">@style/greenButton</item>

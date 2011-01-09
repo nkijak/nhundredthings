@@ -2,13 +2,11 @@
 	<item>
 		<shape  android:shape="rectangle">
 		        <gradient
-		                android:startColor="#aaa"
-		                android:endColor="#FFFFFFFF"
+		                android:startColor="#4F4"
+		                android:endColor="#464"
 		                android:angle="270"/>
 		        
 		</shape>
 	</item>
-	<item> 
-		<bitmap  android:src="@drawable/bodybg" android:tileMode="repeat" />
-	</item>
+
 </layer-list>

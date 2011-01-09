@@ -5,33 +5,57 @@
   android:layout_height="fill_parent"
   android:orientation="vertical"
   android:gravity="center_horizontal">
-	<ProgressBar android:layout_height="wrap_content"
-		android:id="@+id/SubCountProgress" android:layout_width="fill_parent"
-		android:progress="0" android:layout_marginLeft="3dp"
-		android:layout_marginRight="3dp"
-		android:visibility="gone" />
-  	<ProgressBar android:layout_height="wrap_content"
-		android:id="@+id/CountProgress" android:layout_width="fill_parent"
-		android:progress="0" android:layout_marginLeft="3dp"
-		android:layout_marginRight="3dp" />
-	<TextView android:id="@+id/Directions"
-		android:textColor="#FFFFFF"
-		android:textSize="75dp"
-		android:gravity="center"
-		android:text="DOWN" 
-		android:height="300dp"
-		android:layout_height="fill_parent"
-		android:layout_width="fill_parent"
-		android:layout_weight="1"
-		android:background="@android:drawable/screen_background_dark_transparent"
-		android:shadowColor="#f000"
-  		android:shadowDy="-1"
-  		android:shadowRadius="1" />	
-	<TextView android:id="@+id/TotalCount" android:text="0" android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true" android:layout_width="wrap_content"
-		android:visibility="gone" />
-	<Button android:layout_height='50dip' android:id="@+id/Done"
-		android:text="@string/done" android:onClick="done" android:gravity="center" android:layout_gravity="bottom"
-		android:layout_width="fill_parent" android:visibility="invisible" 
-		android:textSize="25sp" />	
+  <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+			android:layout_height="50dp" android:background="@drawable/header">
+		
+			<ImageView android:id="@+id/InAppLogo" android:layout_width="100dp" android:paddingLeft="8dp" android:layout_height="wrap_content" android:src="@drawable/inapp_logo"></ImageView>
+	  		<TextView android:layout_height="fill_parent"
+	  			android:text="Overall Total Count" 
+	  			android:background="@drawable/btn_default_normal_disable"
+	  			android:textSize="20dp"
+	  			android:id="@+id/OverallTotalCount"
+	  			android:gravity="center"
+	  			style="@style/whiteDropShadow" android:layout_width="wrap_content" android:layout_gravity="fill_horizontal"/>
+	  		
+	  		
+  		</LinearLayout>
+  		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" android:layout_gravity="center_horizontal"
+			android:orientation="vertical">
+	  		
+	  		
+	  		
+	  		
+			<ProgressBar android:layout_height="wrap_content"
+				android:id="@+id/SubCountProgress" android:layout_width="fill_parent"
+				android:progress="0" android:layout_marginLeft="3dp"
+				android:layout_marginRight="3dp"
+				android:visibility="gone" />
+		  	<ProgressBar android:layout_height="wrap_content"
+				android:id="@+id/CountProgress" android:layout_width="fill_parent"
+				android:progress="0" android:layout_marginLeft="3dp"
+				android:layout_marginRight="3dp" />
+			<TextView android:id="@+id/Directions"
+				android:textColor="#FFFFFF"
+				android:textSize="75dp"
+				android:gravity="center"
+				android:text="DOWN" 
+				android:height="300dp"
+				android:layout_height="fill_parent"
+				android:layout_width="fill_parent"
+				android:layout_weight="1"
+				android:background="@android:drawable/screen_background_dark_transparent"
+				android:shadowColor="#f000"
+		  		android:shadowDy="-1"
+		  		android:shadowRadius="1" />	
+			<TextView android:id="@+id/TotalCount" android:text="0" android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true" android:layout_width="wrap_content"
+				android:visibility="gone" />
+			<Button android:layout_height='50dip' android:id="@+id/Done"
+				android:text="@string/done" android:onClick="done" android:gravity="center" android:layout_gravity="bottom"
+				android:layout_width="fill_parent" android:visibility="invisible" 
+				android:textSize="25sp" />	
+	
+		</LinearLayout>
 </LinearLayout>
