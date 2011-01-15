@@ -1,5 +1,7 @@
 package com.kinnack.nthings.model;
 
+import android.util.Log;
+
 public class ExerciseSet {
     private int[] counts;
     private int[] rests;
@@ -13,6 +15,7 @@ public class ExerciseSet {
     public static final int TO_EXAUSTION = -1;
     
     public ExerciseSet(int[] counts_, int[] rests_) {
+        Log.d("ExerciseSet:constructor","Creating ExerciseSet");
         counts = counts_;
         rests = rests_;
         countIndex = 0;
@@ -24,8 +27,10 @@ public class ExerciseSet {
         int retval = -2;
         onCount = !onCount;
         if (!onCount) {
+            Log.d("ExerciseSet:next","returning next count at index "+countIndex);
             retval = counts[countIndex];
             if(countIndex+1>=counts.length) {
+                Log.d("ExerciseSet:next", (countIndex+1)+" is >= "+counts.length+" wrapping back to index 0");
                 countIndex = 0;
                 wrappedCounts = true;
             } else { 
@@ -34,6 +39,7 @@ public class ExerciseSet {
             
         } else {
             retval = rests[restIndex];
+            Log.d("ExerciseSet:next","returning next rest at index "+restIndex);
             if (restIndex+1>=rests.length) {
                 restIndex = 0;
                 wrappedRests = true;

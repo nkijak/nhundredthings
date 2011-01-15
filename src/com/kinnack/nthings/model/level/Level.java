@@ -22,4 +22,10 @@ public abstract class Level {
         Log.d("", "Checking if "+count_+" is >="+start_+" and <="+end_+" "+((count_ >= start_) && (count_ <= end_)));
         return count_ >= start_ && count_ <= end_;
     }
+    
+    @Override
+    public boolean equals(Object o_) {
+        if (!(o_ instanceof Level) ) {return false;}
+        return o_.getClass().getName().equals(getClass().getName());
+    }
 }

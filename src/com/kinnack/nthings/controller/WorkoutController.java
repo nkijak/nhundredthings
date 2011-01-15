@@ -184,10 +184,17 @@ public abstract class WorkoutController {
  
 
     public void setDayAndWeek(DayAndWeek dayAndWeek_) {
+        Log.d("WorkoutController.setDayAndWeek",String.format("Setting day=%1$d and week=%2$d",dayAndWeek_.day,dayAndWeek_.week));
+       
         history.setDay(dayAndWeek_.day);
         history.setWeek(dayAndWeek_.week);
+        getThisWeekAndDaySet();
     }
 
+    public DayAndWeek getDayAndWeek() {
+        return new DayAndWeek(getDay(), getWeek());
+    }
+    
     public Logg addCountAndTimeLog(int count, long time_) {
         Logg log = history.getCurrentLog();
         log.addCountAndTime(count, time_);
@@ -200,6 +207,7 @@ public abstract class WorkoutController {
 
     public boolean setCurrentLevel(Level level_) {
         history.setCurrentLevel(level_);
+        getThisWeekAndDaySet();
         if (history.getDay() == 0) {
             history.setDay(1);
             return true;

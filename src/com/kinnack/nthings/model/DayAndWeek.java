@@ -19,4 +19,11 @@ public class DayAndWeek {
     public boolean wasFound() {
         return day > 0 && week > 0;
     }
+    
+    @Override
+    public boolean equals(Object o_) {
+        if (!(o_ instanceof DayAndWeek)) {return false;}
+        DayAndWeek other = (DayAndWeek)o_;
+        return other.day == day && other.week == week;
+    }
 }

@@ -95,15 +95,18 @@ public class WorkoutSettingsActivity extends Activity {
      */
     private void setDayWeekSelectorOnItemClick() {
         ((Spinner)findViewById(R.id.dayWeekSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
-
+            private int previousPosition = -1;
             @Override
             public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
                 Log.d("dgmt!dayWeekSelectorItemSelect","day and week changed to position "+position_);
                 DayAndWeek dayAndWeek = WorkoutSelectionViewAdapter.getDayAndWeekByPosition(position_);
-                if (dayAndWeek.wasFound() && !workoutController.isTest()) {
+                boolean dayOrWeekChanged = !dayAndWeek.equals(workoutController.getDayAndWeek());
+                if (dayAndWeek.wasFound() && !workoutController.isTest() && dayOrWeekChanged ) {
                     Log.d("dgmt!dayWeekSelectorItemSelect","day and week has changed");
                     workoutController.setDayAndWeek(dayAndWeek);
+                    dayWeekOrLevelChanged();
                 }
+                previousPosition = position_;
                 
                 
             }
@@ -120,15 +123,20 @@ public class WorkoutSettingsActivity extends Activity {
     private void setLevelSelectorOnItemSelect(){
         ((Spinner)findViewById(R.id.levelSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
 
+            
+           
             @Override
             public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
                 Log.d("dgmt!levelSelectorItemSelect","Level changed to position "+position_);
                 Level level = LevelSelectionViewAdapter.getLevelByPosition(position_);
+               
+                boolean levelChanged = !level.equals(workoutController.getCurrentLevel());
+                Log.d("dgmt!levelSelectorItemSelect","Level changed?"+levelChanged+". current="+workoutController.getCurrentLevel()+"] selected="+level);
                 if(position_ != 3 && workoutController.setCurrentLevel(level)) {
                     Log.d("dgmt!levelSelectorItemSelect", "Level has actually changed");
                     findViewById(R.id.dayWeekSelector).setEnabled(true);
-                    
                 }
+                if (levelChanged) {dayWeekOrLevelChanged();}
                 
                 
             }
@@ -177,16 +185,20 @@ public class WorkoutSettingsActivity extends Activity {
             value = workoutController.getLevelForDisplay();
         }
         
-        
+        dayWeekOrLevelChanged();
         
         
         if (workoutController.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
     }
     
+    protected void dayWeekOrLevelChanged() {
+        ((TextView)findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+workoutController.totalCountLeft()+"!");
+    }
+    
     public void listDayWeekOptions() {
         
         Spinner dayWeekSelector = (Spinner)findViewById(R.id.dayWeekSelector);
-        
+        if (dayWeekSelector.getAdapter() !=  null) { return; }
         WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this, workoutController.isFinal());
         dayWeekSelector.setAdapter(listAdapter);
         Log.d("dgmt:listDayWeekOptions","Getting position for dayWeek with week="+workoutController.getWeek()+" and day="+workoutController.getDay());
@@ -196,6 +208,7 @@ public class WorkoutSettingsActivity extends Activity {
     
     public void loadLevelOptions() {
         Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
+        if (levelSelector.getAdapter() != null){return;}
         boolean showTest = workoutController.shouldDisplayDayAsTest();
         LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this, showTest);
         levelSelector.setAdapter(viewAdapter);
@@ -265,6 +278,7 @@ public class WorkoutSettingsActivity extends Activity {
         startActivityForResult(restIntent, REST_INTENT);
     }
     
+    
     @Override
     protected void onActivityResult(int requestCode_, int resultCode_, Intent data_) {
        Resources resources = getResources();
@@ -284,6 +298,7 @@ public class WorkoutSettingsActivity extends Activity {
             if (!workoutController.hasNext()) { 
                 workoutController.advanceDate();
                 saveHistory(); 
+                dayWeekOrLevelChanged();
                 configureMainView();
                 showProgress(workoutController.getHistory());
                 
