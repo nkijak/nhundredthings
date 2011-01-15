@@ -42,7 +42,7 @@ public class LevelSelectionViewAdapter extends SimpleAdapter {
         return levelMap;
     }
     
-    public int getPositionForLevel(Level level_) {
+    public static int getPositionForLevel(Level level_) {
         return level_.getIndex();
     }
     

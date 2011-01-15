@@ -206,6 +206,10 @@ public class WorkoutSettingsActivity extends Activity {
         
     }
     
+    public void resetDayWeekOptionsSpinner() {
+        ((Spinner)findViewById(R.id.dayWeekSelector)).setAdapter(null);
+    }
+    
     public void loadLevelOptions() {
         Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
         if (levelSelector.getAdapter() != null){return;}
@@ -214,6 +218,12 @@ public class WorkoutSettingsActivity extends Activity {
         levelSelector.setAdapter(viewAdapter);
         levelSelector.setSelection(showTest ? 3 :viewAdapter.getPositionForLevel(workoutController.getCurrentLevel()));
     }
+    
+    public void resetLevelOptionsSpinner() {
+        ((Spinner)findViewById(R.id.levelSelector)).setAdapter(null);
+    }
+    
+   
     // ------------ ACTIONS ----------------
     
     public void doActivity(View target_) {
@@ -296,9 +306,10 @@ public class WorkoutSettingsActivity extends Activity {
             currentLog.addCountAndTime(count, avgTime);
            
             if (!workoutController.hasNext()) { 
-                workoutController.advanceDate();
+                DayAndWeek dayAndWeek = workoutController.advanceDate();
                 saveHistory(); 
-                dayWeekOrLevelChanged();
+                resetDayWeekOptionsSpinner();
+                resetLevelOptionsSpinner();
                 configureMainView();
                 showProgress(workoutController.getHistory());
                 
