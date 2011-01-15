@@ -192,7 +192,9 @@ public class WorkoutSettingsActivity extends Activity {
     }
     
     protected void dayWeekOrLevelChanged() {
-        ((TextView)findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+workoutController.totalCountLeft()+"!");
+        String count = (String) getResources().getText(R.string.count_for_test_msg);
+        if (!workoutController.shouldDisplayDayAsTest()) { count = workoutController.totalCountLeft()+""; }
+        ((TextView)findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
     }
     
     public void listDayWeekOptions() {
@@ -206,8 +208,10 @@ public class WorkoutSettingsActivity extends Activity {
         
     }
     
-    public void resetDayWeekOptionsSpinner() {
+    public void resetSpinners() {
         ((Spinner)findViewById(R.id.dayWeekSelector)).setAdapter(null);
+        ((Spinner)findViewById(R.id.levelSelector)).setAdapter(null);
+        dayWeekOrLevelChanged();
     }
     
     public void loadLevelOptions() {
@@ -219,9 +223,7 @@ public class WorkoutSettingsActivity extends Activity {
         levelSelector.setSelection(showTest ? 3 :viewAdapter.getPositionForLevel(workoutController.getCurrentLevel()));
     }
     
-    public void resetLevelOptionsSpinner() {
-        ((Spinner)findViewById(R.id.levelSelector)).setAdapter(null);
-    }
+  
     
    
     // ------------ ACTIONS ----------------
@@ -306,10 +308,9 @@ public class WorkoutSettingsActivity extends Activity {
             currentLog.addCountAndTime(count, avgTime);
            
             if (!workoutController.hasNext()) { 
-                DayAndWeek dayAndWeek = workoutController.advanceDate();
+                workoutController.advanceDate();
                 saveHistory(); 
-                resetDayWeekOptionsSpinner();
-                resetLevelOptionsSpinner();
+                resetSpinners();
                 configureMainView();
                 showProgress(workoutController.getHistory());
                 

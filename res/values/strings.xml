@@ -26,6 +26,7 @@
 	<string name="share_results_msg">I just did %1$d %2$s at %3$d %2$s/min in #DGMT!</string>
 	<string name="share_complete_msg">I finished the %1$d %2$s program using #DGMT! with %3$d IN A ROW at %4$d %2$s/min!</string>
 	<string name="share_dnf_final_msg">"I just did %1$d %2$s IN A ROW at %3$d %2$s/min in #DGMT! Almost there!"</string>
+	<string name="count_for_test_msg">as many as you can</string>
 	<!-- Proximity Errors -->
 	<string name="prox_err_title">No Sensor!</string>
 	<string name="prox_err_msg">Can not find proximity sensor.</string>
