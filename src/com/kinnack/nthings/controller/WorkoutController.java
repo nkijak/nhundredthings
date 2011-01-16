@@ -207,12 +207,13 @@ public abstract class WorkoutController {
 
     public boolean setCurrentLevel(Level level_) {
         history.setCurrentLevel(level_);
-        getThisWeekAndDaySet();
+        boolean changedFromTestToOther = false;
         if (history.getDay() == 0) {
             history.setDay(1);
-            return true;
+            changedFromTestToOther = true;
         }
-        return false;
+        getThisWeekAndDaySet();
+        return changedFromTestToOther;
     }
 
     /**

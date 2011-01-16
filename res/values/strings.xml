@@ -60,7 +60,7 @@
 	This cannot be undone!</string>
 	
 	<!-- Rest -->
-	<string name="skip_rest_msg">Press Back to skip to the next workout</string>
+	<string name="skip_rest_msg">Press Back to skip to the next set</string>
 	<string name="count_to_go">%1$d more to go</string>
 	
 </resources>
