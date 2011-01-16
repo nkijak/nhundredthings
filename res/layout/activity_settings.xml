@@ -4,7 +4,8 @@
 		android:layout_height="match_parent" android:layout_gravity="center_horizontal"
 		>
 		<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="50dp" android:background="@drawable/header">
+			android:layout_height="50dp" android:background="@drawable/header"
+			android:paddingBottom="3dp">
 		
 			<ImageView android:id="@+id/InAppLogo" android:layout_width="100dp" android:paddingLeft="8dp" android:layout_height="wrap_content" android:src="@drawable/inapp_logo"></ImageView>
 	  		<TextView android:layout_height="fill_parent"
