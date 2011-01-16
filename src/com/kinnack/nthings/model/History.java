@@ -37,6 +37,8 @@ public class History {
         setWeek(json.getInt("week"));
         setType(Workout.Type.valueOf(json.getString("type")));
         setCurrentLevel(new GenericLevel(json.getJSONObject("level")));
+        
+        loadLastWorkout(json);
         loadFinished(json);
         loadFinalUnlocked(json);
         JSONArray testResults = json.getJSONArray("testResults");
@@ -73,6 +75,15 @@ public class History {
         }
     }
     
+    private void loadLastWorkout(JSONObject json) {
+        try {
+            setLastWorkout(json.getLong("lastWorkout"));
+        } catch (JSONException je) {
+            android.util.Log.w("DGMT!History.History", "Failure loading lastWorkout from json file. Probably old version.", je);
+            setLastWorkout(null);
+        }
+    }
+    
     
     public JSONObject toJSON() throws JSONException {
         JSONObject self = new JSONObject();
@@ -82,7 +93,8 @@ public class History {
         .put("testResults", new JSONArray(_testResults))
         .put("type", _type.toString())
         .put("finished", _finished)
-        .put("finalUnlocked", _finalUnlocked);
+        .put("finalUnlocked", _finalUnlocked)
+        .put("lastWorkout", _lastWorkout.getTime());
         self.put("logs", new JSONArray());
         for(Logg log : _logs) {
             self.accumulate("logs", log.toJSON());
@@ -121,6 +133,8 @@ public class History {
         }
         return totalCount;
     }
+    
+   
 
     /**
      * @return the testResults
@@ -224,6 +238,10 @@ public class History {
         return _lastWorkout;
     }
 
+    public void setLastWorkout(long lastWorkoutTimeMs_) {
+        setLastWorkout(new Date(lastWorkoutTimeMs_));
+    }
+    
     /**
      * @param lastWorkout_ the lastWorkout to set
      */

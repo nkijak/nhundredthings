@@ -43,4 +43,17 @@
 	<item name="android:shadowDy">1</item>
 </style>
 
+<style name="label">
+	<item name="android:textSize">5pt</item>
+	<item name="android:shadowRadius">1</item>
+	<item name="android:shadowColor">#cfff</item>
+	<item name="android:shadowDy">1</item>
+	<item name="android:gravity">bottom</item>
+</style>
+
+<style name="value">
+	<item name="android:textSize">8pt</item>
+	<item name="android:textColor">#f888</item>
+	<item name="android:gravity">top</item>
+</style>
 </resources>

@@ -1,23 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="match_parent"
-		android:layout_height="match_parent" android:layout_gravity="center_horizontal"
-		android:paddingLeft="20dp" android:paddingRight="20dp">
-	
-		<ImageView android:id="@+id/InAppLogo" android:layout_width="wrap_content" android:paddingLeft="8dp" android:layout_height="wrap_content" android:src="@drawable/inapp_logo"></ImageView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:layout_gravity="center_horizontal"
+	android:paddingLeft="20dp" android:paddingRight="20dp">
+
+	<ImageView android:id="@+id/InAppLogo" android:layout_width="wrap_content"
+		android:paddingLeft="8dp" android:layout_height="wrap_content"
+		android:src="@drawable/inapp_logo"></ImageView>
+
+	<LinearLayout android:layout_height="wrap_content"
+		android:id="@+id/LinearLayout01" android:orientation="horizontal"
+		android:layout_width="fill_parent">
+		<Button android:layout_height="fill_parent" android:id="@+id/PushupsButton"
+			android:text="Push Ups" android:layout_width="wrap_content"
+			android:gravity="center" android:onClick="doPushups" android:layout_weight="1"></Button>
+		<LinearLayout android:layout_height="wrap_content"
+			android:id="@+id/LinearLayout02" android:orientation="vertical"
+			android:layout_width="wrap_content" android:padding="3dp">
+			<TextView 
+				android:layout_height="wrap_content" android:text="Last"
+				android:layout_width="wrap_content" style="@style/label"></TextView>
+			<TextView android:id="@+id/pushupLastUse"
+				android:layout_height="wrap_content" android:text="1/1/11"
+				android:layout_width="wrap_content" style="@style/value"></TextView>
+			<TextView 
+				android:layout_height="wrap_content" android:text="Last Count"
+				android:layout_width="wrap_content" style="@style/label"></TextView>
+			<TextView android:id="@+id/pushupLastCount"
+				android:layout_height="wrap_content" android:text="112"
+				android:layout_width="wrap_content" style="@style/value"></TextView>
+			<TextView 
+				android:layout_height="wrap_content" android:text="Total"
+				android:layout_width="wrap_content" style="@style/label"></TextView>
+			<TextView android:id="@+id/pushupTotalValue"
+				android:layout_height="wrap_content" android:text="696"
+				android:layout_width="wrap_content" style="@style/value"></TextView>
+		</LinearLayout>
+	</LinearLayout>
+
+
+	<LinearLayout android:layout_height="wrap_content"
+		android:id="@+id/LinearLayout02" android:orientation="horizontal"
+		android:layout_width="fill_parent">
+		<LinearLayout android:layout_height="wrap_content"
+			android:id="@+id/LinearLayout03" android:orientation="vertical"
+			android:layout_width="wrap_content" android:padding="3dp">
+			<TextView 
+				android:layout_height="wrap_content" android:text="Last"
+				android:layout_width="match_parent" android:gravity="right" style="@style/label" ></TextView>
+			<TextView android:id="@+id/situpLastUse"
+				android:layout_height="wrap_content" android:text="1/1/11"
+				android:layout_width="match_parent" android:gravity="right" style="@style/value"></TextView>
+			<TextView 
+				android:layout_height="wrap_content" android:text="Last Count"
+				android:layout_width="match_parent" android:gravity="right"  style="@style/label"></TextView>
+			<TextView android:id="@+id/situpLastCount"
+				android:layout_height="wrap_content" android:text="112"
+				style="@style/value" android:layout_width="match_parent" android:gravity="right"></TextView>
+			<TextView 
+				android:layout_height="wrap_content" android:text="Total"
+				android:layout_width="match_parent" android:gravity="right" style="@style/label"></TextView>
+			<TextView android:id="@+id/situpTotalValue"
+				android:layout_height="wrap_content" android:text="696"
+				android:layout_width="match_parent" android:gravity="right" style="@style/value"></TextView>
+		</LinearLayout>
 		
-		<Button android:layout_height="wrap_content" android:id="@+id/PushupsButton"
-			android:text="Push Ups" android:gravity="center_horizontal"
-			android:layout_width="fill_parent" android:onClick="doPushups" ></Button>
+		<Button android:layout_height="fill_parent" android:id="@+id/SitupsButton"
+			android:text="@string/situps_button_txt" android:gravity="center"
+			android:layout_width="fill_parent" android:onClick="doSitups" android:layout_weight="1"></Button>
 			
 		
-		
-		<Button android:layout_height="wrap_content" android:id="@+id/SitupsButton"
-			android:text="@string/situps_button_txt" android:gravity="center_horizontal"
-			android:layout_width="fill_parent" android:onClick="doSitups" ></Button>
-			
-		
-		
+	</LinearLayout>	
 	
+
 </LinearLayout>
