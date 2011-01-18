@@ -41,6 +41,7 @@ import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.controller.SitupWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.helper.CounterActivityManager;
+import com.kinnack.nthings.helper.PrettyDate;
 import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.LevelSelectionViewAdapter;
@@ -105,8 +106,7 @@ public class Home extends Activity {
     
     private String formatDate(Date date_) {
         if (date_ == null) { return "?"; }
-        SimpleDateFormat formatter = new SimpleDateFormat("M/d/yy");
-        return formatter.format(date_);
+        return PrettyDate.format(date_);
     }
     
     public void doPushups(View target_) {
