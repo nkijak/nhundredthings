@@ -9,7 +9,7 @@ public class PrettyDate {
         long msBetween = now.getTime() - then_.getTime();
         long daysBetween = msBetween / 86400000;
         long hoursBetween = msBetween / 3600000;
-        long minutesBetween = msBetween / 3600;
+        long minutesBetween = msBetween / 60000;
         long secondsBetween = msBetween / 1000;
         
         if (daysBetween > 0) {

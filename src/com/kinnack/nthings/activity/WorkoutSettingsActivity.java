@@ -315,6 +315,7 @@ public class WorkoutSettingsActivity extends Activity {
                 showProgress(workoutController.getHistory());
                 
                 shareResults(currentLog);
+                finish();
                 return; 
             }
             startRestActivity();
