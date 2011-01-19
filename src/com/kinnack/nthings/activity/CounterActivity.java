@@ -57,9 +57,7 @@ public class CounterActivity extends Activity {
         
         if (extras.getBoolean(IS_TEST)) {
             dialogToUser(R.string.is_test_title,R.string.is_test_msg);
-        } else if (showDone) {
-            dialogToUser(R.string.is_unlimited_title,R.string.is_unlimited_msg);
-        }
+        } 
         
         stopWatch = new StopWatch();
         stopWatch.start();
