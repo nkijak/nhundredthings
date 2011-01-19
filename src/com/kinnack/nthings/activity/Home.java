@@ -92,8 +92,8 @@ public class Home extends Activity {
         super.onResume();
         
         SharedPreferences preferences = getSharedPreferences(WorkoutSettingsActivity.PREFS, Context.MODE_PRIVATE);
-        pushupController.loadHistory(preferences);
-        situpController.loadHistory(preferences);
+        pushupController.forceReloadHistory(preferences);
+        situpController.forceReloadHistory(preferences);
         
         pushupLastUse.setText(formatDate(pushupController.getHistory().getLastWorkout()));
         pushupLastCount.setText(pushupController.getCurrentLog().getTotalCount()+"");

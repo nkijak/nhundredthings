@@ -54,6 +54,10 @@ public abstract class WorkoutController {
      */
     public void loadHistory(SharedPreferences prefs) {
         if (history != null) { return; }
+        forceReloadHistory(prefs);
+    }
+    
+    public void forceReloadHistory(SharedPreferences prefs){
         try {
             history = new History(prefs.getString(getKeyForHistory(), null));
             Log.d(getTag(),"Loaded history as "+prefs.getString(getKeyForHistory(), "[Not found]"));

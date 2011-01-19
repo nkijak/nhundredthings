@@ -191,6 +191,12 @@ public class WorkoutSettingsActivity extends Activity {
         if (workoutController.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
     }
     
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //((Spinner)findViewById(R.id.levelSelector)).s
+    }
+    
     protected void dayWeekOrLevelChanged() {
         String count = (String) getResources().getText(R.string.count_for_test_msg);
         if (!workoutController.shouldDisplayDayAsTest()) { count = workoutController.totalCountLeft()+""; }
@@ -310,13 +316,13 @@ public class WorkoutSettingsActivity extends Activity {
             if (!workoutController.hasNext()) { 
                 workoutController.advanceDate();
                 saveHistory(); 
-                resetSpinners();
-                configureMainView();
+                
                 showProgress(workoutController.getHistory());
                 
                 shareResults(currentLog);
                 finish();
-                return; 
+                return;
+                
             }
             startRestActivity();
             
