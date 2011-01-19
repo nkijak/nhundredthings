@@ -10,14 +10,15 @@
 		android:src="@drawable/inapp_logo"></ImageView>
 
 	<LinearLayout android:layout_height="wrap_content"
-		android:id="@+id/LinearLayout01" android:orientation="horizontal"
+		android:orientation="horizontal"
 		android:layout_width="fill_parent">
 		<Button android:layout_height="fill_parent" android:id="@+id/PushupsButton"
 			android:text="Push Ups" android:layout_width="wrap_content"
 			android:gravity="center" android:onClick="doPushups" android:layout_weight="1"></Button>
 		<LinearLayout android:layout_height="wrap_content"
-			android:id="@+id/LinearLayout02" android:orientation="vertical"
-			android:layout_width="wrap_content" android:padding="3dp">
+			android:orientation="vertical"
+			android:layout_width="wrap_content" android:padding="3dp"
+			android:layout_weight="1">
 			<TextView 
 				android:layout_height="wrap_content" android:text="Last"
 				android:layout_width="wrap_content" style="@style/label"></TextView>
@@ -41,11 +42,11 @@
 
 
 	<LinearLayout android:layout_height="wrap_content"
-		android:id="@+id/LinearLayout02" android:orientation="horizontal"
+		android:orientation="horizontal"
 		android:layout_width="fill_parent">
 		<LinearLayout android:layout_height="wrap_content"
-			android:id="@+id/LinearLayout03" android:orientation="vertical"
-			android:layout_width="wrap_content" android:padding="3dp">
+			android:orientation="vertical"
+			android:layout_width="wrap_content" android:padding="3dp" android:layout_weight="1">
 			<TextView 
 				android:layout_height="wrap_content" android:text="Last"
 				android:layout_width="match_parent" android:gravity="right" style="@style/label" ></TextView>
@@ -68,7 +69,7 @@
 		
 		<Button android:layout_height="fill_parent" android:id="@+id/SitupsButton"
 			android:text="@string/situps_button_txt" android:gravity="center"
-			android:layout_width="fill_parent" android:onClick="doSitups" android:layout_weight="1"></Button>
+			android:layout_width="wrap_content" android:onClick="doSitups" android:layout_weight="1"></Button>
 			
 		
 	</LinearLayout>	

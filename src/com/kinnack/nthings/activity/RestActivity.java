@@ -1,5 +1,8 @@
 package com.kinnack.nthings.activity;
 
+import static android.os.PowerManager.ON_AFTER_RELEASE;
+import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
+
 import java.util.Date;
 
 import android.app.Activity;
@@ -10,13 +13,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
-import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-
-import static android.os.PowerManager.*;
 
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.SoundAlert;
@@ -46,9 +47,13 @@ public class RestActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         rest_milliseconds = extras.getInt(REST_LENGTH);
         int setsToGo = extras.getInt(SETS_TO_GO);
-        ((TextView)findViewById(R.id.CompletionRatio)).setText(setsToGo
-                                                                +" more set"
-                                                                +(setsToGo > 1?"s":""));
+        if (setsToGo > 1) {
+            ((TextView)findViewById(R.id.CompletionRatio)).setText(setsToGo+" more sets");
+        } else {
+            ((TextView)findViewById(R.id.CountForTest)).setVisibility(View.VISIBLE);
+            ((TextView)findViewById(R.id.CompletionRatio)).setVisibility(View.GONE);
+        }
+        
         int countToGo = extras.getInt(COUNT_TO_GO);
         ((TextView)findViewById(R.id.CountToGo)).setText(getResources().getString(R.string.count_to_go,countToGo));
         soundAlert = new SoundAlert(PreferenceManager.getDefaultSharedPreferences(this),this);

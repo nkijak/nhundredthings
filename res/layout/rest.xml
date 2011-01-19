@@ -27,6 +27,14 @@
 			android:textSize="20sp"
 			style="@style/whiteDropShadow"/>
 			
+		<TextView android:id="@+id/CountForTest"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" 
+			android:gravity="center" 
+			android:textSize="20sp"
+			style="@style/whiteDropShadow"
+			android:text="@string/is_test_msg"
+			android:visibility="gone"/>
+			
 	</LinearLayout>
 			<TextView android:text="@string/skip_rest_msg" android:layout_width="fill_parent" android:layout_height="fill_parent" 
 					android:textSize="15sp"
