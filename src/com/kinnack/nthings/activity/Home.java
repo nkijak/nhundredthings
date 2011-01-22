@@ -12,7 +12,9 @@ import java.util.Date;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -50,6 +52,7 @@ import com.kinnack.nthings.model.Test;
 import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
+import com.kinnack.nthings.receiver.ReminderReceiver;
 
 public class Home extends Activity {
     public static final String TAG = "dgmt:HOME";
@@ -84,7 +87,17 @@ public class Home extends Activity {
         pushupController = new PushupWorkoutController();
         situpController = new SitupWorkoutController();
 
+        setupAlarm();
         
+    }
+    
+    private void setupAlarm() {
+        Intent intent = new Intent(this, ReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, ReminderReceiver.RESPONSE_CODE,  intent, PendingIntent.FLAG_NO_CREATE);
+        if (pendingIntent != null) { return; }
+        pendingIntent = PendingIntent.getBroadcast(this, ReminderReceiver.RESPONSE_CODE,  intent, 0);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.RTC, new Date().getTime() - 60000,AlarmManager.INTERVAL_DAY, pendingIntent);
     }
     
     @Override
