@@ -50,7 +50,7 @@ public class SitupAccelCounterActivity extends CounterActivity  implements Senso
         
         
         
-        if (y > 8 && z < 2) satUp = true;
+        if (y > 7.25 && z < 2) satUp = true;
         if (z > 8 && y < 2) {layDown = true; satUp = false; directions.setText("UP");} //reset
         
         if (layDown && satUp) {

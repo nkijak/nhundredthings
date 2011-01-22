@@ -72,7 +72,7 @@ public class ReminderReceiver extends BroadcastReceiver {
      */
     private void sendNotification(Context context_, String subject_, String message_) {
         NotificationManager notificationManager = (NotificationManager)context_.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(R.drawable.dialog, message_, System.currentTimeMillis());
+        Notification notification = new Notification(R.drawable.notification_icon, message_, System.currentTimeMillis());
         PendingIntent pendingIntent = PendingIntent.getActivity(context_, 0, new Intent(context_,Home.class), 0);
         notification.setLatestEventInfo(context_, subject_, message_, pendingIntent);
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
