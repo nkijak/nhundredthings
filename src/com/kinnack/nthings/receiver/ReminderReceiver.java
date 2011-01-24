@@ -41,13 +41,13 @@ public class ReminderReceiver extends BroadcastReceiver {
         String message = "";
         String subject = "DGMT!";
         if (remindPushups && remindSitups) {
-            message = "Time to get your workouts in!";
+            message = "Get your workouts in!";
         } else if (remindPushups) {
             subject = "DGMT! Pushups";
-            message = "Time to beat your face!";
+            message = "Beat your face!";
         } else if (remindSitups) {
             subject = "DGMT! Situps";
-            message = "Time for some DGMT!";
+            message = "Get some DGMT!";
         }
         
         sendNotification(context_, subject,message);

@@ -97,7 +97,7 @@ public class Home extends Activity {
         if (pendingIntent != null) { return; }
         pendingIntent = PendingIntent.getBroadcast(this, ReminderReceiver.RESPONSE_CODE,  intent, 0);
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC, new Date().getTime() - 60000,AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, new Date().getTime(),AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
     }
     
     @Override
