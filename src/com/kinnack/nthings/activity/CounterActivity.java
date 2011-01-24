@@ -82,6 +82,10 @@ public class CounterActivity extends Activity {
         Button done = (Button) findViewById(R.id.Done);
         done.setVisibility(View.VISIBLE);
     }
+    
+    protected void reachedMinimumRequired() {
+        findViewById(R.id.Done).setEnabled(true);
+    }
 
 
     /**
@@ -141,6 +145,9 @@ public class CounterActivity extends Activity {
             soundAlert.finishedBeep();
             finish();
         }
+        
+        if (neededCount - count <= 0) { reachedMinimumRequired(); }
+        
         stopWatch.start();
     }
 

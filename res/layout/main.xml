@@ -32,7 +32,7 @@
 				android:layout_height="wrap_content" android:text="112"
 				android:layout_width="wrap_content" style="@style/value"></TextView>
 			<TextView 
-				android:layout_height="wrap_content" android:text="Total"
+				android:layout_height="wrap_content" android:text="Total+Tests"
 				android:layout_width="wrap_content" style="@style/label"></TextView>
 			<TextView android:id="@+id/pushupTotalValue"
 				android:layout_height="wrap_content" android:text="696"
@@ -60,7 +60,7 @@
 				android:layout_height="wrap_content" android:text="112"
 				style="@style/value" android:layout_width="match_parent" android:gravity="right"></TextView>
 			<TextView 
-				android:layout_height="wrap_content" android:text="Total"
+				android:layout_height="wrap_content" android:text="Total+Tests"
 				android:layout_width="match_parent" android:gravity="right" style="@style/label"></TextView>
 			<TextView android:id="@+id/situpTotalValue"
 				android:layout_height="wrap_content" android:text="696"
