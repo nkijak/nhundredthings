@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.helper.PrettyDateAndTime;
 import com.kinnack.nthings.model.SoundAlert;
 
 public class RestActivity extends Activity {
@@ -70,7 +71,7 @@ public class RestActivity extends Activity {
         if (rest_milliseconds <= 0) { finish(); }
         
         final TextView timeLeft = (TextView) findViewById(R.id.TimeLeft);
-        timeLeft.setText(rest_milliseconds/1000+"s");
+        timeLeft.setText(PrettyDateAndTime.formatMillis(rest_milliseconds));
         
         createAndStartCountDownTimer(timeLeft);
     }
@@ -98,7 +99,7 @@ public class RestActivity extends Activity {
             @Override
             public void onTick(long millisUntilFinished_) {
                 millisRestLeft = millisUntilFinished_;
-                timeLeft.setText(millisRestLeft/1000+"s");
+                timeLeft.setText(PrettyDateAndTime.formatMillis(millisRestLeft));
                 getWindow().setFeatureInt(Window.FEATURE_PROGRESS, (int)(1-millisRestLeft/(rest_milliseconds))*10000);
                 if (millisRestLeft <= 10999 && !warned) {
                     Log.i("nthings:RestActivity", "Ending in 10 seconds");

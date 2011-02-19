@@ -79,8 +79,7 @@ public class CounterActivity extends Activity {
      * 
      */
     protected void showQuitingOptions() {
-        Button done = (Button) findViewById(R.id.Done);
-        done.setVisibility(View.VISIBLE);
+        findViewById(R.id.Done).setVisibility(View.VISIBLE);
     }
     
     protected void reachedMinimumRequired() {

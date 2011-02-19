@@ -3,7 +3,7 @@ package com.kinnack.nthings.helper;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PrettyDate {
+public class PrettyDateAndTime {
     public static String format(Date then_) {
         Date now = new Date();
         long msBetween = now.getTime() - then_.getTime();
@@ -22,5 +22,12 @@ public class PrettyDate {
             return secondsBetween + " second"+(secondsBetween == 1?"":"s")+" ago";
         }
         
+    }
+    
+    public static String formatMillis(long millis_) {
+        long minutes = millis_/60000;
+        long seconds = (millis_/1000)%60;
+        
+        return String.format("%02d:%02d", minutes,seconds);
     }
 }
