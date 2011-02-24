@@ -5,26 +5,24 @@
 	<ProgressBar android:layout_height="wrap_content"
 		android:id="@+id/SubCountProgress" android:layout_width="fill_parent"
 		android:progress="0" android:layout_marginLeft="3dp"
-		android:layout_marginRight="3dp"
-		android:visibility="gone" />
+		android:layout_marginRight="3dp" android:visibility="gone" />
 	<ProgressBar android:layout_height="wrap_content"
 		android:id="@+id/CountProgress" android:layout_width="fill_parent"
 		android:progress="0" android:layout_marginLeft="3dp"
 		android:layout_marginRight="3dp" />
 	<Button android:layout_height="0dip" android:id="@+id/Count"
-		android:text="COUNT" android:height="300px"
-		android:onClick="countButtonClick" android:layout_width="fill_parent"
-		android:layout_weight="1" />
+		android:text="COUNT" android:height="300px" android:onClick="countButtonClick"
+		android:layout_width="fill_parent" android:layout_weight="1" />
 
 
 
-	<TextView android:id="@+id/TotalCount" android:text="0" android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true" android:layout_width="wrap_content"
-		android:visibility="gone" />
-	<com.kinnack.nthings.view.SwipeTextView android:layout_height='50dip' android:id="@+id/Done"
-		android:text="@string/done" android:gravity="center" android:layout_gravity="bottom"
-		android:layout_width="fill_parent" android:visibility="invisible" 
-		android:textSize="25sp" android:enabled="false" />
+	<TextView android:id="@+id/TotalCount" android:text="0"
+		android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+		android:layout_width="wrap_content" android:visibility="gone" />
+	<SeekBar android:id="@+id/Done" android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:padding="10dp" android:visibility="gone"></SeekBar>
+	
 
 
 

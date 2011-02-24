@@ -31,10 +31,8 @@
 			<TextView android:id="@+id/TotalCount" android:text="0" android:layout_height="wrap_content"
 				android:layout_alignParentBottom="true" android:layout_width="wrap_content"
 				android:visibility="gone" />
-			<Button android:layout_height='50dip' android:id="@+id/Done"
-				android:text="@string/done" android:onClick="done" android:gravity="center" android:layout_gravity="bottom"
-				android:layout_width="fill_parent" android:visibility="invisible" 
-				android:textSize="25sp" 
-				android:enabled="false"/>	
+			<SeekBar android:id="@+id/Done" android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:padding="10dp" android:visibility="gone"></SeekBar>
 	
 </LinearLayout>

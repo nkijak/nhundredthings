@@ -10,13 +10,15 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.model.SoundAlert;
 
-public class CounterActivity extends Activity {
+public class CounterActivity extends Activity implements OnSeekBarChangeListener{
     public static final String INIT_COUNT_KEY = "com.kinnack.nthings.init_count";
     public static final String SHOW_DONE = "com.kinnack.nthings.show_done";
     public static final String MAX_COUNT = "com.kinnack.nthing.max_count";
@@ -79,6 +81,7 @@ public class CounterActivity extends Activity {
      * 
      */
     protected void showQuitingOptions() {
+        ((SeekBar)findViewById(R.id.Done)).setOnSeekBarChangeListener(this);
         findViewById(R.id.Done).setVisibility(View.VISIBLE);
     }
     
@@ -200,5 +203,31 @@ public class CounterActivity extends Activity {
         intent.putExtra(AVG_TIME, (reps_ == 0 ? 0 : sumTimeBetweenCounts/reps_));
         intent.putExtra(TOTAL_TIME, sumTimeBetweenCounts);
         return intent;
+    }
+
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar_, int progress_, boolean fromUser_) {
+        if (progress_ == 100) {
+            seekBar_.setEnabled(false);
+            done(null);
+        }
+        
+    }
+
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar_) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar_) {
+        if (seekBar_.getProgress() != 100) {
+            seekBar_.setProgress(0);
+        }
+        
     }
 }
