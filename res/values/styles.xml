@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 <style name="GradientLight" parent="@android:style/Theme.Light.NoTitleBar">
     <item name="android:windowBackground">@drawable/background</item>
@@ -9,6 +9,7 @@
     <item name="android:listViewStyle">@style/listView</item>
     <item name="android:itemBackground">@drawable/menu_selector</item>
     <item name="android:spinnerStyle">@style/spinner</item>
+    <item name="android:seekBarStyle">@style/seekBar</item>
 </style>
 
 <style name="progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
@@ -18,6 +19,11 @@
 	<item name="android:paddingTop">15dp</item>
 	<item name="android:paddingBottom">15dp</item>
 	<item name="android:progressDrawable">@drawable/green_progress_horizontal</item>
+</style>
+
+<style name="seekBar" parent="@android:style/Widget.SeekBar">
+	<item name="android:progressDrawable">@drawable/slide_to_finish</item>
+	<item name="android:thumb">@drawable/seek_thumb</item>
 </style>
 
 <style name="greenButton" parent="@android:style/Widget.Button">
