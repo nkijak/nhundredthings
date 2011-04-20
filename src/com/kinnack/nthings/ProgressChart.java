@@ -36,7 +36,11 @@ public class ProgressChart {
         renderer.setXAxisMin(1);
         renderer.setYAxisMin(0);
         renderer.setAxesColor(DARK_COLOR);
+        renderer.setShowAxes(true);
         renderer.setLabelsColor(DARK_COLOR);
+        renderer.setChartValuesTextSize(24f);
+        renderer.setChartTitleTextSize(24f);
+        
         
         renderer.setShowLegend(false);
         renderer.setDisplayChartValues(true);
