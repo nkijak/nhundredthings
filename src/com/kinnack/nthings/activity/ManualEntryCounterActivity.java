@@ -71,7 +71,8 @@ public class ManualEntryCounterActivity extends CounterActivity {
     }
     
     protected void showQuitingOptions() {
-        super.showQuitingOptions();
+        findViewById(R.id.Done).setVisibility(View.VISIBLE);
         findViewById(R.id.manualEntry).setVisibility(View.VISIBLE);
+        
     }
 }
