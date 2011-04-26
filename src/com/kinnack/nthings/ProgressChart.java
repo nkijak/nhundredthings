@@ -68,7 +68,7 @@ public class ProgressChart {
         int numberOfWorkouts = Math.max(logs.size()+1,10);
         int xMin = numberOfWorkouts - 13;
       
-        renderer.setXAxisMin(xMin);
+        renderer.setXAxisMin(Math.max(1,xMin));
         renderer.setXAxisMax(numberOfWorkouts);
         renderer.setXLabels(numberOfWorkouts - xMin);
         renderer.setYAxisMax(maxCount+10);
