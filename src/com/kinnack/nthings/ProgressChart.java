@@ -53,7 +53,7 @@ public class ProgressChart {
         renderer.setMargins(new int[]{30,40,50,0});
         renderer.setMarginsColor(Color.WHITE);
         
-        renderer.setBarSpacing(0.5);
+        renderer.setBarSpacing(1);
         
         XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
         CategorySeries series = new CategorySeries("Progress");
