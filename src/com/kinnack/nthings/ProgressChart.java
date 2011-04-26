@@ -13,6 +13,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer.Orientation;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
 
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
@@ -32,23 +33,32 @@ public class ProgressChart {
         //settings
         renderer.setChartTitle(history_.getType()+" Progress");
         renderer.setXTitle("Workout");
+
         renderer.setYTitle("Count");
-        renderer.setXAxisMin(1);
         renderer.setYAxisMin(0);
+        renderer.setYLabelsAngle(270f);
+        renderer.setYLabelsAlign(Align.RIGHT);
+        
         renderer.setAxesColor(DARK_COLOR);
-        renderer.setShowAxes(true);
         renderer.setLabelsColor(DARK_COLOR);
-        renderer.setChartValuesTextSize(24f);
+        renderer.setLabelsTextSize(24f);
+
         renderer.setChartTitleTextSize(24f);
         
-        
         renderer.setShowLegend(false);
+        
+        renderer.setChartValuesTextSize(24f);
         renderer.setDisplayChartValues(true);
+
+        renderer.setMargins(new int[]{30,40,50,0});
+        renderer.setMarginsColor(Color.WHITE);
+        
+        renderer.setBarSpacing(0.5);
         
         XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
         CategorySeries series = new CategorySeries("Progress");
         List<Logg> logs = history_.getLogs();
-        int maxCount = 100;
+        int maxCount = 50;
         for(int i = 0,len = logs.size(); i < len; i++) {
             Logg log = logs.get(i);
             int total = log.getTotalCount();
@@ -56,8 +66,11 @@ public class ProgressChart {
             series.add(total);
         }
         int numberOfWorkouts = Math.max(logs.size()+1,10);
+        int xMin = numberOfWorkouts - 13;
+      
+        renderer.setXAxisMin(xMin);
         renderer.setXAxisMax(numberOfWorkouts);
-        renderer.setXLabels(numberOfWorkouts);
+        renderer.setXLabels(numberOfWorkouts - xMin);
         renderer.setYAxisMax(maxCount+10);
         renderer.setYLabels(15);
         data.addSeries(series.toXYSeries());
