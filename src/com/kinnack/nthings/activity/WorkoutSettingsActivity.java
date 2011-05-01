@@ -36,6 +36,7 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -169,7 +170,10 @@ public class WorkoutSettingsActivity extends Activity {
     private void configureMainView() {
         ((Button)findViewById(R.id.ActivityButton)).setEnabled(true);
         ((Button)findViewById(R.id.FinalButton)).setEnabled(false);
-        findViewById(R.id.levelSelector).setEnabled(true);
+        
+        Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
+        
+        levelSelector.setEnabled(true);
         findViewById(R.id.dayWeekSelector).setEnabled(true);
         
         String value = "";
@@ -178,12 +182,14 @@ public class WorkoutSettingsActivity extends Activity {
             value = "TEST";
         } else if (workoutController.isFinal()) {
             findViewById(R.id.dayWeekSelector).setEnabled(false);
-            findViewById(R.id.levelSelector).setEnabled(false);
+            levelSelector.setEnabled(false);
             value = "FINAL";
             ((Button)findViewById(R.id.ActivityButton)).setEnabled(false);
         } else {
             value = workoutController.getLevelForDisplay();
         }
+        
+        
         
         dayWeekOrLevelChanged();
         
@@ -222,11 +228,12 @@ public class WorkoutSettingsActivity extends Activity {
     
     public void loadLevelOptions() {
         Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
-        if (levelSelector.getAdapter() != null){return;}
         boolean showTest = workoutController.shouldDisplayDayAsTest();
-        LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this, showTest);
-        levelSelector.setAdapter(viewAdapter);
-        levelSelector.setSelection(showTest ? 3 :viewAdapter.getPositionForLevel(workoutController.getCurrentLevel()));
+        if (levelSelector.getAdapter() == null){
+            LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this, showTest);
+            levelSelector.setAdapter(viewAdapter);
+        }
+        levelSelector.setSelection(showTest ? 3 :LevelSelectionViewAdapter.getPositionForLevel(workoutController.getCurrentLevel()));
     }
     
   
@@ -336,9 +343,8 @@ public class WorkoutSettingsActivity extends Activity {
             
             Level level = workoutController.getLevelForTestResult(testCount);
             if (level == null) { return; }
-            workoutController.addTestResult(testCount).resetDay().setCurrentLevel(level);
+            workoutController.addTestResult(testCount).setCurrentLevel(level);
             saveHistory();
-            configureMainView();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             break;
         case FINAL_TEST_INTENT:
@@ -444,18 +450,26 @@ public class WorkoutSettingsActivity extends Activity {
     
     // TODO move this out of here!
     private void saveHistory() {
-        
-        try {
-            workoutController.saveHistory(prefEditor);
-           
-            File externalFolder = new File(PUBLIC_FOLDER_PATH);
-            if (!externalFolder.exists()) { externalFolder.mkdir(); }
-            prefEditor.commit();
-            copyFile(new File(PRIVATE_FILE_PATH),new File(PUBLIC_FILE_PATH));
-        } catch (JSONException e) {
-            Log.e(TAG,"Couldn't convert history to JSON! ",e);
-            Toast.makeText(this, "Error saving history", Toast.LENGTH_SHORT);
-        }
+        new AsyncTask<Void, Void, Boolean>() {
+            protected Boolean doInBackground(Void... params_) {
+                try {
+                    workoutController.saveHistory(prefEditor);
+                    
+                    File externalFolder = new File(PUBLIC_FOLDER_PATH);
+                    if (!externalFolder.exists()) { externalFolder.mkdir(); }
+                    prefEditor.commit();
+                    copyFile(new File(PRIVATE_FILE_PATH),new File(PUBLIC_FILE_PATH));
+                    return true;
+                } catch (JSONException e) {
+                    Log.e(TAG,"Couldn't convert history to JSON! ",e);
+                    return false;
+                }
+            }
+            
+            protected void onPostExecute(Boolean result) {                
+                Toast.makeText(getApplicationContext(), "Error saving history", Toast.LENGTH_SHORT);
+            }
+        }.execute();
     }
     
 
