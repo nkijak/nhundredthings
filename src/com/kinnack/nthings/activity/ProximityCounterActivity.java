@@ -17,7 +17,6 @@ import com.kinnack.nthings.R;
 
 public class ProximityCounterActivity extends CounterActivity implements SensorEventListener {
     int current = 0;
-    private boolean screenLoading = true;
     private boolean disabledToPreventDoubleCount = false;
     private Handler handler;
     @Override
@@ -31,7 +30,7 @@ public class ProximityCounterActivity extends CounterActivity implements SensorE
     protected void onResume() {
         super.onResume();
         registerSensors();
-        screenLoading = true;
+        temporarilyDisableCounting();
     }
     
    
@@ -75,7 +74,6 @@ public class ProximityCounterActivity extends CounterActivity implements SensorE
     public void onSensorChanged(SensorEvent event_) {
        
         if (event_.sensor.getType() == Sensor.TYPE_PROXIMITY && !disabledToPreventDoubleCount) {
-            if (screenLoading) { screenLoading = false; return; }
             float value = event_.values[0];
             float max = event_.sensor.getMaximumRange();
             boolean prox_is_far = value >= max;
@@ -86,7 +84,6 @@ public class ProximityCounterActivity extends CounterActivity implements SensorE
             if (prox_is_far) {
                 count();
                 currentCount.setTextColor(Color.WHITE);
-                //FIXME THIS ISN"T WORKING!!
                 temporarilyDisableCounting();
             } else {
                 currentCount.setTextColor(Color.RED);
@@ -105,7 +102,7 @@ public class ProximityCounterActivity extends CounterActivity implements SensorE
             public void run() {
                 disabledToPreventDoubleCount = false;
             }
-        }, 250);
+        }, 750);
     }
 
 }
