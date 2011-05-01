@@ -8,8 +8,8 @@ public class InitialEasyLevel extends EasyLevel {
 
     @Override
     public boolean checkLevel(int count_) {
-        Log.d("InitialEasyLevel", "Check if "+count_+" < 5 "+(count_<5));
-        return count_ < 5;
+        Log.d("InitialEasyLevel", "Check if "+count_+" <= 5 "+(count_<=5));
+        return count_ <= 5;
     }
 
     @Override
