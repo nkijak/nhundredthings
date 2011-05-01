@@ -41,6 +41,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -514,5 +516,16 @@ public class WorkoutSettingsActivity extends Activity {
         Intent progressIntent = chart.progressChart(history_, this);
         startActivity(progressIntent);
     }
+    
+    //---- menu stuff ------
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu_) {
+       getMenuInflater().inflate(R.menu.main,menu_);
+       menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
+       menu_.findItem(R.id.reset).setEnabled(false).setVisible(false);
+       return true;
+    }
+    
+   
     
 }

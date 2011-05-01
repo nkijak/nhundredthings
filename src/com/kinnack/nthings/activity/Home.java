@@ -140,19 +140,11 @@ public class Home extends Activity {
     public boolean onCreateOptionsMenu(Menu menu_) {
        getMenuInflater().inflate(R.menu.main,menu_);
        menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
+       menu_.findItem(R.id.reset).setIntent(new Intent(this, ResetActivity.class));
        return true;
     }
     
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item_) {
-        switch(item_.getItemId()) {
-        case R.id.reset:
-            startActivityForResult(new Intent(this,ResetActivity.class), RESET_INTENT);
-            return true;
-        default:
-            return super.onOptionsItemSelected(item_);            
-        }
-    }
+  
     
     
     private boolean createFile(File file_) throws IOException{
