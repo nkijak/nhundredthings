@@ -3,7 +3,9 @@
 	<CheckBoxPreference android:summaryOff="@string/sound_off_msg"
 		android:key="@string/sound_setting_key" android:summaryOn="@string/sound_on_msg"
 		android:title="@string/sound_setting_title" android:defaultValue="true"></CheckBoxPreference>
-	
+	<CheckBoxPreference android:summaryOff="@string/reminders_off_msg"
+		android:key="@string/reminders_setting_key" android:summaryOn="@string/reminders_on_msg"
+		android:title="@string/reminders_setting_title" android:defaultValue="true"/>
 		
 	<ListPreference android:key="@string/input_mode_key" 
 		android:title="@string/input_mode_title" 

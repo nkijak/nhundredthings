@@ -47,6 +47,10 @@
 	<string name="input_mode_key">INPUT_MODE</string>
 	<string name="situp_input_mode_title">Situp Input Method</string>
 	<string name="situp_input_mode_key">SITUP_INPUT_MODE</string>
+	<string name="reminders_off_msg">No Reminders</string>
+	<string name="reminders_setting_key">WORKOUT_REMINDERS</string>
+	<string name="reminders_on_msg">Remind Me Occasionally</string>
+	<string name="reminders_setting_title">Workout Reminders</string>
 	
 	<!-- HISTORY -->
 	<string name="history">History</string>

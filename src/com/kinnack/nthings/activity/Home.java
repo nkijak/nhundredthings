@@ -94,10 +94,22 @@ public class Home extends Activity {
     private void setupAlarm() {
         Intent intent = new Intent(this, ReminderReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, ReminderReceiver.RESPONSE_CODE,  intent, PendingIntent.FLAG_NO_CREATE);
-        if (pendingIntent != null) { return; }
-        pendingIntent = PendingIntent.getBroadcast(this, ReminderReceiver.RESPONSE_CODE,  intent, 0);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, new Date().getTime(),AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
+
+        boolean shouldHaveReminders = shouldHaveReminders();
+        if (shouldHaveReminders && pendingIntent == null) { 
+            // turn them on
+            pendingIntent = PendingIntent.getBroadcast(this, ReminderReceiver.RESPONSE_CODE,  intent, 0);
+            AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, new Date().getTime(),AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
+        } else if (!shouldHaveReminders && pendingIntent != null) {
+            // turn them off!
+            pendingIntent.cancel();
+        }
+    }
+    
+    private boolean shouldHaveReminders() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getBoolean(getResources().getString(R.string.reminders_setting_key), true);
     }
     
     @Override
