@@ -208,7 +208,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
 
     @Override
     public void onProgressChanged(SeekBar seekBar_, int progress_, boolean fromUser_) {
-        if (progress_ == 100) {
+        if (progress_ >= 90) {
             seekBar_.setEnabled(false);
             done(null);
         }
@@ -225,7 +225,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar_) {
-        if (seekBar_.getProgress() != 100) {
+        if (seekBar_.getProgress() >= 90) {
             seekBar_.setProgress(0);
         }
         
