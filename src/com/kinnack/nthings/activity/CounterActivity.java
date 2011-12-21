@@ -1,11 +1,14 @@
 package com.kinnack.nthings.activity;
 
+import static android.os.PowerManager.ON_AFTER_RELEASE;
+import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -34,10 +37,13 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     protected long sumTimeBetweenCounts = 0;
     private boolean useSubcount = false;
     protected SoundAlert soundAlert;
+    private PowerManager.WakeLock wakeLock;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        
         Bundle extras = getIntent().getExtras();
         neededCount = extras.getInt(INIT_COUNT_KEY);
         count = neededCount;
@@ -65,6 +71,11 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         stopWatch.start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        keepScreenAlive();
+    }
 
     /**
      * @param extras
@@ -183,6 +194,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     protected void onDestroy() {
         super.onDestroy();
         soundAlert.cleanup();
+        wakeLock.release();
     }
     
     private int getProgressPercent() {
@@ -229,5 +241,11 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
             seekBar_.setProgress(0);
         }
         
+    }
+    
+    private void keepScreenAlive() {
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = pm.newWakeLock(SCREEN_DIM_WAKE_LOCK|ON_AFTER_RELEASE, "RestActivity.screenOn");
+        wakeLock.acquire();
     }
 }
