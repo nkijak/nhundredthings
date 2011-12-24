@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_short_name">DGMT!</string>
+    <string name="app_name">Drop and Give Me Twenty!</string>
+	<string name="is_test_msg">This will be a test.  Perform as many as you can without stopping.\nDon\'t over do it!</string>
+	<string name="is_test_title">Get Ready</string>
+	<string name="is_unlimited_title">Stop When you Drop</string>
+	<string name="is_unlimited_msg">This is the last set. Fill the bar and then do as many more as you can.</string>
+	<string name="final_complete_title">Outstanding!</string>
+	<string name="final_complete_msg">You just completed %1$d %2$s in a row! Share this with your friends!</string>
+	<string name="final_complete_OK">OK, Thanks</string>
+	<string name="final_DNF_title">Congratulations!</string>
+	<string name="final_DNF_msg">You didn\'t quite make it but don\'t give up. That was still a impressive effort!\nTo help you reach your goal week 6 has been reset so you can practice more\nOr you can retry this final test at any time!</string>
+	<string name="week">week</string>
+	<string name="day">day</string>
+	<string name="level">level</string>
+	<string name="positive">Let\'s Do It!</string>
+	<string name="done">DONE</string>
+	<string name="week_day_select_msg">Select Week and Day</string>
+	<string name="level_select_msg">Select Intensity Level</string>
+	<string name="reset">Reset History...</string>
+	<string name="actual_reset">Reset History</string>
+	<string name="situps_button_txt">Situps</string>
+	<string name="situps_label">situps</string>
+	<string name="pushups_label">pushups</string>
+	<string name="share_results_msg">I just did %1$d %2$s at %3$d %2$s/min in #DGMT!</string>
+	<string name="share_complete_msg">I finished the %1$d %2$s program using #DGMT! with %3$d IN A ROW at %4$d %2$s/min!</string>
+	<string name="share_dnf_final_msg">"I just did %1$d %2$s IN A ROW at %3$d %2$s/min in #DGMT! Almost there!"</string>
+	<string name="count_for_test_msg">as many as you can</string>
+	<!-- Proximity Errors -->
+	<string name="prox_err_title">No Sensor!</string>
+	<string name="prox_err_msg">Can not find proximity sensor.</string>
+	<!-- SETTINGS -->
+	<string name="settings">Settings</string>
+	<string name="sound_on_msg">Sound On</string>
+	<string name="sound_off_msg">Sound Off</string>
+	<string name="sound_setting_key">SOUND_SETTING</string>
+	<string name="sound_setting_title">Sound</string>
+	<string name="manual_entry_msg">Timer only</string>
+	<string name="nose_entry_msg">Use my nose</string>
+	<string name="proximity_entry_msg">Count by proximity</string>
+	<string name="situp_accelerometer_entry_msg">Hold the phone on my chest</string>
+	<string name="situp_counter_entry_msg">Giant counter button</string>
+	<string name="entry_setting_title">Manual Count Entry</string>
+	<string name="entry_type_key">MANUAL_ENTRY</string>
+	<string name="input_mode_title">Pushup Input Method</string>
+	<string name="input_mode_key">INPUT_MODE</string>
+	<string name="situp_input_mode_title">Situp Input Method</string>
+	<string name="situp_input_mode_key">SITUP_INPUT_MODE</string>
+	<string name="reminders_off_msg">No Reminders</string>
+	<string name="reminders_setting_key">WORKOUT_REMINDERS</string>
+	<string name="reminders_on_msg">Remind Me Occasionally</string>
+	<string name="reminders_setting_title">Workout Reminders</string>
+	
+	
+	<!-- HISTORY -->
+	<string name="history">History</string>
+	<!-- Manual Entry -->
+	<string name="start">START</string>
+	<string name="end">END</string>
+	<string name="manual_entry_label">Number of pushups</string>
+	
+	<!-- Reset -->
+	<string name="resetWarning">If you wish to reset your workout history long press on the screen and choose "Reset History".
+	This cannot be undone!</string>
+	
+	<!-- Rest -->
+	<string name="skip_rest_msg">Press Back to skip to the next set</string>
+	<string name="count_to_go">%1$d more to go</string>
+	
+</resources>

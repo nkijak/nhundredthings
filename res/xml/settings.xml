@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+	<CheckBoxPreference android:summaryOff="@string/sound_off_msg"
+		android:key="@string/sound_setting_key" android:summaryOn="@string/sound_on_msg"
+		android:title="@string/sound_setting_title" android:defaultValue="true"></CheckBoxPreference>
+	<CheckBoxPreference android:summaryOff="@string/reminders_off_msg"
+		android:key="@string/reminders_setting_key" android:summaryOn="@string/reminders_on_msg"
+		android:title="@string/reminders_setting_title" android:defaultValue="true"/>
+		
+	<ListPreference android:key="@string/input_mode_key" 
+		android:title="@string/input_mode_title" 
+		android:entryValues="@array/input_mode_keys" 
+		android:entries="@array/input_mode" 
+		android:dialogTitle="@string/input_mode_title"
+		android:defaultValue="COUNT"
+		android:dialogIcon="@drawable/dialog" />
+		
+	<ListPreference android:key="@string/situp_input_mode_key"
+		android:title="@string/situp_input_mode_title"
+		android:entryValues="@array/situp_input_mode_keys"
+		android:entries="@array/situp_input_mode" 
+		android:dialogTitle="@string/situp_input_mode_title" 
+		android:defaultValue="ACCELEROMETER"
+		android:dialogIcon="@drawable/dialog" />
+</PreferenceScreen>

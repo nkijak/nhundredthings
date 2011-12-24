@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" android:layout_gravity="center_horizontal"
+			android:paddingLeft="20dp" android:paddingRight="20dp" android:orientation="vertical">
+	  		
+	  		
+	  		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="total count" android:gravity="center"
+				android:textSize="25sp" android:id="@+id/count_for_settings"
+				android:background="@drawable/speech_bubble" />
+	  		
+	  		<Spinner android:id="@+id/dayWeekSelector"
+						 android:choiceMode="singleChoice" 
+						 android:layout_width="fill_parent" android:layout_height="50dp"
+						 android:prompt="@string/week_day_select_msg"
+						 >
+			
+			</Spinner>
+			<Spinner android:id="@+id/levelSelector"
+					android:choiceMode="singleChoice"
+					android:layout_width="fill_parent"
+					android:layout_height="50dp" 
+					android:prompt="@string/level_select_msg" />
+					
+	  		<Button android:layout_height="wrap_content" android:id="@+id/ActivityButton"
+				android:text="Start" android:gravity="center_horizontal"
+				android:layout_width="fill_parent" android:onClick="doActivity"></Button>
+	  		
+	  		<Button android:layout_height="wrap_content" android:id="@+id/FinalButton"
+				android:text="Final Test" android:layout_width="fill_parent"
+				android:gravity="center_horizontal" android:onClick="doFinalTest"
+				android:enabled="false"></Button>
+				
+			<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton"
+				android:layout_width="fill_parent" android:gravity="center_horizontal"
+				android:text="Progress" android:onClick="showProgress"></Button>	
+	  		
+		</LinearLayout>

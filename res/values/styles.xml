@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+<style name="GradientLight" parent="@android:style/Theme.Light.NoTitleBar">
+    <item name="android:windowBackground">@drawable/background</item>
+    <item name="android:progressBarStyle">@style/progressBar</item>
+    <item name="android:buttonStyle">@style/greenButton</item>
+    <item name="android:buttonStyleSmall">@style/greenButton</item>
+    <item name="android:listViewStyle">@style/listView</item>
+    <item name="android:itemBackground">@drawable/menu_selector</item>
+    <item name="android:spinnerStyle">@style/spinner</item>
+    <item name="android:seekBarStyle">@style/seekBar</item>
+</style>
+
+<style name="progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+	<!-- These margins are valid but do not work. Had to put on the element. -->
+	<item name="android:layout_marginLeft">3dp</item>
+	<item name="android:layout_marginRight">3dp</item>
+	<item name="android:paddingTop">15dp</item>
+	<item name="android:paddingBottom">15dp</item>
+	<item name="android:progressDrawable">@drawable/green_progress_horizontal</item>
+</style>
+
+<style name="seekBar" parent="@android:style/Widget.SeekBar">
+	<item name="android:progressDrawable">@drawable/slide_to_finish</item>
+	<item name="android:thumb">@drawable/seek_thumb</item>
+</style>
+
+<style name="greenButton" parent="@android:style/Widget.Button">
+	<item name="android:background">@drawable/green_button</item>
+	<item name="android:textSize">35sp</item>
+	<item name="android:shadowRadius">1</item>
+	<item name="android:shadowColor">#ffff</item>
+	<item name="android:shadowDy">1</item>
+</style>
+
+<style name="listView" parent="@android:style/Widget.ListView.White">
+	<item name="android:background">@drawable/background</item>
+	<item name="android:listSelector">@drawable/list_selector_background_green</item>
+</style>
+
+<style name="spinner" parent="@android:style/Widget.Spinner">
+	<item name="android:background">@drawable/btn_dropdown</item>
+</style>
+
+<style name="whiteDropShadow">
+	<item name="android:shadowRadius">1</item>
+	<item name="android:shadowColor">#cfff</item>
+	<item name="android:shadowDy">1</item>
+</style>
+
+<style name="label">
+	<item name="android:textSize">5pt</item>
+	<item name="android:shadowRadius">1</item>
+	<item name="android:shadowColor">#cfff</item>
+	<item name="android:shadowDy">1</item>
+	<item name="android:gravity">bottom</item>
+</style>
+
+<style name="value">
+	<item name="android:textSize">8pt</item>
+	<item name="android:textColor">#f888</item>
+	<item name="android:gravity">top</item>
+</style>
+
+<style parent="Widget.TitlePageIndicator" name="Widget.GreenTitlePageIndicator">
+    <item name="footerColor">#ff479e00</item>
+</style>
+</resources>
