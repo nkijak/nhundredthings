@@ -24,7 +24,8 @@
 	  			android:id="@+id/ExerciseLabel"
 	  			style="@style/whiteDropShadow" 
 	  			android:gravity="center"  android:layout_width="0px"
-	  			android:layout_weight="1"/>
+	  			android:layout_weight="1"
+	  			android:visibility="gone"/>
   			
   		</LinearLayout>
   		<com.viewpagerindicator.TitlePageIndicator

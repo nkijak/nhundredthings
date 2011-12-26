@@ -57,4 +57,5 @@ public class ExcerciseSettingsFragment extends Fragment {
     }
     
     public String getLabel() { return type.getLabel(); }
+    public WorkoutController getWorkoutController() { return workoutController; }
 }

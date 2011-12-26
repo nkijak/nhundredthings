@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.fragments.ExcerciseSettingsFragment;
 import com.kinnack.nthings.model.Workout.Type;
 import com.viewpagerindicator.TitleProvider;
@@ -39,6 +40,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter implements TitleProvi
     @Override
     public Fragment getItem(int position_) {
         return TITLES[position_];
+    }
+    
+    public WorkoutController getWorkoutController(int position_) {
+        return TITLES[position_].getWorkoutController();
     }
 
 }

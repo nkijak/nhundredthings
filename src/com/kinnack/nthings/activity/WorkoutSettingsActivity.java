@@ -44,6 +44,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,12 +80,32 @@ public class WorkoutSettingsActivity extends FragmentActivity {
         Bundle extras = getIntent().getExtras();
         Type type = Type.valueOf(extras.getString(WORKOUT_TYPE));
         TextView exerciseLabel = (TextView)findViewById(R.id.ExerciseLabel);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
-        TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
+        
+        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        final ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+        final TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
         pager.setAdapter(adapter);
         indicator.setViewPager(pager);
-        
+        indicator.setOnPageChangeListener(new OnPageChangeListener() {
+            
+            @Override
+            public void onPageSelected(int position_) {
+                workoutController = adapter.getWorkoutController(position_);
+                onResume();
+            }
+            
+            @Override
+            public void onPageScrolled(int arg0_, float arg1_, int arg2_) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void onPageScrollStateChanged(int arg0_) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
         
         switch (type) {
         case PUSHUP:
