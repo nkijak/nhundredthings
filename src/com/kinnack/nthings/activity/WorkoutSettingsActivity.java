@@ -79,7 +79,6 @@ public class WorkoutSettingsActivity extends FragmentActivity {
         setContentView(R.layout.activity_settings);
         Bundle extras = getIntent().getExtras();
         Type type = Type.valueOf(extras.getString(WORKOUT_TYPE));
-        TextView exerciseLabel = (TextView)findViewById(R.id.ExerciseLabel);
         
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         final ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
@@ -91,7 +90,7 @@ public class WorkoutSettingsActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position_) {
                 workoutController = adapter.getWorkoutController(position_);
-                onResume();
+                ((TextView)findViewById(R.id.OverallTotalCount)).setText(workoutController.getTotalCount()+" TOTAL");
             }
             
             @Override
@@ -107,16 +106,10 @@ public class WorkoutSettingsActivity extends FragmentActivity {
             }
         });
         
-        switch (type) {
-        case PUSHUP:
-            workoutController = new PushupWorkoutController();
-            exerciseLabel.setText("Push Ups");
-            break;
-        case SITUP:
-            workoutController = new SitupWorkoutController();
-            exerciseLabel.setText("Sit Ups");
-            break;
-        }
+        int position = adapter.getPositionForType(type);
+        workoutController = adapter.getWorkoutController(position);
+        pager.setCurrentItem(position);
+        
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
         //setDayWeekSelectorOnItemClick();
@@ -128,72 +121,19 @@ public class WorkoutSettingsActivity extends FragmentActivity {
     /**
      * 
      */
-    private void setDayWeekSelectorOnItemClick() {
-        ((Spinner)findViewById(R.id.dayWeekSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
-            private int previousPosition = -1;
-            @Override
-            public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
-                Log.d("dgmt!dayWeekSelectorItemSelect","day and week changed to position "+position_);
-                DayAndWeek dayAndWeek = WorkoutSelectionViewAdapter.getDayAndWeekByPosition(position_);
-                boolean dayOrWeekChanged = !dayAndWeek.equals(workoutController.getDayAndWeek());
-                if (dayAndWeek.wasFound() && !workoutController.isTest() && dayOrWeekChanged ) {
-                    Log.d("dgmt!dayWeekSelectorItemSelect","day and week has changed");
-                    workoutController.setDayAndWeek(dayAndWeek);
-                    dayWeekOrLevelChanged();
-                }
-                previousPosition = position_;
-                
-                
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0_) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-        
-    }
     
-    private void setLevelSelectorOnItemSelect(){
-        ((Spinner)findViewById(R.id.levelSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
-
-            
-           
-            @Override
-            public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
-                Log.d("dgmt!levelSelectorItemSelect","Level changed to position "+position_);
-                Level level = LevelSelectionViewAdapter.getLevelByPosition(position_);
-               
-                boolean levelChanged = !level.equals(workoutController.getCurrentLevel());
-                Log.d("dgmt!levelSelectorItemSelect","Level changed?"+levelChanged+". current="+workoutController.getCurrentLevel()+"] selected="+level);
-                if(position_ != 3 && workoutController.setCurrentLevel(level)) {
-                    Log.d("dgmt!levelSelectorItemSelect", "Level has actually changed");
-                    findViewById(R.id.dayWeekSelector).setEnabled(true);
-                }
-                if (levelChanged) {dayWeekOrLevelChanged();}
-                
-                
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0_) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-    }
+    
+    
     
     
     @Override
     protected void onResume() {
         super.onResume();
-        counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
-        workoutController.setCounterActivityManager(counterActivityManager);
-        workoutController.loadHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
-        ((TextView)findViewById(R.id.OverallTotalCount)).setText(workoutController.getTotalCount()+" TOTAL");
         
-        //listDayWeekOptions();
+        //((TextView)findViewById(R.id.OverallTotalCount)).setText(workoutController.getTotalCount()+" TOTAL");
+        
+        
+        
         //loadLevelOptions();
         //configureMainView();
     }
@@ -225,7 +165,7 @@ public class WorkoutSettingsActivity extends FragmentActivity {
         
         
         
-        dayWeekOrLevelChanged();
+//        dayWeekOrLevelChanged();
         
         
         if (workoutController.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
@@ -237,27 +177,13 @@ public class WorkoutSettingsActivity extends FragmentActivity {
         //((Spinner)findViewById(R.id.levelSelector)).s
     }
     
-    protected void dayWeekOrLevelChanged() {
-        String count = (String) getResources().getText(R.string.count_for_test_msg);
-        if (!workoutController.shouldDisplayDayAsTest()) { count = workoutController.totalCountLeft()+""; }
-        ((TextView)findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
-    }
     
-    public void listDayWeekOptions() {
-        
-        Spinner dayWeekSelector = (Spinner)findViewById(R.id.dayWeekSelector);
-        if (dayWeekSelector.getAdapter() !=  null) { return; }
-        WorkoutSelectionViewAdapter listAdapter = new WorkoutSelectionViewAdapter(this, workoutController.isFinal());
-        dayWeekSelector.setAdapter(listAdapter);
-        Log.d("dgmt:listDayWeekOptions","Getting position for dayWeek with week="+workoutController.getWeek()+" and day="+workoutController.getDay());
-        dayWeekSelector.setSelection(listAdapter.getPositionForWeekDay(workoutController.getWeek(), workoutController.getDay()));
-        
-    }
+    
     
     public void resetSpinners() {
         ((Spinner)findViewById(R.id.dayWeekSelector)).setAdapter(null);
         ((Spinner)findViewById(R.id.levelSelector)).setAdapter(null);
-        dayWeekOrLevelChanged();
+//        dayWeekOrLevelChanged();
     }
     
     public void loadLevelOptions() {

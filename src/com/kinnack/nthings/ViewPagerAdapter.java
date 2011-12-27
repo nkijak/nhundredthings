@@ -16,6 +16,7 @@ import com.viewpagerindicator.TitleProvider;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter implements TitleProvider {
 
+    private static final Type[] POSITIONS = {Type.PUSHUP, Type.SITUP}; 
     private static final ExcerciseSettingsFragment[] TITLES = {ExcerciseSettingsFragment.newInstance(Type.PUSHUP),
                                                                 ExcerciseSettingsFragment.newInstance(Type.SITUP)};
     
@@ -44,6 +45,13 @@ public class ViewPagerAdapter extends FragmentPagerAdapter implements TitleProvi
     
     public WorkoutController getWorkoutController(int position_) {
         return TITLES[position_].getWorkoutController();
+    }
+    
+    public int getPositionForType(Type typeToFind_) {
+        for (int i = 0; i < POSITIONS.length; i++) {
+           if (POSITIONS[i] == typeToFind_){ return i; }
+        }
+        return 0;
     }
 
 }
