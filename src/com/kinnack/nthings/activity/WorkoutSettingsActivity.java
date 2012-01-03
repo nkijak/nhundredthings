@@ -7,54 +7,41 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.util.Date;
 
 import org.json.JSONException;
 
-import com.kinnack.nthings.ProgressChart;
-import com.kinnack.nthings.R;
-import com.kinnack.nthings.StopWatch;
-import com.kinnack.nthings.ViewPagerAdapter;
-import com.kinnack.nthings.controller.PushupWorkoutController;
-import com.kinnack.nthings.controller.SitupWorkoutController;
-import com.kinnack.nthings.controller.WorkoutController;
-import com.kinnack.nthings.helper.CounterActivityManager;
-import com.kinnack.nthings.model.DayAndWeek;
-import com.kinnack.nthings.model.History;
-import com.kinnack.nthings.model.LevelSelectionViewAdapter;
-import com.kinnack.nthings.model.Logg;
-import com.kinnack.nthings.model.Test;
-import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
-import com.kinnack.nthings.model.Workout.Type;
-import com.kinnack.nthings.model.level.Level;
-import com.viewpagerindicator.TitlePageIndicator;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.kinnack.nthings.ProgressChart;
+import com.kinnack.nthings.R;
+import com.kinnack.nthings.StopWatch;
+import com.kinnack.nthings.ViewPagerAdapter;
+import com.kinnack.nthings.controller.WorkoutController;
+import com.kinnack.nthings.model.History;
+import com.kinnack.nthings.model.Logg;
+import com.kinnack.nthings.model.Workout.Type;
+import com.kinnack.nthings.model.level.Level;
+import com.viewpagerindicator.TitlePageIndicator;
 
 public class WorkoutSettingsActivity extends FragmentActivity {
     public static final String TAG = "dgmt:WorkoutSettings";
@@ -71,7 +58,6 @@ public class WorkoutSettingsActivity extends FragmentActivity {
     
     private WorkoutController workoutController;
     private Editor prefEditor;
-    private CounterActivityManager counterActivityManager;
     
     @Override
     protected void onCreate(Bundle savedInstanceState_) {
@@ -90,7 +76,7 @@ public class WorkoutSettingsActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position_) {
                 workoutController = adapter.getWorkoutController(position_);
-                ((TextView)findViewById(R.id.OverallTotalCount)).setText(workoutController.getTotalCount()+" TOTAL");
+                getSupportActionBar().setTitle(workoutController.getTotalCount()+" TOTAL");
             }
             
             @Override
@@ -112,65 +98,9 @@ public class WorkoutSettingsActivity extends FragmentActivity {
         
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
-        //setDayWeekSelectorOnItemClick();
-        //setLevelSelectorOnItemSelect();
     }
     
-    
-    
-    /**
-     * 
-     */
-    
-    
-    
-    
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        
-        //((TextView)findViewById(R.id.OverallTotalCount)).setText(workoutController.getTotalCount()+" TOTAL");
-        
-        
-        
-        //loadLevelOptions();
-        //configureMainView();
-    }
-    
-    /**
-     * 
-     */
-    private void configureMainView() {
-        ((Button)findViewById(R.id.ActivityButton)).setEnabled(true);
-        ((Button)findViewById(R.id.FinalButton)).setEnabled(false);
-        
-        Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
-        
-        levelSelector.setEnabled(true);
-        findViewById(R.id.dayWeekSelector).setEnabled(true);
-        
-        String value = "";
-        if (workoutController.isTest()) {
-            findViewById(R.id.dayWeekSelector).setEnabled(false);
-            value = "TEST";
-        } else if (workoutController.isFinal()) {
-            findViewById(R.id.dayWeekSelector).setEnabled(false);
-            levelSelector.setEnabled(false);
-            value = "FINAL";
-            ((Button)findViewById(R.id.ActivityButton)).setEnabled(false);
-        } else {
-            value = workoutController.getLevelForDisplay();
-        }
-        
-        
-        
-//        dayWeekOrLevelChanged();
-        
-        
-        if (workoutController.isFinalUnlocked()) ((Button)findViewById(R.id.FinalButton)).setEnabled(true);
-    }
-    
+   
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -186,16 +116,7 @@ public class WorkoutSettingsActivity extends FragmentActivity {
 //        dayWeekOrLevelChanged();
     }
     
-    public void loadLevelOptions() {
-        Spinner levelSelector = (Spinner)findViewById(R.id.levelSelector);
-        boolean showTest = workoutController.shouldDisplayDayAsTest();
-        if (levelSelector.getAdapter() == null){
-            LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(this, showTest);
-            levelSelector.setAdapter(viewAdapter);
-        }
-        levelSelector.setSelection(showTest ? 3 :LevelSelectionViewAdapter.getPositionForLevel(workoutController.getCurrentLevel()));
-    }
-    
+   
   
     
    
@@ -476,6 +397,19 @@ public class WorkoutSettingsActivity extends FragmentActivity {
     }
     
     //---- menu stuff ------
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item_) {
+        switch (item_.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item_);
+        }
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu_) {
        getMenuInflater().inflate(R.menu.main,menu_);

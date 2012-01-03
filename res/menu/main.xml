@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 	<item android:id="@+id/settings" android:icon="@android:drawable/ic_menu_preferences"
-		android:title="@string/settings"></item>
+		android:title="@string/settings"
+		android:showAsAction="ifRoom"></item>
 	
 
 	<item android:id="@+id/reset" android:icon="@android:drawable/ic_menu_revert"

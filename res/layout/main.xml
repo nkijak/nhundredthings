@@ -73,6 +73,6 @@
 			
 		
 	</LinearLayout>	
-	
+	<ImageButton android:src="@android:drawable/ic_menu_preferences" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-<style name="GradientLight" parent="@android:style/Theme.Light.NoTitleBar">
+<style name="GradientLight" parent="Theme.Sherlock.Light">
     <item name="android:windowBackground">@drawable/background</item>
     <item name="android:progressBarStyle">@style/progressBar</item>
     <item name="android:buttonStyle">@style/greenButton</item>
@@ -10,6 +10,11 @@
     <item name="android:itemBackground">@drawable/menu_selector</item>
     <item name="android:spinnerStyle">@style/spinner</item>
     <item name="android:seekBarStyle">@style/seekBar</item>
+   	<item name="abBackground">@drawable/header</item> 
+   	<item name="actionBarSize">50dp</item>
+   	<item name="abTitleTextStyle">@style/whiteDropShadow</item><!-- Doesn't style the text as listed. Only basic functionality? -->
+   	<item name="abLogo">@drawable/header_logo</item>
+   	<item name="selectableItemBackground">@drawable/ab_selectable_background_green</item>
 </style>
 
 <style name="progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
@@ -47,6 +52,7 @@
 	<item name="android:shadowRadius">1</item>
 	<item name="android:shadowColor">#cfff</item>
 	<item name="android:shadowDy">1</item>
+	<item name="android:textStyle">bold</item>
 </style>
 
 <style name="label">
