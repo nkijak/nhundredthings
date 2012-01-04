@@ -21,7 +21,11 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.ActionBar.Tab;
+import android.support.v4.app.ActionBar.TabListener;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
@@ -32,18 +36,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.internal.view.menu.ActionMenuView.ActionMenuChildView;
 import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.ViewPagerAdapter;
 import com.kinnack.nthings.controller.WorkoutController;
+import com.kinnack.nthings.fragments.ExcerciseTabListener;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
 import com.viewpagerindicator.TitlePageIndicator;
 
-public class WorkoutSettingsActivity extends FragmentActivity {
+public class WorkoutSettingsActivity extends FragmentActivity implements TabListener{
     public static final String TAG = "dgmt:WorkoutSettings";
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;
@@ -62,39 +68,13 @@ public class WorkoutSettingsActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState_) {
         super.onCreate(savedInstanceState_);
-        setContentView(R.layout.activity_settings);
         Bundle extras = getIntent().getExtras();
         Type type = Type.valueOf(extras.getString(WORKOUT_TYPE));
         
-        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        final ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
-        final TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
-        pager.setAdapter(adapter);
-        indicator.setViewPager(pager);
-        indicator.setOnPageChangeListener(new OnPageChangeListener() {
-            
-            @Override
-            public void onPageSelected(int position_) {
-                workoutController = adapter.getWorkoutController(position_);
-                getSupportActionBar().setTitle(workoutController.getTotalCount()+" TOTAL");
-            }
-            
-            @Override
-            public void onPageScrolled(int arg0_, float arg1_, int arg2_) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void onPageScrollStateChanged(int arg0_) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-        
-        int position = adapter.getPositionForType(type);
-        workoutController = adapter.getWorkoutController(position);
-        pager.setCurrentItem(position);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.addTab(actionBar.newTab().setText("Push Ups").setTabListener(new ExcerciseTabListener(this, Type.PUSHUP)));
+        actionBar.addTab(actionBar.newTab().setText("Sit Ups").setTabListener(new ExcerciseTabListener(this, Type.SITUP)));
         
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
@@ -416,6 +396,29 @@ public class WorkoutSettingsActivity extends FragmentActivity {
        menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
        menu_.findItem(R.id.reset).setEnabled(false).setVisible(false);
        return true;
+    }
+
+
+    
+//--- ACTIONBAR TABLISTENER
+    @Override
+    public void onTabReselected(Tab tab_, FragmentTransaction ft_) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void onTabSelected(Tab tab_, FragmentTransaction ft_) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void onTabUnselected(Tab tab_, FragmentTransaction ft_) {
+        // TODO Auto-generated method stub
+        
     }
     
    

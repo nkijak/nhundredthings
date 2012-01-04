@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ExcerciseSettingsFragment extends Fragment {
+    
     private static final String WORKOUT_TYPE = "workout-type";
     public static final String PREFS = "prefs_config";
     
