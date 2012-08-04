@@ -21,35 +21,29 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.ActionBar.Tab;
-import android.support.v4.app.ActionBar.TabListener;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.internal.view.menu.ActionMenuView.ActionMenuChildView;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
-import com.kinnack.nthings.ViewPagerAdapter;
 import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.fragments.ExcerciseTabListener;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
-import com.viewpagerindicator.TitlePageIndicator;
 
-public class WorkoutSettingsActivity extends FragmentActivity implements TabListener{
+public class WorkoutSettingsActivity extends SherlockFragmentActivity implements TabListener{
     public static final String TAG = "dgmt:WorkoutSettings";
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;
@@ -346,7 +340,7 @@ public class WorkoutSettingsActivity extends FragmentActivity implements TabList
                 copyFile_.getParentFile().mkdirs();
                 copyFile_.createNewFile();
             }
-            
+             
             FileOutputStream out = new FileOutputStream(copyFile_);
             FileInputStream in = new FileInputStream(originalFile_);
             
@@ -392,7 +386,7 @@ public class WorkoutSettingsActivity extends FragmentActivity implements TabList
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu_) {
-       getMenuInflater().inflate(R.menu.main,menu_);
+       getSupportMenuInflater().inflate(R.menu.main,menu_);
        menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
        menu_.findItem(R.id.reset).setEnabled(false).setVisible(false);
        return true;

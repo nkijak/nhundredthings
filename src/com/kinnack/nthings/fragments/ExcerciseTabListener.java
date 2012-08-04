@@ -1,7 +1,7 @@
 package com.kinnack.nthings.fragments;
 
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -31,7 +31,7 @@ public class ExcerciseTabListener implements ActionBar.TabListener {
             ft.add(android.R.id.content, mFragment, mTag);
         } else {
             // If it exists, simply attach it in order to show it
-            ft.attach(mFragment);
+            ft.show(mFragment);
         }
         ft.commit();
     }
@@ -40,7 +40,7 @@ public class ExcerciseTabListener implements ActionBar.TabListener {
         if (mFragment != null) {
             // Detach the fragment, because another one is being attached
             ft = activity.getSupportFragmentManager().beginTransaction();
-            ft.detach(mFragment);
+            ft.hide(mFragment);
             ft.commit();
         }
     }

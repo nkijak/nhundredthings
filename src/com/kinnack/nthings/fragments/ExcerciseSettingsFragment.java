@@ -1,32 +1,41 @@
 package com.kinnack.nthings.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.ViewPagerAdapter;
 import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.controller.SitupWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.LevelSelectionViewAdapter;
-import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
+import com.kinnack.nthings.model.SetTitleAdapter;
 import com.kinnack.nthings.model.Workout.Type;
+import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
 import com.kinnack.nthings.model.level.Level;
+import com.viewpagerindicator.TitlePageIndicator;
 
-import android.content.Context;
-import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
-
-public class ExcerciseSettingsFragment extends Fragment {
+public class ExcerciseSettingsFragment extends SherlockFragment {
     
     private static final String WORKOUT_TYPE = "workout-type";
     public static final String PREFS = "prefs_config";
@@ -66,7 +75,17 @@ public class ExcerciseSettingsFragment extends Fragment {
     
     @Override
     public View onCreateView(LayoutInflater inflater_, ViewGroup container_, Bundle savedInstanceState_) {
-        view = inflater_.inflate(R.layout.excercise_settings, container_, false);
+    	if (view != null) return view;
+        view = inflater_.inflate(R.layout.excersice_settings_level, container_, false);
+        
+        ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
+        //new SetAdapterTask(pager, new SetTitleAdapter(getFragmentManager(),workoutController)).execute();
+        pager.setAdapter(new SetTitleAdapter(getFragmentManager(),workoutController));
+      
+        
+        TitlePageIndicator titleIndicator = (TitlePageIndicator)view.findViewById(R.id.setTitles);
+        titleIndicator.setViewPager(pager);
+        
         //setDayWeekSelectorOnItemClick();
         //setLevelSelectorOnItemSelect();
         return view;
@@ -79,10 +98,27 @@ public class ExcerciseSettingsFragment extends Fragment {
         workoutController.setCounterActivityManager(counterActivityManager);
         workoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         
-        listDayWeekOptions();
-        loadLevelOptions();
-        configureMainView();
+        //listDayWeekOptions();
+        //loadLevelOptions();
+        //configureMainView();
+        
+        
+        
+        
     }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu_, MenuInflater inflater_) {
+    	MenuItem levelMenuItem = menu_.findItem(R.id.levelMenuItem);
+		levelMenuItem.setTitle("II");
+    }
+    
+   @Override
+	public void onPrepareOptionsMenu(Menu menu_) {
+		MenuItem levelMenuItem = menu_.findItem(R.id.levelMenuItem);
+		levelMenuItem.setTitle("II");
+		MenuItem rankMenuItem = menu_.findItem(R.id.rankMenuItem);
+	}
     
     private void configureMainView() {
         ((Button)view.findViewById(R.id.ActivityButton)).setEnabled(true);
@@ -202,4 +238,26 @@ public class ExcerciseSettingsFragment extends Fragment {
     
     public String getLabel() { return type.getLabel(); }
     public WorkoutController getWorkoutController() { return workoutController; }
+    
+    
+    private class SetAdapterTask extends AsyncTask<Void, Void, Void>{
+    	private ViewPager _pager;
+    	private FragmentPagerAdapter _adapter;
+    	
+    	public SetAdapterTask(ViewPager pager_, FragmentPagerAdapter adapter_) {
+    		_pager = pager_;
+    		_adapter = adapter_;
+    	}
+    	
+		@Override
+		protected Void doInBackground(Void... params_) {
+			return null;
+		}
+
+		
+		@Override
+		protected void onPostExecute(Void result_) {
+			_pager.setAdapter(_adapter);
+		}
+    }
 }

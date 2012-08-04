@@ -10,13 +10,13 @@
     <item name="android:itemBackground">@drawable/menu_selector</item>
     <item name="android:spinnerStyle">@style/spinner</item>
     <item name="android:seekBarStyle">@style/seekBar</item>
-   	<item name="abBackground">@drawable/header</item> 
+   	 
    	<item name="actionBarSize">50dp</item>
-   	<item name="abTitleTextStyle">@style/whiteDropShadow</item><!-- Doesn't style the text as listed. Only basic functionality? -->
+   	
    	<item name="actionBarTabTextStyle">@style/whiteDropShadow</item>
    	<item name="actionBarTabStyle">@style/actionBarTab</item>
-   	<item name="abLogo">@drawable/header_logo</item>
-   	<item name="selectableItemBackground">@drawable/ab_selectable_background_green</item>
+   	
+   	
 </style>
 
 <style name="actionBarTab" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
