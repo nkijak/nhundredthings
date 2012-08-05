@@ -4,11 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Overview"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+  <LinearLayout android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_width="wrap_content" android:padding="3dp"
+		android:layout_weight="1">
+		<TextView 
+			android:layout_height="wrap_content" android:text="Last"
+			android:layout_width="wrap_content" style="@style/label"></TextView>
+		<TextView android:id="@+id/lastUse"
+			android:layout_height="wrap_content" android:text="1/1/11"
+			android:layout_width="wrap_content" style="@style/value"></TextView>
+		<TextView 
+			android:layout_height="wrap_content" android:text="Last Count"
+			android:layout_width="wrap_content" style="@style/label"></TextView>
+		<TextView android:id="@+id/lastCount"
+			android:layout_height="wrap_content" android:text="112"
+			android:layout_width="wrap_content" style="@style/value"></TextView>
+		<TextView 
+			android:layout_height="wrap_content" android:text="Total+Tests"
+			android:layout_width="wrap_content" style="@style/label"></TextView>
+		<TextView android:id="@+id/totalValue"
+			android:layout_height="wrap_content" android:text="696"
+			android:layout_width="wrap_content" style="@style/value"></TextView>
+	</LinearLayout>
 
 </LinearLayout>

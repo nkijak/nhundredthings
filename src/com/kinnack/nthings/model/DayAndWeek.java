@@ -26,4 +26,8 @@ public class DayAndWeek {
         DayAndWeek other = (DayAndWeek)o_;
         return other.day == day && other.week == week;
     }
+    
+    public DayAndWeek differentDayOfWeek(int day) {
+    	return new DayAndWeek(day, week);
+    }
 }

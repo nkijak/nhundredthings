@@ -131,7 +131,13 @@ public abstract class WorkoutController {
         return history.isFinalUnlocked();
     }
 
-    public boolean shouldDisplayDayAsTest() {
+    /**
+	 * @deprecated Use {@link #shouldDisplayDayAsTest(DayAndWeek)} instead
+	 */
+	public boolean shouldDisplayDayAsTest() {
+		return shouldDisplayDayAsTest(null);
+	}
+	public boolean shouldDisplayDayAsTest(DayAndWeek dayAndWeek_) {
         return history != null && (history.isTest() || history.isFinal());
     }
 
@@ -177,7 +183,13 @@ public abstract class WorkoutController {
         return set.getSetsToGo();
     }
     
-    public int totalCountLeft() {
+    /**
+	 * @deprecated Use {@link #totalCountLeft(DayAndWeek)} instead
+	 */
+	public int totalCountLeft() {
+		return totalCountLeft(null);
+	}
+	public int totalCountLeft(DayAndWeek dayAndWeek_) {
         return set.getCountLeft();
     }
 

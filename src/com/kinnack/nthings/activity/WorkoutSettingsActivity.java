@@ -21,15 +21,12 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -43,7 +40,7 @@ import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
 
-public class WorkoutSettingsActivity extends SherlockFragmentActivity implements TabListener{
+public class WorkoutSettingsActivity extends SherlockFragmentActivity {
     public static final String TAG = "dgmt:WorkoutSettings";
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;
@@ -154,7 +151,7 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity implements
         restIntent.putExtra(RestActivity.REST_LENGTH, workoutController.nextSet());
         restIntent.putExtra(RestActivity.SETS_DONE, workoutController.completedSets());
         restIntent.putExtra(RestActivity.SETS_TO_GO, workoutController.incompleteSets());
-        restIntent.putExtra(RestActivity.COUNT_TO_GO, workoutController.totalCountLeft());
+        restIntent.putExtra(RestActivity.COUNT_TO_GO, workoutController.totalCountLeft(null));
         startActivityForResult(restIntent, REST_INTENT);
     }
     
@@ -394,27 +391,5 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity implements
 
 
     
-//--- ACTIONBAR TABLISTENER
-    @Override
-    public void onTabReselected(Tab tab_, FragmentTransaction ft_) {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public void onTabSelected(Tab tab_, FragmentTransaction ft_) {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public void onTabUnselected(Tab tab_, FragmentTransaction ft_) {
-        // TODO Auto-generated method stub
-        
-    }
-    
-   
     
 }

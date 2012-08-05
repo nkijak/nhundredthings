@@ -79,8 +79,11 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         view = inflater_.inflate(R.layout.excersice_settings_level, container_, false);
         
         ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
-        //new SetAdapterTask(pager, new SetTitleAdapter(getFragmentManager(),workoutController)).execute();
-        pager.setAdapter(new SetTitleAdapter(getFragmentManager(),workoutController));
+        
+        pager.setAdapter(new SetTitleAdapter(getFragmentManager(),
+        						type, 
+        						new DayAndWeek(workoutController.getDay(), workoutController.getWeek()),
+        						getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE)));
       
         
         TitlePageIndicator titleIndicator = (TitlePageIndicator)view.findViewById(R.id.setTitles);
@@ -221,13 +224,13 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     
     protected void dayWeekOrLevelChanged() {
         String count = (String) getResources().getText(R.string.count_for_test_msg);
-        if (!workoutController.shouldDisplayDayAsTest()) { count = workoutController.totalCountLeft()+""; }
+        if (!workoutController.shouldDisplayDayAsTest(null)) { count = workoutController.totalCountLeft(null)+""; }
         ((TextView)view.findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
     }
     
     public void loadLevelOptions() {
         Spinner levelSelector = (Spinner)view.findViewById(R.id.levelSelector);
-        boolean showTest = workoutController.shouldDisplayDayAsTest();
+        boolean showTest = workoutController.shouldDisplayDayAsTest(null);
         if (levelSelector.getAdapter() == null){
             LevelSelectionViewAdapter viewAdapter = new LevelSelectionViewAdapter(getActivity(), showTest);
             levelSelector.setAdapter(viewAdapter);
@@ -239,25 +242,5 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     public String getLabel() { return type.getLabel(); }
     public WorkoutController getWorkoutController() { return workoutController; }
     
-    
-    private class SetAdapterTask extends AsyncTask<Void, Void, Void>{
-    	private ViewPager _pager;
-    	private FragmentPagerAdapter _adapter;
-    	
-    	public SetAdapterTask(ViewPager pager_, FragmentPagerAdapter adapter_) {
-    		_pager = pager_;
-    		_adapter = adapter_;
-    	}
-    	
-		@Override
-		protected Void doInBackground(Void... params_) {
-			return null;
-		}
 
-		
-		@Override
-		protected void onPostExecute(Void result_) {
-			_pager.setAdapter(_adapter);
-		}
-    }
 }
