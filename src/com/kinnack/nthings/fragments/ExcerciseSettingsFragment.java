@@ -58,7 +58,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     @Override
     public void onCreate(Bundle savedInstanceState_) {
         super.onCreate(savedInstanceState_);
-        
+        setHasOptionsMenu(true);
         if (savedInstanceState_ == null) savedInstanceState_= getArguments();
         
         type = Type.valueOf(savedInstanceState_.getString(WORKOUT_TYPE));
@@ -113,13 +113,13 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu_, MenuInflater inflater_) {
     	MenuItem levelMenuItem = menu_.findItem(R.id.levelMenuItem);
-		levelMenuItem.setTitle("II");
+		
     }
     
    @Override
 	public void onPrepareOptionsMenu(Menu menu_) {
 		MenuItem levelMenuItem = menu_.findItem(R.id.levelMenuItem);
-		levelMenuItem.setTitle("II");
+		levelMenuItem.setTitle("III");
 		MenuItem rankMenuItem = menu_.findItem(R.id.rankMenuItem);
 	}
     

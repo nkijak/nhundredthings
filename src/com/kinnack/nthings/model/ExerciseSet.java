@@ -77,4 +77,12 @@ public class ExerciseSet {
         return totalCount;
     }
     
+    public int[] getCounts() {
+    	return counts;
+    }
+    
+    public int[] getRests() {
+    	return rests;
+    }
+    
 }

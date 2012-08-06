@@ -50,7 +50,9 @@ public class SetTitleAdapter extends FragmentPagerAdapter implements TitleProvid
 				if (controller.isTest()) return "Test";
 			default:
 				if (position_ == last && controller.isFinal()) return "Final";
-				return "Day "+position_;
+				int day = position_;
+				if (_possibleTestController != null) day-=1;
+				return "Day "+day;
 		}
 	}
 	

@@ -381,6 +381,12 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
         }
     }
     
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu_) {
+    	// TODO Auto-generated method stub
+    	return super.onPrepareOptionsMenu(menu_);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu_) {
        getSupportMenuInflater().inflate(R.menu.main,menu_);

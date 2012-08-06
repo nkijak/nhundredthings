@@ -48,7 +48,10 @@ public abstract class WorkoutController {
     
     
 
-    /**
+    public ExerciseSet getSet() {
+		return set;
+	}
+	/**
      * @param prefs
      * @return 
      */
