@@ -3,14 +3,13 @@ package com.kinnack.nthings.fragments;
 import java.util.Date;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kinnack.nthings.R;
-import com.kinnack.nthings.controller.WorkoutController;
+import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.helper.PrettyDateAndTime;
 
 public class OverviewFragment extends BaseExcersiseSetFragment {
@@ -18,13 +17,14 @@ public class OverviewFragment extends BaseExcersiseSetFragment {
 	private TextView pushupLastUse;
     private TextView pushupLastCount;
     private TextView pushupTotalValue;
-    private WorkoutController controller;
+    private FullWorkoutController controller;
     
-	public static OverviewFragment newInstance(WorkoutController controller_) {
+	public static OverviewFragment newInstance(FullWorkoutController controller_) {
 		return new OverviewFragment(controller_);
 	}
 	
-	public OverviewFragment(WorkoutController controller_) {
+	public OverviewFragment(FullWorkoutController controller_) {
+		super(0);
 		controller = controller_;
 	}
 	

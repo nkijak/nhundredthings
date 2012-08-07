@@ -642,12 +642,22 @@ public class Workout {
         return new ExerciseSet(countRest[0], countRest[1]);
     }
     
+    public static int daysForPushupWeek(int week) {
+    	if (week == 0 || week >= PUSHUPS.length) return 0;
+    	return PUSHUPS[week-1].length;
+    }
+    
     public static ExerciseSet getSitupSetFor(int week, int day, Level level) {
      // TODO error handling, argument checking
     	if (week == 0 || day == 0) return null;
         Log.d("dgmt:Workout.getSitupSetFor", String.format("Getting situps for week %d, day %d, level %s",week,day,level));
         int[][] countRest = SITUPS[week-1][day-1][level.getIndex()];
         return new ExerciseSet(countRest[0], countRest[1]);
+    }
+    
+    public static int daysForSitupWeek(int week) {
+    	if (week == 0 || week >= SITUPS.length) return 0;
+    	return SITUPS[week-1].length;
     }
         
     

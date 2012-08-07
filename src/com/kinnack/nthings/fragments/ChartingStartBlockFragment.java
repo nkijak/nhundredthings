@@ -1,19 +1,18 @@
 package com.kinnack.nthings.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kinnack.nthings.R;
-import com.kinnack.nthings.controller.WorkoutController;
-import com.kinnack.nthings.model.DayAndWeek;
+import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.widget.SetOverviewChart;
 
 public class ChartingStartBlockFragment extends BaseExcersiseSetFragment {
 	
-	public ChartingStartBlockFragment(WorkoutController controller_) {
+	public ChartingStartBlockFragment(FullWorkoutController controller_, int setNumber_) {
+		super(setNumber_);
 		_controller = controller_;
 		
 	}
@@ -24,8 +23,8 @@ public class ChartingStartBlockFragment extends BaseExcersiseSetFragment {
 		View view = super.onCreateView(inflater_, container_, savedInstanceState_);
 		SetOverviewChart chart = (SetOverviewChart)view.findViewById(R.id.setOverviewChart);
 		
-		chart.setExercseSet(_controller.getSet());
-		
+		chart.setExercseSet(_controller.getSetForDay(_setNumber));
+		chart.setMaxX(_controller.getOverallMaxCount());
 		return view;
 		
 	}

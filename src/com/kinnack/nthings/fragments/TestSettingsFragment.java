@@ -1,11 +1,10 @@
 package com.kinnack.nthings.fragments;
 
-import com.kinnack.nthings.controller.WorkoutController;
-import com.kinnack.nthings.model.DayAndWeek;
+import com.kinnack.nthings.controller.FullWorkoutController;
 
 public class TestSettingsFragment extends BaseExcersiseSetFragment {
-	public TestSettingsFragment(WorkoutController controller_) {
-	
+	public TestSettingsFragment(FullWorkoutController controller_) {
+		super(0);
 		_controller = controller_;
 	}
 }

@@ -35,17 +35,18 @@ public class SetOverviewChart extends View {
 	private int _color = 0xff397f00;
 	private Paint _paint;
 	private List<Integer> _counts;
-	private int _maxCount;
+	private int _maxCountForSet;
+	private int _maxCount = -1;
 	
 	
 	public void setExercseSet(ExerciseSet exercseSet_) {
 		_exercseSet = exercseSet_;
 		
 		_counts.clear();
-		_maxCount = Integer.MIN_VALUE;
+		_maxCountForSet = Integer.MIN_VALUE;
 		for(int count : _exercseSet.getCounts()) {
 		
-			if (count > _maxCount) _maxCount = count;
+			if (count > _maxCountForSet) _maxCountForSet = count;
 			_counts.add(count);
 		}
 		
@@ -62,6 +63,10 @@ public class SetOverviewChart extends View {
 		_paint.setColor(_color);
 	}
 
+	public void setMaxX(int maxX) {
+		_maxCount = maxX;
+	}
+	
 	
 	@Override
 	protected void onMeasure(int widthMeasureSpec_, int heightMeasureSpec_) {
@@ -72,6 +77,7 @@ public class SetOverviewChart extends View {
 	protected void onDraw(Canvas canvas_) {
 		
 		_paint.setStrokeWidth(2);
+		
 		
 		float baseY = (float)Math.floor(getHeight()*0.95);
 		canvas_.drawLine(5, baseY, getWidth()-5,baseY, _paint);

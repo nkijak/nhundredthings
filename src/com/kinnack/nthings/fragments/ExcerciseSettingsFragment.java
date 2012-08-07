@@ -2,10 +2,8 @@ package com.kinnack.nthings.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +20,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.kinnack.nthings.R;
-import com.kinnack.nthings.ViewPagerAdapter;
+import com.kinnack.nthings.controller.FullWorkoutController;
+import com.kinnack.nthings.controller.PushupFullWorkoutController;
 import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.controller.SitupWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
@@ -41,6 +40,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     public static final String PREFS = "prefs_config";
     
     private WorkoutController workoutController;
+    private FullWorkoutController fullWorkoutController;
     private Editor prefEditor;
     private Type type;
     private View view;
@@ -66,6 +66,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         switch (type) {
             case PUSHUP:
                 workoutController = new PushupWorkoutController();
+                fullWorkoutController = new PushupFullWorkoutController();
                 break;
             case SITUP:
                 workoutController = new SitupWorkoutController();
@@ -80,10 +81,11 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         
         ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
         
+        
+        fullWorkoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         pager.setAdapter(new SetTitleAdapter(getFragmentManager(),
         						type, 
-        						new DayAndWeek(workoutController.getDay(), workoutController.getWeek()),
-        						getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE)));
+        						fullWorkoutController));
       
         
         TitlePageIndicator titleIndicator = (TitlePageIndicator)view.findViewById(R.id.setTitles);

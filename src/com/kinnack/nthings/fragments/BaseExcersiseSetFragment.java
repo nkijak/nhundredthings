@@ -8,18 +8,20 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
-import com.kinnack.nthings.model.DayAndWeek;
 
 public class BaseExcersiseSetFragment extends SherlockFragment {
 
-	protected WorkoutController _controller;
+	protected FullWorkoutController _controller;
 	private View _view;
+	protected int _setNumber;
 
 
 
-	public BaseExcersiseSetFragment() {
+	public BaseExcersiseSetFragment(int setNumber) {
 		super();
+		_setNumber = setNumber;
 	}
 
 	@Override
@@ -32,15 +34,15 @@ public class BaseExcersiseSetFragment extends SherlockFragment {
 	
 	protected void dayWeekOrLevelChanged() {
         String count = (String) getResources().getText(R.string.count_for_test_msg);
-        if (!_controller.shouldDisplayDayAsTest()) { count = _controller.totalCountLeft()+""; }
+        if (_setNumber > 0) { count = _controller.totalCountForSet(_setNumber)+""; }
         ((TextView)_view.findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
     }
 
-	public WorkoutController getController() {
+	public FullWorkoutController getController() {
 		return _controller;
 	}
 
-	public void setController(WorkoutController controller_) {
+	public void setController(FullWorkoutController controller_) {
 		_controller = controller_;
 	}
 
