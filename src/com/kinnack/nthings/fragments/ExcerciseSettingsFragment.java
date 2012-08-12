@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -78,18 +79,30 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     public View onCreateView(LayoutInflater inflater_, ViewGroup container_, Bundle savedInstanceState_) {
     	if (view != null) return view;
         view = inflater_.inflate(R.layout.excersice_settings_level, container_, false);
+        final Button startButton = (Button) view.findViewById(R.id.startButton);
         
         ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
-        
+        final SetTitleAdapter adapter = new SetTitleAdapter(getFragmentManager(),
+				type, 
+				fullWorkoutController);
         
         fullWorkoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
-        pager.setAdapter(new SetTitleAdapter(getFragmentManager(),
-        						type, 
-        						fullWorkoutController));
+        pager.setAdapter(adapter);
       
         
         TitlePageIndicator titleIndicator = (TitlePageIndicator)view.findViewById(R.id.setTitles);
         titleIndicator.setViewPager(pager);
+        titleIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        	
+        	@Override
+        	public void onPageSelected(int pageNumber_) {
+        		OnClickListener listener = (OnClickListener)adapter.getItem(pageNumber_);
+        		startButton.setOnClickListener(listener);
+        	}
+        	
+        	@Override public void onPageScrolled(int arg0_, float arg1_, int arg2_) {}
+        	@Override public void onPageScrollStateChanged(int arg0_) {}
+        });
         
         //setDayWeekSelectorOnItemClick();
         //setLevelSelectorOnItemSelect();
@@ -104,7 +117,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         fullWorkoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         
         //listDayWeekOptions();
-        //loadLevelOptions();
+        //loadLevelOptions();ä
         //configureMainView();
         
         
