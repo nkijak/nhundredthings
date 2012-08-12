@@ -82,12 +82,9 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         final Button startButton = (Button) view.findViewById(R.id.startButton);
         
         ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
-        final SetTitleAdapter adapter = new SetTitleAdapter(getFragmentManager(),
-				type, 
-				fullWorkoutController);
         
         fullWorkoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
-        pager.setAdapter(adapter);
+        pager.setAdapter(fullWorkoutController.getPagerAdapter(getFragmentManager()));
       
         
         TitlePageIndicator titleIndicator = (TitlePageIndicator)view.findViewById(R.id.setTitles);
@@ -96,8 +93,8 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         	
         	@Override
         	public void onPageSelected(int pageNumber_) {
-        		OnClickListener listener = (OnClickListener)adapter.getItem(pageNumber_);
-        		startButton.setOnClickListener(listener);
+        		fullWorkoutController.setCurrentSet(pageNumber_);
+        		startButton.setOnClickListener(fullWorkoutController.getCurrentStartListener());
         	}
         	
         	@Override public void onPageScrolled(int arg0_, float arg1_, int arg2_) {}

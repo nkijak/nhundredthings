@@ -48,6 +48,9 @@ public class BaseExcersiseSetFragment extends SherlockFragment implements OnClic
 		_controller = controller_;
 	}
 
+	public String getTitle() {
+		return "Day "+_setNumber;
+	}
 	
 	
 	@Override

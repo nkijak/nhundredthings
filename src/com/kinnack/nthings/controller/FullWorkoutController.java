@@ -1,16 +1,30 @@
 package com.kinnack.nthings.controller;
 
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.List;
+
 import org.json.JSONException;
 
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
+import android.view.View.OnClickListener;
 
+import com.kinnack.nthings.fragments.BaseExcersiseSetFragment;
+import com.kinnack.nthings.fragments.ChartingStartBlockFragment;
+import com.kinnack.nthings.fragments.OverviewFragment;
+import com.kinnack.nthings.fragments.TestSettingsFragment;
 import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
+import com.viewpagerindicator.TitleProvider;
 
 public abstract class FullWorkoutController {
 	public abstract ExerciseSet getSetForDay(int day_);
@@ -24,7 +38,9 @@ public abstract class FullWorkoutController {
 	private int overallMaxCount = -1;
 	private History _history;
 	private CounterActivityManager _counterActivityManager;
-	
+	private BaseExcersiseSetFragment[] _fragments;
+	private WorkoutTitlePagerAdapter _adapter;
+	private int _currentSet;
 	
 	public FullWorkoutController(Level level_, int week_) {
 		week = week_;
@@ -124,5 +140,52 @@ public abstract class FullWorkoutController {
 		_counterActivityManager = counterActivityManager_;
 	}
 	
+	public void setCurrentSet(int setNumber_) {
+		_currentSet = setNumber_;
+	}
+	public OnClickListener getCurrentStartListener() {
+		return (OnClickListener)_adapter.getItem(_currentSet);
+	}
+	public BaseExcersiseSetFragment[] getFragments() {
+		if (_fragments == null) {
+			List<BaseExcersiseSetFragment> fragmentList = new ArrayList<BaseExcersiseSetFragment>();
+			fragmentList.add(new OverviewFragment(this));
+			
+			if (hasTest()) fragmentList.add(new TestSettingsFragment(this));
+			for (int i = 1; i < 4; i++) fragmentList.add(new ChartingStartBlockFragment(this, i));
+			//if (_controller.isFinal()) fragmentList.add(new FinalSettingsFragment(newController(type_, dayAndWeek_)));
+			_fragments = fragmentList.toArray(new BaseExcersiseSetFragment[0]);
+		}
+		return _fragments;
+	}
 	
+	public PagerAdapter getPagerAdapter(FragmentManager fragmentManager_) {
+		if (_adapter == null) {
+			_adapter = new WorkoutTitlePagerAdapter(fragmentManager_);
+		}
+		return _adapter;
+	}
+	
+	public class WorkoutTitlePagerAdapter extends FragmentPagerAdapter implements TitleProvider {
+
+		public WorkoutTitlePagerAdapter(FragmentManager fragmentManager_) {
+			super(fragmentManager_);
+		}
+		
+		@Override
+		public String getTitle(int position_) {
+			return getFragments()[position_].getTitle();
+		}
+
+		@Override
+		public Fragment getItem(int arg0_) {
+			return getFragments()[arg0_];
+		}
+
+		@Override
+		public int getCount() {
+			return getFragments().length;
+		}
+		
+	}
 }
