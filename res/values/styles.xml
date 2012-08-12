@@ -2,6 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 <style name="GradientLight" parent="Theme.Sherlock.Light">
+    
     <item name="android:windowBackground">@drawable/background</item>
     <item name="android:progressBarStyle">@style/progressBar</item>
     <item name="android:buttonStyle">@style/greenButton</item>
@@ -11,14 +12,23 @@
     <item name="android:spinnerStyle">@style/spinner</item>
     <item name="android:seekBarStyle">@style/seekBar</item>
    	 
+   	
+    <item name="actionBarStyle">@style/GradientLight.ActionBar</item>
+    <item name="android:actionBarStyle">@style/GradientLight.ActionBar</item>
+   	
    	<item name="actionBarSize">50dp</item>
    	
    	<item name="actionBarTabTextStyle">@style/whiteDropShadow</item>
+   	<item name="android:actionBarTabTextStyle">@style/whiteDropShadow</item>
    	<item name="actionBarTabStyle">@style/actionBarTab</item>
-   	
+   	<item name="android:actionBarTabStyle">@style/actionBarTab</item>
+   	<item name="android:selectableItemBackground">@drawable/selectable_background</item>
    	
 </style>
-
+<style name="GradientLight.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <item name="background">@drawable/header</item>
+    <item name="android:background">@drawable/header</item>
+</style>
 <style name="actionBarTab" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
     <item name="android:background">@drawable/header</item>
 </style>

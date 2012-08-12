@@ -23,6 +23,7 @@ import com.kinnack.nthings.R;
 import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.controller.PushupFullWorkoutController;
 import com.kinnack.nthings.controller.PushupWorkoutController;
+import com.kinnack.nthings.controller.SitupFullWorkoutController;
 import com.kinnack.nthings.controller.SitupWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.helper.CounterActivityManager;
@@ -65,11 +66,10 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         
         switch (type) {
             case PUSHUP:
-                workoutController = new PushupWorkoutController();
                 fullWorkoutController = new PushupFullWorkoutController();
                 break;
             case SITUP:
-                workoutController = new SitupWorkoutController();
+                fullWorkoutController = new SitupFullWorkoutController();
                 break;
         }
     }
@@ -100,8 +100,8 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     public void onResume() {
         super.onResume();
         CounterActivityManager counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(getActivity()), getActivity());
-        workoutController.setCounterActivityManager(counterActivityManager);
-        workoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
+        fullWorkoutController.setCounterActivityManager(counterActivityManager);
+        fullWorkoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         
         //listDayWeekOptions();
         //loadLevelOptions();

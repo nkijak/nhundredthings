@@ -6,7 +6,10 @@
     <com.viewpagerindicator.TitlePageIndicator
         android:id="@+id/setTitles"
        	android:layout_height="wrap_content"
-       	android:layout_width="fill_parent" />
+       	android:layout_width="fill_parent" 
+       	android:background="#cc397f00"
+       	app:footerColor="#ff397f00"/>
+    
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"

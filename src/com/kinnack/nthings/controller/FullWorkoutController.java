@@ -5,6 +5,7 @@ import org.json.JSONException;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
@@ -22,7 +23,7 @@ public abstract class FullWorkoutController {
 	private int week;
 	private int overallMaxCount = -1;
 	private History _history;
-	
+	private CounterActivityManager _counterActivityManager;
 	
 	
 	public FullWorkoutController(Level level_, int week_) {
@@ -114,6 +115,13 @@ public abstract class FullWorkoutController {
 	public void setWeek(int week_) {
 		week = week_;
 		invalidate();
+	}
+	public CounterActivityManager getCounterActivityManager() {
+		return _counterActivityManager;
+	}
+	public void setCounterActivityManager(
+			CounterActivityManager counterActivityManager_) {
+		_counterActivityManager = counterActivityManager_;
 	}
 	
 	
