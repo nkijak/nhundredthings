@@ -6,15 +6,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
+import com.kinnack.nthings.activity.WorkoutActions;
+import com.kinnack.nthings.activity.WorkoutSettingsActivity;
+import com.kinnack.nthings.controller.FullWorkoutController;
+import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.model.Workout.Type;
 
 public class ExcerciseTabListener implements ActionBar.TabListener {
-    private Fragment mFragment;
+    private ExcerciseSettingsFragment mFragment;
     private final String mTag;
     private final Type type;
-    private final FragmentActivity activity;
+    private final WorkoutSettingsActivity activity;
 
-    public ExcerciseTabListener(FragmentActivity activity_, Type type_) {
+    public ExcerciseTabListener(WorkoutSettingsActivity activity_, Type type_) {
         mTag = type_.toString();
         type = type_;
         activity = activity_;
@@ -27,13 +31,14 @@ public class ExcerciseTabListener implements ActionBar.TabListener {
         ft = activity.getSupportFragmentManager().beginTransaction();
         if (mFragment == null) {
             // If not, instantiate and add it to the activity
-            mFragment = ExcerciseSettingsFragment.newInstance(type);
+            mFragment = ExcerciseSettingsFragment.newInstance(type, (WorkoutActions)activity);
             ft.add(android.R.id.content, mFragment, mTag);
         } else {
             // If it exists, simply attach it in order to show it
             ft.show(mFragment);
         }
         ft.commit();
+        activity.setFullWorkoutController(getWorkoutController());
     }
 
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
@@ -47,5 +52,9 @@ public class ExcerciseTabListener implements ActionBar.TabListener {
 
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
         // User selected the already selected tab. Usually do nothing.
+    }
+    
+    public FullWorkoutController getWorkoutController() {
+    	return mFragment.getFullWorkoutController();
     }
 }

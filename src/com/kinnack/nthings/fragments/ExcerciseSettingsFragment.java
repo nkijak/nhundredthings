@@ -1,6 +1,7 @@
 package com.kinnack.nthings.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.activity.CounterActivity;
+import com.kinnack.nthings.activity.WorkoutActions;
 import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.controller.PushupFullWorkoutController;
 import com.kinnack.nthings.controller.PushupWorkoutController;
@@ -46,14 +49,23 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     private Editor prefEditor;
     private Type type;
     private View view;
+    private WorkoutActions actions;
     
-    public static ExcerciseSettingsFragment newInstance(Type workoutType_) {
+    public static ExcerciseSettingsFragment newInstance(Type workoutType_, WorkoutActions actions_) {
         ExcerciseSettingsFragment fragment = new ExcerciseSettingsFragment();
-        
+        fragment.actions = actions_;
         Bundle args = new Bundle();
         args.putString(WORKOUT_TYPE, workoutType_.toString());
         fragment.setArguments(args);
         
+        switch (workoutType_) {
+        case PUSHUP:
+        	fragment.fullWorkoutController = new PushupFullWorkoutController(actions_);
+        	break;
+        case SITUP:
+        	fragment.fullWorkoutController = new SitupFullWorkoutController(actions_);
+        	break;
+        }
         return fragment;
     }
     
@@ -65,14 +77,6 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         
         type = Type.valueOf(savedInstanceState_.getString(WORKOUT_TYPE));
         
-        switch (type) {
-            case PUSHUP:
-                fullWorkoutController = new PushupFullWorkoutController();
-                break;
-            case SITUP:
-                fullWorkoutController = new SitupFullWorkoutController();
-                break;
-        }
     }
     
     @Override
@@ -80,6 +84,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     	if (view != null) return view;
         view = inflater_.inflate(R.layout.excersice_settings_level, container_, false);
         final Button startButton = (Button) view.findViewById(R.id.startButton);
+        startButton.setOnClickListener(fullWorkoutController);
         
         ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
         
@@ -89,17 +94,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         
         TitlePageIndicator titleIndicator = (TitlePageIndicator)view.findViewById(R.id.setTitles);
         titleIndicator.setViewPager(pager);
-        titleIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-        	
-        	@Override
-        	public void onPageSelected(int pageNumber_) {
-        		fullWorkoutController.setCurrentSet(pageNumber_);
-        		startButton.setOnClickListener(fullWorkoutController.getCurrentStartListener());
-        	}
-        	
-        	@Override public void onPageScrolled(int arg0_, float arg1_, int arg2_) {}
-        	@Override public void onPageScrollStateChanged(int arg0_) {}
-        });
+        titleIndicator.setOnPageChangeListener(fullWorkoutController);
         
         //setDayWeekSelectorOnItemClick();
         //setLevelSelectorOnItemSelect();
@@ -251,8 +246,14 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     }
     
     
+
+    
     public String getLabel() { return type.getLabel(); }
     public WorkoutController getWorkoutController() { return workoutController; }
+
+	public FullWorkoutController getFullWorkoutController() {
+		return fullWorkoutController;
+	}
     
 
 }

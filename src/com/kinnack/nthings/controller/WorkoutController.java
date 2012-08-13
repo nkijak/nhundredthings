@@ -3,7 +3,6 @@ package com.kinnack.nthings.controller;
 import java.util.Date;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -16,7 +15,6 @@ import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
-import com.kinnack.nthings.model.Workout;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
 

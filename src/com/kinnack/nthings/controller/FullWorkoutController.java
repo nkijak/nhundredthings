@@ -2,23 +2,32 @@ package com.kinnack.nthings.controller;
 
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+
+import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.kinnack.nthings.activity.CounterActivity;
+import com.kinnack.nthings.activity.WorkoutActions;
 import com.kinnack.nthings.fragments.BaseExcersiseSetFragment;
 import com.kinnack.nthings.fragments.ChartingStartBlockFragment;
 import com.kinnack.nthings.fragments.OverviewFragment;
 import com.kinnack.nthings.fragments.TestSettingsFragment;
 import com.kinnack.nthings.helper.CounterActivityManager;
+import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.ExerciseSet;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Logg;
@@ -26,12 +35,15 @@ import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
 import com.viewpagerindicator.TitleProvider;
 
-public abstract class FullWorkoutController {
+public abstract class FullWorkoutController implements OnPageChangeListener, OnClickListener{
 	public abstract ExerciseSet getSetForDay(int day_);
 	protected abstract int numberOfDays();
 	protected abstract String getTag();
 	protected abstract String getKeyForHistory();
 	protected abstract Type getWorkoutType();
+	public abstract int getFinalTestCount();
+	public abstract int getLabelResource();
+	public abstract Level getLevelForTestResult(int testCount_);
 	
 	private Level level;
 	private int week;
@@ -41,10 +53,14 @@ public abstract class FullWorkoutController {
 	private BaseExcersiseSetFragment[] _fragments;
 	private WorkoutTitlePagerAdapter _adapter;
 	private int _currentSet;
+	private WorkoutActions _actions;
 	
-	public FullWorkoutController(Level level_, int week_) {
+	private ExerciseSet set;
+
+	public FullWorkoutController(WorkoutActions actions_, Level level_, int week_) {
 		week = week_;
 		level = level_;
+		_actions = actions_;
 	}
 	
 	public void invalidate() {
@@ -132,17 +148,27 @@ public abstract class FullWorkoutController {
 		week = week_;
 		invalidate();
 	}
+	
+	public Class<? extends CounterActivity> getCounterActivity() {
+        return _counterActivityManager.getActivity(getWorkoutType());
+    }
 	public CounterActivityManager getCounterActivityManager() {
 		return _counterActivityManager;
 	}
-	public void setCounterActivityManager(
-			CounterActivityManager counterActivityManager_) {
+	public void setCounterActivityManager(CounterActivityManager counterActivityManager_) {
 		_counterActivityManager = counterActivityManager_;
 	}
 	
-	public void setCurrentSet(int setNumber_) {
-		_currentSet = setNumber_;
+	
+	@Override
+	public void onClick(View v_) {
+		set = getSetForDay(_currentSet);
+//		 if (fullWorkoutController.isTest()) {_actions.startTestActivity(); return;}
+//		 if (fullWorkoutController.isFinal()) {_actions.startFinalTestActivity(); return;}
+//		 workoutController.beginExercise(target_);
+		 _actions.startCounterActivity();
 	}
+	
 	public OnClickListener getCurrentStartListener() {
 		return (OnClickListener)_adapter.getItem(_currentSet);
 	}
@@ -188,4 +214,90 @@ public abstract class FullWorkoutController {
 		}
 		
 	}
+	
+	@Override
+	public void onPageSelected(int pageNumber_) {
+		_currentSet = pageNumber_;
+	}
+	
+	@Override public void onPageScrolled(int arg0_, float arg1_, int arg2_) {}
+	@Override public void onPageScrollStateChanged(int arg0_) {}
+	
+	public int nextSet() {
+		return set.next();
+	}
+	
+	public boolean hasNext() {
+        return set.hasNext();
+    }
+
+    public boolean isMaxSet() {
+        return set.isMax();
+    }
+
+    public int completedSets() {
+        return set.getSetsDone();
+    }
+
+    public int incompleteSets() {
+        return set.getSetsToGo();
+    }
+    public int totalCountLeft() {
+		return set.getCountLeft();
+	}
+	
+    public FullWorkoutController addTestResult(int testCount_) {
+        _history.getTestResults().add(testCount_);
+        return this;
+    }
+    public void markFinalComplete() {
+        _history.setFinished(true);
+    }
+    public void resetToWorkoutForFinal() {
+        _history.setWeek(6);
+        resetDay();
+    }
+    public FullWorkoutController resetDay() {
+        _history.setDay(1);
+        return this;
+    }
+    public void removeCurrentLog() {
+        _history.removeCurrentLog();
+    }
+    public DayAndWeek advanceDate() {
+    	//TODO check if this still makes sense (https://trello.com/c/iyQqOXeD)
+        int day = _history.getDay();
+        int week = _history.getWeek();
+        if (day == 3) {
+            day = (week==5 ? 0 : week%2);
+            _history.setDay(day);
+            _history.setWeek(_history.getWeek()+1);
+        } else {
+            _history.setDay(day+1);
+        }
+        
+        return new DayAndWeek(day, week);
+        
+    }
+    
+    public boolean setCurrentLevel(Level level_) {
+        _history.setCurrentLevel(level_);
+        boolean changedFromTestToOther = false;
+        if (_history.getDay() == 0) {
+            _history.setDay(1);
+            changedFromTestToOther = true;
+        }
+        //TODO Check if this still makes sense
+        set = getSetForDay(_history.getDay());
+        return changedFromTestToOther;
+    }
+    
+    public void saveHistory(Editor prefEditor_) throws JSONException{
+        setLastWorkout(new Date());
+        prefEditor_.putString(getKeyForHistory(), _history.toJSON().toString());
+    }
+    
+    public void setLastWorkout(Date lastWorkoutDate_) {
+        _history.setLastWorkout(lastWorkoutDate_);
+    }
 }

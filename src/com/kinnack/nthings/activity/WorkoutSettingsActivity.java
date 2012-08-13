@@ -33,6 +33,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
+import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.fragments.ExcerciseTabListener;
 import com.kinnack.nthings.model.History;
@@ -40,7 +41,7 @@ import com.kinnack.nthings.model.Logg;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
 
-public class WorkoutSettingsActivity extends SherlockFragmentActivity {
+public class WorkoutSettingsActivity extends SherlockFragmentActivity implements WorkoutActions {
     public static final String TAG = "dgmt:WorkoutSettings";
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;
@@ -53,7 +54,7 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
     public static String WORKOUT_TYPE = "workout-type";
     public static final String PREFS = "prefs_config";
     
-    private WorkoutController workoutController;
+    private FullWorkoutController fullWorkoutController;
     private Editor prefEditor;
     
     @Override
@@ -64,9 +65,11 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
         
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.addTab(actionBar.newTab().setText("Push Ups").setTabListener(new ExcerciseTabListener(this, Type.PUSHUP)));
-        actionBar.addTab(actionBar.newTab().setText("Sit Ups").setTabListener(new ExcerciseTabListener(this, Type.SITUP)));
+        ExcerciseTabListener tabListener = new ExcerciseTabListener(this, Type.PUSHUP);
         
+        actionBar.addTab(actionBar.newTab().setText("Push Ups").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Sit Ups").setTabListener(new ExcerciseTabListener(this, Type.SITUP)));
+     
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         prefEditor = prefs.edit();
     }
@@ -91,41 +94,33 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
   
     
    
-    // ------------ ACTIONS ----------------
-    
-    public void doActivity(View target_) {
-        if (workoutController.isTest()) {startTestActivity(); return;}
-        if (workoutController.isFinal()) { startFinalTestActivity(); return;}
-        workoutController.beginExercise(target_);
-        startCounterActivity();
-    }
     
     // ------------ APPLICATION FLOW ----------
-    public void doFinalTest(View target_) {
+
+	public void doFinalTest(View target_) {
         startFinalTestActivity();
     }
-    
-    public void showProgress(View target_) {
-        showProgress(workoutController.getHistory());
+
+	public void showProgress(View target_) {
+        showProgress(fullWorkoutController.getHistory());
     }
     
    
 
-    /**
-     * 
-     */
-    private void startCounterActivity() {
-        Intent counterIntent = new Intent(this, workoutController.getCounterActivity());
-        counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, workoutController.nextSet());
-        counterIntent.putExtra(CounterActivity.SHOW_DONE, workoutController.isMaxSet());
+    @Override
+    public void startCounterActivity() {
+        Intent counterIntent = new Intent(this, fullWorkoutController.getCounterActivity());
+        counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, fullWorkoutController.nextSet());
+        counterIntent.putExtra(CounterActivity.SHOW_DONE, fullWorkoutController.isMaxSet());
    
         Log.d(TAG, "Intent about to start");
         startActivityForResult(counterIntent, COUNTER_INTENT);
         Log.d(TAG, "Intent started and returned");
     }
-    
-    private void startTestActivity() {
-        Intent counterIntent = new Intent(this, workoutController.getCounterActivity());
+
+    @Override    
+    public void startTestActivity() {
+        Intent counterIntent = new Intent(this, fullWorkoutController.getCounterActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 0);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
         counterIntent.putExtra(CounterActivity.IS_TEST, true);
@@ -134,8 +129,9 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
         Log.d(TAG, "Intent started and returned");
     }
     
-    private void startFinalTestActivity() {
-        Intent counterIntent = new Intent(this, workoutController.getCounterActivity());
+    @Override
+    public void startFinalTestActivity() {
+        Intent counterIntent = new Intent(this, fullWorkoutController.getCounterActivity());
         counterIntent.putExtra(CounterActivity.INIT_COUNT_KEY, 100);
         counterIntent.putExtra(CounterActivity.SHOW_DONE, true);
         counterIntent.putExtra(CounterActivity.IS_TEST, true);
@@ -145,13 +141,14 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
         Log.d(TAG, "Intent started and returned");
     }
     
-    private void startRestActivity() {
+    @Override
+    public void startRestActivity() {
         Intent restIntent = new Intent(this, RestActivity.class);
         Log.d(TAG, "About to launch intnet for "+RestActivity.class.getName());
-        restIntent.putExtra(RestActivity.REST_LENGTH, workoutController.nextSet());
-        restIntent.putExtra(RestActivity.SETS_DONE, workoutController.completedSets());
-        restIntent.putExtra(RestActivity.SETS_TO_GO, workoutController.incompleteSets());
-        restIntent.putExtra(RestActivity.COUNT_TO_GO, workoutController.totalCountLeft(null));
+        restIntent.putExtra(RestActivity.REST_LENGTH, fullWorkoutController.nextSet());
+        restIntent.putExtra(RestActivity.SETS_DONE, fullWorkoutController.completedSets());
+        restIntent.putExtra(RestActivity.SETS_TO_GO, fullWorkoutController.incompleteSets());
+        restIntent.putExtra(RestActivity.COUNT_TO_GO, fullWorkoutController.totalCountLeft());
         startActivityForResult(restIntent, REST_INTENT);
     }
     
@@ -169,14 +166,14 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
             Bundle extras = data_.getExtras();
             int count = extras.getInt(CounterActivity.MAX_COUNT);
             long avgTime = extras.getLong(CounterActivity.AVG_TIME);
-            Logg currentLog =workoutController.getCurrentLog();
+            Logg currentLog =fullWorkoutController.getCurrentLog();
             currentLog.addCountAndTime(count, avgTime);
            
-            if (!workoutController.hasNext()) { 
-                workoutController.advanceDate();
+            if (!fullWorkoutController.hasNext()) { 
+                fullWorkoutController.advanceDate();
                 saveHistory(); 
                 
-                showProgress(workoutController.getHistory());
+                showProgress(fullWorkoutController.getHistory());
                 
                 shareResults(currentLog);
                 finish();
@@ -193,9 +190,9 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
             if (data_ == null) { return; }
             int testCount = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             
-            Level level = workoutController.getLevelForTestResult(testCount);
+            Level level = fullWorkoutController.getLevelForTestResult(testCount);
             if (level == null) { return; }
-            workoutController.addTestResult(testCount).setCurrentLevel(level);
+            fullWorkoutController.addTestResult(testCount).setCurrentLevel(level);
             saveHistory();
             Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
             break;
@@ -203,25 +200,25 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
             if(data_ == null) { return; }
             testCount = data_.getExtras().getInt(CounterActivity.MAX_COUNT);
             long totalTime = data_.getExtras().getLong(CounterActivity.TOTAL_TIME);
-            workoutController.addTestResult(testCount);
+            fullWorkoutController.addTestResult(testCount);
             if (testCount >= 100) {
                 shareComplete(testCount, totalTime);
                 String msg = String.format(resources.getString(R.string.final_complete_msg), 
-                                            workoutController.getFinalTestCount(), 
-                                            resources.getString(workoutController.getLabelResource()));
+                                            fullWorkoutController.getFinalTestCount(), 
+                                            resources.getString(fullWorkoutController.getLabelResource()));
                 showUserDialog(R.string.final_complete_title, msg);
-                workoutController.markFinalComplete();
+                fullWorkoutController.markFinalComplete();
             } else {
                 shareDNFFinal(testCount, totalTime);
                 showUserDialog(R.string.final_DNF_title, resources.getString(R.string.final_DNF_msg));
             }
-            workoutController.resetToWorkoutForFinal();
+            fullWorkoutController.resetToWorkoutForFinal();
             saveHistory();
             break;
         case RESET_INTENT:
             if (data_ == null) {return;}
             if (data_.getExtras().getBoolean(ResetActivity.RESET,false)) {
-                workoutController = null;
+                fullWorkoutController = null;
             }
             
             break;
@@ -237,7 +234,7 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
 
 
     private void deleteAnyUnwantedLogs() {
-        workoutController.removeCurrentLog();
+        fullWorkoutController.removeCurrentLog();
     }
 
 
@@ -261,7 +258,7 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
      */
     private void shareResults(Logg currentLog) {
         long roundedFrequency = Math.round(60000*currentLog.getAveragePushupFrequency());
-        String typeLabel = getResources().getString(workoutController.getLabelResource());
+        String typeLabel = getResources().getString(fullWorkoutController.getLabelResource());
         launchSharingChooser("My Latest DGMT! Results",
                 getResources().getString(R.string.share_results_msg, currentLog.getTotalCount(), typeLabel ,roundedFrequency));
                 
@@ -270,10 +267,10 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
     
     private void shareComplete(int totalCount_, long totalTime_) {
         long roundedFrequency = Math.round(60000.0*totalCount_/totalTime_);
-        String typeLabel = getResources().getString(workoutController.getLabelResource());
+        String typeLabel = getResources().getString(fullWorkoutController.getLabelResource());
         launchSharingChooser("Mission Accomplished!",
                 getResources().getString(R.string.share_complete_msg, 
-                                            workoutController.getFinalTestCount(),
+                                            fullWorkoutController.getFinalTestCount(),
                                             typeLabel,
                                             totalCount_, 
                                             roundedFrequency));
@@ -281,7 +278,7 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
     
     private void shareDNFFinal(int totalCount_, long totalTime_) {
         long roundedFrequency = Math.round(60000.0*totalCount_/totalTime_);
-        String typeLabel = getResources().getString(workoutController.getLabelResource());
+        String typeLabel = getResources().getString(fullWorkoutController.getLabelResource());
         launchSharingChooser("Almost There!",
                 getResources().getString(R.string.share_dnf_final_msg, 
                         totalCount_,
@@ -305,7 +302,7 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
         new AsyncTask<Void, Void, Boolean>() {
             protected Boolean doInBackground(Void... params_) {
                 try {
-                    workoutController.saveHistory(prefEditor);
+                    fullWorkoutController.saveHistory(prefEditor);
                     
                     File externalFolder = new File(PUBLIC_FOLDER_PATH);
                     if (!externalFolder.exists()) { externalFolder.mkdir(); }
@@ -394,6 +391,16 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity {
        menu_.findItem(R.id.reset).setEnabled(false).setVisible(false);
        return true;
     }
+
+
+	public FullWorkoutController getFullWorkoutController() {
+		return fullWorkoutController;
+	}
+
+
+	public void setFullWorkoutController(FullWorkoutController fullWorkoutController_) {
+		fullWorkoutController = fullWorkoutController_;
+	}
 
 
     
