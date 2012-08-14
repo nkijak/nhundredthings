@@ -3,8 +3,24 @@
     
     <item
         android:id="@+id/levelMenuItem"
-        android:title="I"
-        android:showAsAction="ifRoom"/>
+        android:title="T"
+        android:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/levelTest"
+                android:title="T" />
+            <item
+                android:id="@+id/levelEasy"
+                android:title="I" />
+            <item
+                android:id="@+id/levelMedium"
+                android:title="II" />
+            <item
+                android:id="@+id/levelHard"
+                android:title="III" 
+                android:icon="@drawable/ic_action_sergant"/>
+        </menu>
+    </item>
     <item
         android:id="@+id/rankMenuItem"
         android:icon="@drawable/ic_action_sergant"

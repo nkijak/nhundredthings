@@ -50,6 +50,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     private Type type;
     private View view;
     private WorkoutActions actions;
+	private MenuItem _levelMenuItem;
     
     public static ExcerciseSettingsFragment newInstance(Type workoutType_, WorkoutActions actions_) {
         ExcerciseSettingsFragment fragment = new ExcerciseSettingsFragment();
@@ -119,17 +120,39 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     
     @Override
     public void onCreateOptionsMenu(Menu menu_, MenuInflater inflater_) {
-    	MenuItem levelMenuItem = menu_.findItem(R.id.levelMenuItem);
+    	_levelMenuItem = menu_.findItem(R.id.levelMenuItem);
 		
     }
     
    @Override
 	public void onPrepareOptionsMenu(Menu menu_) {
-		MenuItem levelMenuItem = menu_.findItem(R.id.levelMenuItem);
-		levelMenuItem.setTitle("III");
 		MenuItem rankMenuItem = menu_.findItem(R.id.rankMenuItem);
 	}
     
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item_) {
+    	int levelIndex = 0;
+    	switch(item_.getItemId()){
+    	case R.id.levelEasy: 
+    		_levelMenuItem.setTitle("I");
+    		break;
+    	case R.id.levelMedium:
+    		_levelMenuItem.setTitle("II");
+    		levelIndex = 1;
+    		break;
+    	case R.id.levelHard:
+    		_levelMenuItem.setTitle("III");
+    		levelIndex = 2;
+    		break;
+    	default:
+    		return false;
+    	}
+    	
+    	Level level = LevelSelectionViewAdapter.getLevelByPosition(levelIndex);
+    	fullWorkoutController.setCurrentLevel(level);
+    	return true;
+    }
+   
     private void configureMainView() {
         ((Button)view.findViewById(R.id.ActivityButton)).setEnabled(true);
         ((Button)view.findViewById(R.id.FinalButton)).setEnabled(false);

@@ -13,7 +13,7 @@ import com.kinnack.nthings.R;
 import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
 
-public class BaseExcersiseSetFragment extends SherlockFragment implements OnClickListener {
+public class BaseExcersiseSetFragment extends SherlockFragment {
 
 	protected FullWorkoutController _controller;
 	private View _view;
@@ -34,10 +34,16 @@ public class BaseExcersiseSetFragment extends SherlockFragment implements OnClic
 		return _view;
 	}
 	
-	protected void dayWeekOrLevelChanged() {
+	public void dayWeekOrLevelChanged() {
+		if (!isAdded()) return;
+		
         String count = (String) getResources().getText(R.string.count_for_test_msg);
         if (_setNumber > 0) { count = _controller.totalCountForSet(_setNumber)+""; }
-        ((TextView)_view.findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
+        if (_view != null) {
+        	((TextView)_view.findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
+        	
+        }
+        
     }
 
 	public FullWorkoutController getController() {
@@ -50,13 +56,12 @@ public class BaseExcersiseSetFragment extends SherlockFragment implements OnClic
 
 	public String getTitle() {
 		return "Day "+_setNumber;
-	}
-	
+	}	
 	
 	@Override
-	public void onClick(View v_) {
-		Log.d("DGMT!BESF", "Starting for set number "+_setNumber);
-		
+	public void onDetach() {
+		// TODO Auto-generated method stub
+		super.onDetach();
+		Log.d("DGMT!BESF", "BaseExerciseSetFragment being removed, set "+_setNumber);
 	}
-
 }

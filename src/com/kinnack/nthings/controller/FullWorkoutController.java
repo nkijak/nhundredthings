@@ -281,15 +281,24 @@ public abstract class FullWorkoutController implements OnPageChangeListener, OnC
     }
     
     public boolean setCurrentLevel(Level level_) {
-        _history.setCurrentLevel(level_);
-        boolean changedFromTestToOther = false;
-        if (_history.getDay() == 0) {
-            _history.setDay(1);
-            changedFromTestToOther = true;
-        }
-        //TODO Check if this still makes sense
-        set = getSetForDay(_history.getDay());
-        return changedFromTestToOther;
+    	boolean levelChanged = !_history.getCurrentLevel().equals(level_);
+    	if (levelChanged) {
+    		setLevel(level_);
+    		_history.setCurrentLevel(level_);
+    		for(BaseExcersiseSetFragment besFragment : getFragments()) {
+    			besFragment.dayWeekOrLevelChanged();
+    		}
+    	}
+    	
+    	return levelChanged;
+//        boolean changedFromTestToOther = false;
+//        if (_history.getDay() == 0) {
+//            _history.setDay(1);
+//            changedFromTestToOther = true;
+//        }
+//        //TODO Check if this still makes sense
+//        set = getSetForDay(_history.getDay());
+//        return changedFromTestToOther;
     }
     
     public void saveHistory(Editor prefEditor_) throws JSONException{
