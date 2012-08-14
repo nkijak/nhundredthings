@@ -145,8 +145,14 @@ public abstract class FullWorkoutController implements OnPageChangeListener, OnC
 		return week;
 	}
 	public void setWeek(int week_) {
-		week = week_;
-		invalidate();
+		if (week_ != week) {
+			week = week_;
+			invalidate();
+			
+			for(BaseExcersiseSetFragment besFragment : getFragments()) {
+    			besFragment.dayWeekOrLevelChanged();
+    		}
+		}
 	}
 	
 	public Class<? extends CounterActivity> getCounterActivity() {

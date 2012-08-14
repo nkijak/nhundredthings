@@ -51,6 +51,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     private View view;
     private WorkoutActions actions;
 	private MenuItem _levelMenuItem;
+	private MenuItem _rankMenuItem;
     
     public static ExcerciseSettingsFragment newInstance(Type workoutType_, WorkoutActions actions_) {
         ExcerciseSettingsFragment fragment = new ExcerciseSettingsFragment();
@@ -121,35 +122,63 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu_, MenuInflater inflater_) {
     	_levelMenuItem = menu_.findItem(R.id.levelMenuItem);
+    	_rankMenuItem = menu_.findItem(R.id.rankMenuItem);
 		
     }
     
    @Override
 	public void onPrepareOptionsMenu(Menu menu_) {
-		MenuItem rankMenuItem = menu_.findItem(R.id.rankMenuItem);
+	   //TODO set current level and rank
 	}
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item_) {
-    	int levelIndex = 0;
-    	switch(item_.getItemId()){
-    	case R.id.levelEasy: 
-    		_levelMenuItem.setTitle("I");
-    		break;
-    	case R.id.levelMedium:
-    		_levelMenuItem.setTitle("II");
-    		levelIndex = 1;
-    		break;
-    	case R.id.levelHard:
-    		_levelMenuItem.setTitle("III");
-    		levelIndex = 2;
-    		break;
-    	default:
-    		return false;
-    	}
     	
-    	Level level = LevelSelectionViewAdapter.getLevelByPosition(levelIndex);
-    	fullWorkoutController.setCurrentLevel(level);
+    	int levelIndex = -1;
+    	int rankIndex = -1;
+    	switch(item_.getItemId()){
+	    	case R.id.levelEasy: 
+	    		_levelMenuItem.setTitle("I");
+	    		break;
+	    	case R.id.levelMedium:
+	    		_levelMenuItem.setTitle("II");
+	    		levelIndex = 1;
+	    		break;
+	    	case R.id.levelHard:
+	    		_levelMenuItem.setTitle("III");
+	    		levelIndex = 2;
+	    		break;
+	    		
+	    	case R.id.rankPrivate:
+	    		rankIndex = 1;
+	    		break;
+	    	case R.id.rankCorporal:
+	    		rankIndex = 2;
+	    		break;
+	    	case R.id.rankSergant:
+	    		rankIndex = 3;
+	    		break;
+	    	case R.id.rankMsgt:
+	    		rankIndex = 4;
+	    		break;
+	    	case R.id.rankLt:
+	    		rankIndex = 5;
+	    		break;
+	    	case R.id.rankCaptain:
+	    		rankIndex = 6;
+	    		break;
+	    		
+	    	default:
+	    		return false;
+    	}
+    	if (levelIndex >= 0) {
+    		Level level = LevelSelectionViewAdapter.getLevelByPosition(levelIndex);
+    		fullWorkoutController.setCurrentLevel(level);
+    	} else if (rankIndex >= 0) {
+    		_rankMenuItem.setIcon(item_.getIcon());
+    		Log.d("dgmt!onOptionsItemSelected","week changed to position "+rankIndex);
+    		fullWorkoutController.setWeek(rankIndex);
+    	}
     	return true;
     }
    

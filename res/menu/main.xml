@@ -25,7 +25,34 @@
         android:id="@+id/rankMenuItem"
         android:icon="@drawable/ic_action_sergant"
         android:showAsAction="ifRoom"
-        android:title="Rank"/>
+        android:title="Rank">
+    	<menu>
+    	    <item
+    	        android:id="@+id/rankPrivate"
+    	        android:title="Private"
+    	        android:icon="@drawable/ic_action_private" />
+    	    <item
+    	        android:id="@+id/rankCorporal"
+    	        android:title="Corporal"
+    	        android:icon="@drawable/ic_action_corporal" />
+    	    <item
+    	        android:id="@+id/rankSergant"
+    	        android:title="Sergant"
+    	        android:icon="@drawable/ic_action_sergant" />
+    	    <item
+    	        android:id="@+id/rankMsgt"
+    	        android:title="Master Sergant"
+    	         />
+    	    <item
+    	        android:id="@+id/rankLt"
+    	        android:title="1st Leutenant"
+    	         />
+    	    <item
+    	        android:id="@+id/rankCaptain"
+    	        android:title="Captain"
+    	         />
+    	</menu>    
+    </item>
     <item
         android:id="@+id/settings"
         android:icon="@android:drawable/ic_menu_preferences"
