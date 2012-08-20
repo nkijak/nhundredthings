@@ -123,12 +123,42 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
     public void onCreateOptionsMenu(Menu menu_, MenuInflater inflater_) {
     	_levelMenuItem = menu_.findItem(R.id.levelMenuItem);
     	_rankMenuItem = menu_.findItem(R.id.rankMenuItem);
+    	
 		
     }
     
    @Override
 	public void onPrepareOptionsMenu(Menu menu_) {
-	   //TODO set current level and rank
+	   
+	   	String level = fullWorkoutController.getLevel() == null ? "EASY" : fullWorkoutController.getLevel().getLabel();
+	   	if (level.equals("HARD")) {
+	   		_levelMenuItem.setTitle("III");
+	   	} else if (level.equals("MEDIUM")) {
+	   		_levelMenuItem.setTitle("II");
+	   	} else {
+	   		_levelMenuItem.setTitle("I");
+	   	}
+	   	int rankId;
+	   	switch(fullWorkoutController.getWeek()) {
+	   	case 6:
+	   		rankId = R.id.rankCaptain;
+	   		break;
+	   	case 5:
+	   		rankId = R.id.rankLt;
+	   		break;
+	   	case 4:
+	   		rankId = R.id.rankMsgt;
+	   		break;
+	   	case 3:
+	   		rankId = R.id.rankSergant;
+	   		break;
+	   	case 2:
+	   		rankId = R.id.rankCorporal;
+	   		break;
+	   	default:
+	   		rankId = R.id.rankPrivate;
+	   	}
+	   	_rankMenuItem.setIcon(menu_.findItem(rankId).getIcon());
 	}
     
     @Override
