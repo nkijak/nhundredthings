@@ -84,8 +84,9 @@
 	<item name="android:textColor">#f888</item>
 	<item name="android:gravity">top</item>
 </style>
-
+ 
 <style parent="Widget.TitlePageIndicator" name="Widget.GreenTitlePageIndicator">
     <item name="footerColor">#ff479e00</item>
 </style>
+
 </resources>
