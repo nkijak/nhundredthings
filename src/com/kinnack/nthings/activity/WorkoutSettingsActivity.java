@@ -65,9 +65,8 @@ public class WorkoutSettingsActivity extends SherlockFragmentActivity implements
         
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ExcerciseTabListener tabListener = new ExcerciseTabListener(this, Type.PUSHUP);
-        
-        actionBar.addTab(actionBar.newTab().setText("Push Ups").setTabListener(tabListener));
+
+        actionBar.addTab(actionBar.newTab().setText("Push Ups").setTabListener(new ExcerciseTabListener(this, Type.PUSHUP)));
         actionBar.addTab(actionBar.newTab().setText("Sit Ups").setTabListener(new ExcerciseTabListener(this, Type.SITUP)));
      
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);

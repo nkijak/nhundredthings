@@ -12,6 +12,7 @@ import com.kinnack.nthings.widget.SetOverviewChart;
 
 public class ChartingStartBlockFragment extends BaseExcersiseSetFragment {
 	private SetOverviewChart _chart;
+	private boolean createViewCalled = false;
 	
 	public ChartingStartBlockFragment(FullWorkoutController controller_, int setNumber_) {
 		super(setNumber_);
@@ -26,6 +27,7 @@ public class ChartingStartBlockFragment extends BaseExcersiseSetFragment {
 		_chart = (SetOverviewChart)view.findViewById(R.id.setOverviewChart);
 		
 		resetViews();
+		createViewCalled = true;
 		return view;
 		
 	}
@@ -41,6 +43,11 @@ public class ChartingStartBlockFragment extends BaseExcersiseSetFragment {
 			_chart.setExercseSet(_controller.getSetForDay(_setNumber));
 			_chart.setMaxX(_controller.getOverallMaxCount());
 		}
+	}
+	
+	@Override
+	public String getTitle() {
+		return super.getTitle()+" ["+(createViewCalled ? "YES" : "NO")+"]";
 	}
 	
 	

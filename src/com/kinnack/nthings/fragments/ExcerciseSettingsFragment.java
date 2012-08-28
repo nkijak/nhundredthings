@@ -1,7 +1,6 @@
 package com.kinnack.nthings.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,10 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,18 +18,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.kinnack.nthings.R;
-import com.kinnack.nthings.activity.CounterActivity;
 import com.kinnack.nthings.activity.WorkoutActions;
 import com.kinnack.nthings.controller.FullWorkoutController;
 import com.kinnack.nthings.controller.PushupFullWorkoutController;
-import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.controller.SitupFullWorkoutController;
-import com.kinnack.nthings.controller.SitupWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.helper.CounterActivityManager;
-import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.LevelSelectionViewAdapter;
-import com.kinnack.nthings.model.SetTitleAdapter;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
 import com.kinnack.nthings.model.level.Level;
@@ -59,6 +50,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         Bundle args = new Bundle();
         args.putString(WORKOUT_TYPE, workoutType_.toString());
         fragment.setArguments(args);
+        
         
         switch (workoutType_) {
         case PUSHUP:
@@ -90,7 +82,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         
         ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
         
-        fullWorkoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
+        fullWorkoutController.forceReloadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         pager.setAdapter(fullWorkoutController.getPagerAdapter(getFragmentManager()));
       
         
@@ -111,7 +103,7 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         fullWorkoutController.loadHistory(getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE));
         
         //listDayWeekOptions();
-        //loadLevelOptions();ä
+        //loadLevelOptions();
         //configureMainView();
         
         
@@ -242,64 +234,8 @@ public class ExcerciseSettingsFragment extends SherlockFragment {
         if (workoutController.isFinalUnlocked()) ((Button)view.findViewById(R.id.FinalButton)).setEnabled(true);
     }
     
-    private void setDayWeekSelectorOnItemClick() {
-        ((Spinner)view.findViewById(R.id.dayWeekSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
-            private int previousPosition = -1;
-            @Override
-            public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
-                Log.d("dgmt!dayWeekSelectorItemSelect","day and week changed to position "+position_);
-                DayAndWeek dayAndWeek = WorkoutSelectionViewAdapter.getDayAndWeekByPosition(position_);
-                boolean dayOrWeekChanged = !dayAndWeek.equals(workoutController.getDayAndWeek());
-                if (dayAndWeek.wasFound() && !workoutController.isTest() && dayOrWeekChanged ) {
-                    Log.d("dgmt!dayWeekSelectorItemSelect","day and week has changed");
-                    workoutController.setDayAndWeek(dayAndWeek);
-                    dayWeekOrLevelChanged();
-                }
-                previousPosition = position_;
-                
-                
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0_) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-        
-    }
+ 
     
-    private void setLevelSelectorOnItemSelect(){
-        ((Spinner)view.findViewById(R.id.levelSelector)).setOnItemSelectedListener(new OnItemSelectedListener() {
-
-            
-           
-            @Override
-            public void onItemSelected(AdapterView<?> parent_, View view_, int position_, long id_) {
-                Log.d("dgmt!levelSelectorItemSelect","Level changed to position "+position_);
-                Level level = LevelSelectionViewAdapter.getLevelByPosition(position_);
-               
-                boolean levelChanged = !level.equals(workoutController.getCurrentLevel());
-                Log.d("dgmt!levelSelectorItemSelect","Level changed?"+levelChanged+". current="+workoutController.getCurrentLevel()+"] selected="+level);
-                if(position_ != 3 && workoutController.setCurrentLevel(level)) {
-                    Log.d("dgmt!levelSelectorItemSelect", "Level has actually changed");
-                    view.findViewById(R.id.dayWeekSelector).setEnabled(true);
-                }
-                if (levelChanged) {dayWeekOrLevelChanged();}
-                
-                
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0_) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-    }
-    
-    
-   
     
     
     public void listDayWeekOptions() {
