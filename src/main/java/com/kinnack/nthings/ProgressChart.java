@@ -47,7 +47,7 @@ public class ProgressChart {
         
         renderer.setShowLegend(false);
         
-        renderer.setChartValuesTextSize(24f);
+        seriesRenderer.setChartValuesTextSize(24f);
         renderer.setDisplayChartValues(true);
 
         renderer.setMargins(new int[]{30,40,50,0});
