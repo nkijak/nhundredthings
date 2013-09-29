@@ -76,5 +76,24 @@ public class ExerciseSet {
         }
         return totalCount;
     }
+
+    public int[] getCounts() {
+        return counts;
+    }
     
+    public int[] getRests() {
+        return rests;
+    }
+    
+    public int[] getMinMaxCounts() {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(int count : counts) {
+            if (count > max) max = count;
+            if (count < min) min = count;
+        }
+        
+        Log.d("DGMT!ExerciseSet", "Found min ["+min+"] and max ["+max+"] for set");
+        return new int[]{min,max};
+    }
 }

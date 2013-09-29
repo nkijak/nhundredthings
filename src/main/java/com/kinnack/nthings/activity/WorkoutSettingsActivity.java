@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -507,7 +508,15 @@ public class WorkoutSettingsActivity extends ActionBarActivity {
        getMenuInflater().inflate(R.menu.main,menu_);
        menu_.findItem(R.id.settings).setIntent(new Intent(this, SettingsActivity.class));
        menu_.findItem(R.id.reset).setEnabled(false).setVisible(false);
-       return true;
+
+       getMenuInflater().inflate(R.menu.progress, menu_);
+       menu_.findItem(R.id.progress_menu_item).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item_) {
+                showProgress(workoutController.getHistory());
+                return true;
+            }
+       });
+       return super.onCreateOptionsMenu(menu_);
     }
     
    

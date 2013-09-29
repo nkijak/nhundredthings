@@ -35,10 +35,6 @@
 				android:text="Final Test" android:layout_width="fill_parent"
 				android:gravity="center_horizontal" android:onClick="doFinalTest"
 				android:enabled="false"></Button>
-				
-			<Button android:layout_height="wrap_content" android:id="@+id/WorkoutButton"
-				android:layout_width="fill_parent" android:gravity="center_horizontal"
-				android:text="Progress" android:onClick="showProgress"></Button>	
 	  		
 		</LinearLayout>
 </LinearLayout>

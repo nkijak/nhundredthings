@@ -3,5 +3,10 @@
 build/
 gen/
 *.iml
+*.iws
+*.ipr
+.settings/
 local.properties
+.DS_Store
+
 
