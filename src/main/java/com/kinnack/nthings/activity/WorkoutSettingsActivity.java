@@ -37,6 +37,9 @@ import android.support.v7.app.ActionBarActivity;
 import java.io.*;
 import java.nio.channels.FileChannel;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 public class WorkoutSettingsActivity extends ActionBarActivity {
     public static final String TAG = "dgmt:WorkoutSettings";
     private static final int COUNTER_INTENT = 100;
@@ -186,7 +189,9 @@ public class WorkoutSettingsActivity extends ActionBarActivity {
     
     @Override
     protected void onDestroy() {
+        Crouton.cancelAllCroutons();
         super.onDestroy();
+
         //((Spinner)findViewById(R.id.levelSelector)).s
     }
     
@@ -332,7 +337,7 @@ public class WorkoutSettingsActivity extends ActionBarActivity {
             if (level == null) { return; }
             workoutController.addTestResult(testCount).setCurrentLevel(level);
             saveHistory();
-            Toast.makeText(this, level.toString(), Toast.LENGTH_SHORT).show();
+            Crouton.makeText(this, level.toString(), Style.CONFIRM).show();
             break;
         case FINAL_TEST_INTENT:
             if(data_ == null) { return; }
@@ -454,7 +459,7 @@ public class WorkoutSettingsActivity extends ActionBarActivity {
             }
             
             protected void onPostExecute(Boolean result) {                
-                Toast.makeText(getApplicationContext(), "Error saving history", Toast.LENGTH_SHORT);
+                Crouton.makeText(WorkoutSettingsActivity.this, "Error saving history", Style.ALERT);
             }
         }.execute();
     }
