@@ -1,7 +1,5 @@
 package com.kinnack.nthings.activity;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -12,8 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
-
 import com.kinnack.nthings.R;
+
+import java.util.List;
 
 public class ProximityCounterActivity extends CounterActivity implements SensorEventListener {
     int current = 0;

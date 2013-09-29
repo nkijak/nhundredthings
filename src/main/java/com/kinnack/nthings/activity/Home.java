@@ -1,60 +1,29 @@
 package com.kinnack.nthings.activity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.json.JSONException;
-
-import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.kinnack.nthings.ProgressChart;
 import com.kinnack.nthings.R;
-import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.controller.SitupWorkoutController;
 import com.kinnack.nthings.controller.WorkoutController;
-import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.helper.PrettyDateAndTime;
-import com.kinnack.nthings.model.DayAndWeek;
-import com.kinnack.nthings.model.History;
-import com.kinnack.nthings.model.LevelSelectionViewAdapter;
-import com.kinnack.nthings.model.Logg;
-import com.kinnack.nthings.model.Test;
-import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
 import com.kinnack.nthings.model.Workout.Type;
-import com.kinnack.nthings.model.level.Level;
 import com.kinnack.nthings.receiver.ReminderReceiver;
+import android.support.v7.app.ActionBarActivity;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
-public class Home extends Activity {
+public class Home extends ActionBarActivity {
     public static final String TAG = "dgmt:HOME";
     private static final int RESET_INTENT = 300;
     private WorkoutController pushupController;

@@ -1,20 +1,16 @@
 package com.kinnack.nthings.activity;
 
-import org.json.JSONException;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-
-import com.kinnack.nthings.R;
 import com.kinnack.nthings.controller.PushupWorkoutController;
 import com.kinnack.nthings.model.HistoricViewAdapter;
 import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Workout;
+import org.json.JSONException;
 
 public class HistoryActivity extends ListActivity {
     private History pushupHistory;

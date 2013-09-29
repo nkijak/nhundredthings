@@ -1,10 +1,9 @@
 package com.kinnack.nthings.activity;
 
-import com.kinnack.nthings.R;
-
 import android.app.TabActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
+import com.kinnack.nthings.R;
 
 
 public class WorkoutSelectionTabActivity extends TabActivity {

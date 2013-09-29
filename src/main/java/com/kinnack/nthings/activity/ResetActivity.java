@@ -1,9 +1,5 @@
 package com.kinnack.nthings.activity;
 
-import java.io.File;
-
-import com.kinnack.nthings.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +7,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnLongClickListener;
+import com.kinnack.nthings.R;
+
+import java.io.File;
 
 public class ResetActivity extends Activity {
     private static final String PUBLIC_FOLDER_PATH=Environment.getExternalStorageDirectory()+"/nhundredthings/";

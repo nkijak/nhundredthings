@@ -1,13 +1,12 @@
 package com.kinnack.nthings.activity;
 
-import com.kinnack.nthings.R;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
+import com.kinnack.nthings.R;
 
 public class SitupAccelCounterActivity extends CounterActivity  implements SensorEventListener {
     private boolean layDown, satUp;

@@ -1,17 +1,14 @@
 package com.kinnack.nthings.activity;
 
-import com.kinnack.nthings.R;
-import com.kinnack.nthings.StopWatch;
-import com.kinnack.nthings.helper.RangedIntTextWatcher;
-
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import com.kinnack.nthings.R;
+import com.kinnack.nthings.StopWatch;
+import com.kinnack.nthings.helper.RangedIntTextWatcher;
 
 public class ManualEntryCounterActivity extends CounterActivity {
     private RangedIntTextWatcher rangedIntTextWatcher;

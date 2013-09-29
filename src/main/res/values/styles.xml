@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-<style name="GradientLight" parent="@android:style/Theme.Light.NoTitleBar">
+<style name="GradientLight" parent="Theme.AppCompat.Light">
     <item name="android:windowBackground">@drawable/background</item>
     <item name="android:progressBarStyle">@style/progressBar</item>
     <item name="android:buttonStyle">@style/greenButton</item>
@@ -10,6 +10,22 @@
     <item name="android:itemBackground">@drawable/menu_selector</item>
     <item name="android:spinnerStyle">@style/spinner</item>
     <item name="android:seekBarStyle">@style/seekBar</item>
+
+
+    <item name="actionBarStyle">@style/GradientLight.ActionBar</item>
+    <item name="android:actionBarStyle">@style/GradientLight.ActionBar</item>
+    
+    <item name="actionBarSize">50dp</item>
+    
+    <!--<item name="actionBarTabTextStyle">@style/whiteDropShadow</item>
+    <item name="android:actionBarTabTextStyle">@style/whiteDropShadow</item>
+    <item name="actionBarTabStyle">@style/actionBarTab</item>
+    <item name="android:actionBarTabStyle">@style/actionBarTab</item>
+    <item name="android:selectableItemBackground">@drawable/selectable_background</item>-->
+</style>
+<style name="GradientLight.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <item name="background">@drawable/header</item>
+    <item name="android:background">@drawable/header</item>
 </style>
 
 <style name="progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">

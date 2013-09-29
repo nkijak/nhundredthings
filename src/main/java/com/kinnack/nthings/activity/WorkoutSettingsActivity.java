@@ -1,39 +1,13 @@
 package com.kinnack.nthings.activity;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.util.Date;
-
-import org.json.JSONException;
-
-import com.kinnack.nthings.ProgressChart;
-import com.kinnack.nthings.R;
-import com.kinnack.nthings.StopWatch;
-import com.kinnack.nthings.controller.PushupWorkoutController;
-import com.kinnack.nthings.controller.SitupWorkoutController;
-import com.kinnack.nthings.controller.WorkoutController;
-import com.kinnack.nthings.helper.CounterActivityManager;
-import com.kinnack.nthings.model.DayAndWeek;
-import com.kinnack.nthings.model.History;
-import com.kinnack.nthings.model.LevelSelectionViewAdapter;
-import com.kinnack.nthings.model.Logg;
-import com.kinnack.nthings.model.Test;
-import com.kinnack.nthings.model.WorkoutSelectionViewAdapter;
-import com.kinnack.nthings.model.Workout.Type;
-import com.kinnack.nthings.model.level.Level;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -42,16 +16,27 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
+import com.kinnack.nthings.ProgressChart;
+import com.kinnack.nthings.R;
+import com.kinnack.nthings.StopWatch;
+import com.kinnack.nthings.controller.PushupWorkoutController;
+import com.kinnack.nthings.controller.SitupWorkoutController;
+import com.kinnack.nthings.controller.WorkoutController;
+import com.kinnack.nthings.helper.CounterActivityManager;
+import com.kinnack.nthings.model.*;
+import com.kinnack.nthings.model.Workout.Type;
+import com.kinnack.nthings.model.level.Level;
+import org.json.JSONException;
 
-public class WorkoutSettingsActivity extends Activity {
+import android.support.v7.app.ActionBarActivity;
+
+import java.io.*;
+import java.nio.channels.FileChannel;
+
+public class WorkoutSettingsActivity extends ActionBarActivity {
     public static final String TAG = "dgmt:WorkoutSettings";
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;
@@ -74,15 +59,14 @@ public class WorkoutSettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
         Bundle extras = getIntent().getExtras();
         Type type = Type.valueOf(extras.getString(WORKOUT_TYPE));
-        TextView exerciseLabel = (TextView)findViewById(R.id.ExerciseLabel);
         switch (type) {
         case PUSHUP:
             workoutController = new PushupWorkoutController();
-            exerciseLabel.setText("Push Ups");
+            getSupportActionBar().setTitle("Push Ups");
             break;
         case SITUP:
             workoutController = new SitupWorkoutController();
-            exerciseLabel.setText("Sit Ups");
+            getSupportActionBar().setTitle("Sit Ups");
             break;
         }
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
@@ -159,7 +143,7 @@ public class WorkoutSettingsActivity extends Activity {
         counterActivityManager = new CounterActivityManager(PreferenceManager.getDefaultSharedPreferences(this), this);
         workoutController.setCounterActivityManager(counterActivityManager);
         workoutController.loadHistory(getSharedPreferences(PREFS, Context.MODE_PRIVATE));
-        ((TextView)findViewById(R.id.OverallTotalCount)).setText(workoutController.getTotalCount()+" TOTAL");
+        getSupportActionBar().setSubtitle(workoutController.getTotalCount()+" TOTAL");
         
         listDayWeekOptions();
         loadLevelOptions();

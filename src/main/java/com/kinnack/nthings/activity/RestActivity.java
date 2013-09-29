@@ -1,10 +1,5 @@
 package com.kinnack.nthings.activity;
 
-import static android.os.PowerManager.ON_AFTER_RELEASE;
-import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
-
-import java.util.Date;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,10 +13,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.helper.PrettyDateAndTime;
 import com.kinnack.nthings.model.SoundAlert;
+
+import java.util.Date;
+
+import static android.os.PowerManager.ON_AFTER_RELEASE;
+import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
 
 public class RestActivity extends Activity {
     private long rest_milliseconds = -1;
