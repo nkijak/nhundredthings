@@ -23,7 +23,7 @@ import com.kinnack.nthings.model.level.Level;
 public abstract class WorkoutController {
 
     private CounterActivityManager counterActivityManager;
-
+    
     protected abstract String getTag();
     protected abstract String getKeyForHistory();
     protected abstract Type getWorkoutType();
@@ -184,6 +184,8 @@ public abstract class WorkoutController {
     public void setLastWorkout(Date lastWorkoutDate_) {
         history.setLastWorkout(lastWorkoutDate_);
     }
+
+    public ExerciseSet getSet() { return set; }
 
  
 

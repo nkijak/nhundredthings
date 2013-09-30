@@ -8,5 +8,6 @@ gen/
 .settings/
 local.properties
 .DS_Store
+tags
 
 

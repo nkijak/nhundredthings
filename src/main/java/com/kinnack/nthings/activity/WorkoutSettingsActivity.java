@@ -30,6 +30,7 @@ import com.kinnack.nthings.helper.CounterActivityManager;
 import com.kinnack.nthings.model.*;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.model.level.Level;
+import com.kinnack.nthings.widget.SetOverviewChart;
 import org.json.JSONException;
 
 import android.support.v7.app.ActionBarActivity;
@@ -199,6 +200,11 @@ public class WorkoutSettingsActivity extends ActionBarActivity {
         String count = (String) getResources().getText(R.string.count_for_test_msg);
         if (!workoutController.shouldDisplayDayAsTest()) { count = workoutController.totalCountLeft()+""; }
         ((TextView)findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
+        
+        SetOverviewChart chart = (SetOverviewChart)findViewById(R.id.setOverviewChart);
+        ExerciseSet set = workoutController.getSet();
+        chart.setExercseSet(set);
+        chart.setMaxX(set.getMinMaxCounts()[1]);
     }
     
     public void listDayWeekOptions() {
