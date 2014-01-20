@@ -20,7 +20,13 @@
                android:textSize="25sp" 
                android:textColor="#ff454545"/>
 
-             <com.kinnack.nthings.widget.SetOverviewChart
+            <fragment
+android:name="com.kinnack.nthings.fragments.LevelSelectorFragment"
+android:layout_width="wrap_content"
+android:layout_height="200dp"
+android:layout_gravity="center_horizontal" />
+
+            <com.kinnack.nthings.widget.SetOverviewChart
                 android:id="@+id/setOverviewChart"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
@@ -28,28 +34,32 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                />
-	  		
-	  		<Spinner android:id="@+id/dayWeekSelector"
+
+            <Spinner android:id="@+id/dayWeekSelector"
 						 android:choiceMode="singleChoice" 
 						 android:layout_width="fill_parent" android:layout_height="50dp"
 						 android:prompt="@string/week_day_select_msg"
-						 >
+                android:visibility="gone">
 			
 			</Spinner>
 			<Spinner android:id="@+id/levelSelector"
 					android:choiceMode="singleChoice"
 					android:layout_width="fill_parent"
 					android:layout_height="50dp" 
-					android:prompt="@string/level_select_msg" />
+					android:prompt="@string/level_select_msg"
+                android:visibility="gone" />
 					
 	  		<Button android:layout_height="wrap_content" android:id="@+id/ActivityButton"
 				android:text="Start" android:gravity="center_horizontal"
-				android:layout_width="fill_parent" android:onClick="doActivity"></Button>
+				android:layout_width="fill_parent" android:onClick="doActivity"
+                ></Button>
 	  		
 	  		<Button android:layout_height="wrap_content" android:id="@+id/FinalButton"
 				android:text="Final Test" android:layout_width="fill_parent"
 				android:gravity="center_horizontal" android:onClick="doFinalTest"
-				android:enabled="false"></Button>
+				android:enabled="false"
+                android:layout_gravity="bottom"
+                android:layout_margin="0dp"></Button>
 	  		
 		</LinearLayout>
 </LinearLayout>

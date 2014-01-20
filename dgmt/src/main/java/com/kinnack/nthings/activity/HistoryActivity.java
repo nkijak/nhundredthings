@@ -12,6 +12,9 @@ import com.kinnack.nthings.model.History;
 import com.kinnack.nthings.model.Workout;
 import org.json.JSONException;
 
+/**
+* This isn't used anymore. It was a list of entries. Eventually to allow for editing records.
+**/
 public class HistoryActivity extends ListActivity {
     private History pushupHistory;
     private final static String TAG = "DGMT:HistoryAction";

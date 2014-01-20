@@ -203,8 +203,10 @@ public class WorkoutSettingsActivity extends ActionBarActivity {
         
         SetOverviewChart chart = (SetOverviewChart)findViewById(R.id.setOverviewChart);
         ExerciseSet set = workoutController.getSet();
-        chart.setExercseSet(set);
-        chart.setMaxX(set.getMinMaxCounts()[1]);
+        if (set != null) {
+            chart.setExercseSet(set);
+            chart.setMaxX(set.getMinMaxCounts()[1]);
+        }
     }
     
     public void listDayWeekOptions() {

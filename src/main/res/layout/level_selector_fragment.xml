@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="6"
+    android:alignmentMode="alignMargins"
+    android:rowCount="3"
+    android:columnOrderPreserved="false"
+    android:orientation="horizontal"
+    android:padding="0dp"
+    android:useDefaultMargins="false">
+
+    <Button
+        android:text="1"
+        android:id="@+id/button"
+        android:layout_gravity="fill"
+        android:width="48dp" />
+    <Button
+        android:text="2"
+        android:id="@+id/button"
+        android:layout_gravity="fill" android:width="48dp"/>
+    <Button
+        android:text="3"
+        android:id="@+id/button"
+        android:layout_gravity="fill" android:width="48dp"/>
+    <Button
+        android:text="4"
+        android:id="@+id/button"
+        android:layout_gravity="fill" android:width="48dp"/>
+    <Button
+        android:text="5"
+        android:id="@+id/button"
+        android:layout_gravity="fill" android:width="48dp"/>
+    <Button
+        android:text="6"
+        android:id="@+id/button"
+        android:layout_gravity="fill" android:width="48dp"/>
+
+
+
+
+    <Button
+        android:text="1"
+        android:id="@+id/button"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"/>
+    <Button
+        android:text="2"
+        android:id="@+id/button"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"/>
+    <Button
+        android:text="3"
+        android:id="@+id/button"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"/>
+
+
+
+    <Button
+        android:text="E"
+        android:id="@+id/button"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:layout_margin="0dp"
+        android:padding="0dp"/>
+    <Button
+        android:text="M"
+        android:id="@+id/button"
+        android:layout_columnSpan="2"
+        android:layout_gravity="center|fill|bottom|left|right|top"
+        android:layout_margin="0dp"
+        android:padding="0dp" />
+    <Button
+        android:text="H"
+        android:id="@+id/button"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:layout_margin="0dp" />
+</GridLayout>
+
