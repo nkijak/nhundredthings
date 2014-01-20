@@ -2,14 +2,12 @@ apply plugin: 'android'
 
 repositories {
     mavenCentral()
-    maven {
-        url "https://repository-achartengine.forge.cloudbees.com/snapshot/"
-    }
+    maven { url 'https://repository-achartengine.forge.cloudbees.com/snapshot/' }
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.0"
+    buildToolsVersion '19.0.0'
 
     defaultConfig {
         minSdkVersion 9
@@ -26,11 +24,10 @@ android {
 }
 
 dependencies {
+    compile 'com.jakewharton:butterknife:4.0.+'
     compile 'org.achartengine:achartengine:1.1.+'
     compile 'com.android.support:support-v4:19.0.0'
     compile 'com.android.support:gridlayout-v7:19.0.0'
     compile 'com.android.support:appcompat-v7:19.0.0'
-    compile('de.keyboardsurfer.android.widget:crouton:1.8.+') {
-        exclude group: 'com.google.android'
-    }
+    compile 'de.keyboardsurfer.android.widget:crouton:1.8.+'
 }
