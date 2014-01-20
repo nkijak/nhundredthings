@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/Documents/code/java/nhundredthings-legacy" />
-            <option value="$USER_HOME$/Documents/code/java/nhundredthings-legacy/dgmt" />
+            <option value="$USER_HOME$/Documents/code/java/nthings-gh" />
+            <option value="$USER_HOME$/Documents/code/java/nthings-gh/dgmt" />
           </set>
         </option>
       </GradleProjectSettings>

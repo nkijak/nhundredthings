@@ -36,9 +36,7 @@ public class LevelSelectorFragment extends Fragment {
     @InjectView(R.id.levelMid) Button _levelMid;
     @InjectView(R.id.levelHard) Button _levelHard;
 
-    final View[] WEEKS = new View[]{_week1, _week2, _week3, _week4, _week5, _week6};
-    final View[] DAYS = new View[] {_day1, _day2, _day3};
-    final View[] LEVELS = new View[] { _levelEasy, _levelMid, _levelHard};
+
 
     final static String TAG = "DGMT:LevelSelectorFragment";
 
@@ -65,6 +63,9 @@ public class LevelSelectorFragment extends Fragment {
 
 
     private void setupOnClickHandlers() {
+        final View[] WEEKS = new View[]{_week1, _week2, _week3, _week4, _week5, _week6};
+        final View[] DAYS = new View[] {_day1, _day2, _day3};
+
         for (int i = 0, len = WEEKS.length; i < len; i++) {
             WEEKS[i].setOnClickListener(new HoldThisForMeOnClickListener<Integer>(i){
                 @Override
@@ -89,13 +90,13 @@ public class LevelSelectorFragment extends Fragment {
                 LevelSelectorFragment.this.selectLevel(_heldThing);
             }
         });
-        _levelEasy.setOnClickListener(new HoldThisForMeOnClickListener<Level>(new InitialMidLevel()) {
+        _levelMid.setOnClickListener(new HoldThisForMeOnClickListener<Level>(new InitialMidLevel()) {
             @Override
             public void onClick(View view) {
                 LevelSelectorFragment.this.selectLevel(_heldThing);
             }
         });
-        _levelEasy.setOnClickListener(new HoldThisForMeOnClickListener<Level>(new InitialHardLevel()) {
+        _levelHard.setOnClickListener(new HoldThisForMeOnClickListener<Level>(new InitialHardLevel()) {
             @Override
             public void onClick(View view) {
                 LevelSelectorFragment.this.selectLevel(_heldThing);

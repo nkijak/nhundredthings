@@ -1,4 +1,5 @@
 apply plugin: 'android'
+apply plugin: 'android-apt'
 
 repositories {
     mavenCentral()
@@ -24,6 +25,7 @@ android {
 }
 
 dependencies {
+    apt 'com.jakewharton:butterknife:4.0.+'
     compile 'com.jakewharton:butterknife:4.0.+'
     compile 'org.achartengine:achartengine:1.1.+'
     compile 'com.android.support:support-v4:19.0.0'
