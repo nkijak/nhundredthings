@@ -41,7 +41,7 @@ public class SetOverviewChart extends View {
 	
 	public void setExercseSet(ExerciseSet exercseSet_) {
 		_exercseSet = exercseSet_;
-		
+
 		_counts.clear();
 		_maxCountForSet = Integer.MIN_VALUE;
 		for(int count : _exercseSet.getCounts()) {
