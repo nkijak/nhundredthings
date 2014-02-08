@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
+import android.support.v7.widget.GridLayout;
 
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.model.level.EasyLevel;
