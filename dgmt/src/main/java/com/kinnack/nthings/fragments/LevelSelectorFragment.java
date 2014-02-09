@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.support.v7.widget.GridLayout;
 
 import com.kinnack.nthings.R;
+import com.kinnack.nthings.controller.WorkoutController;
+import com.kinnack.nthings.model.DayAndWeek;
 import com.kinnack.nthings.model.level.EasyLevel;
 import com.kinnack.nthings.model.level.Level;
 import com.kinnack.nthings.model.level.pushup.InitialEasyLevel;
@@ -37,6 +39,10 @@ public class LevelSelectorFragment extends Fragment {
     @InjectView(R.id.levelHard) Button _levelHard;
 
 
+    private WorkoutController workoutController;
+
+
+    private LevelSelectChangeListener levelSelectorChangeListener;
 
     final static String TAG = "DGMT:LevelSelectorFragment";
 
@@ -51,14 +57,55 @@ public class LevelSelectorFragment extends Fragment {
     public void selectWeek(int week_) {
         Log.d(TAG, "Selected week "+week_);
 
+        DayAndWeek dayAndWeek = workoutController.getDayAndWeek().changeWeek(week_);
+        updateDayAndWeek(dayAndWeek);
     }
-
     public void selectDay(int day_) {
         Log.d(TAG, "Selected day "+day_);
+        DayAndWeek dayAndWeek = workoutController.getDayAndWeek().changeDay(day_);
+        updateDayAndWeek(dayAndWeek);
+    }
+
+    private void updateDayAndWeek(DayAndWeek dayAndWeek) {
+        boolean dayOrWeekChanged = !dayAndWeek.equals(workoutController.getDayAndWeek());
+        if (dayAndWeek.wasFound() && !workoutController.isTest() && dayOrWeekChanged ) {
+            Log.d("dgmt!dayWeekSelectorItemSelect","day and week has changed");
+            workoutController.setDayAndWeek(dayAndWeek);
+            levelSelectorChangeListener.dayWeekOrLevelChanged();
+        }
     }
 
     public void selectLevel(Level level_){
-        Log.d(TAG, "Selected level "+level_);
+        Log.d(TAG,"Level selected "+level_);
+
+        boolean levelChanged = !level_.equals(workoutController.getCurrentLevel());
+        Log.d("dgmt!levelSelectorItemSelect","Level changed?"+levelChanged+". current="+workoutController.getCurrentLevel()+"] selected="+level_);
+        //TODO how handle tests?
+//        if(position_ != 3 && workoutController.setCurrentLevel(level)) {
+//            Log.d("dgmt!levelSelectorItemSelect", "Level has actually changed");
+//            findViewById(R.id.dayWeekSelector).setEnabled(true);
+//        }
+        if (levelChanged) {levelSelectorChangeListener.dayWeekOrLevelChanged();}
+    }
+
+    protected void configureButtons() {
+        int levelIndex = workoutController.getCurrentLevel().getIndex();
+
+        _levelEasy.setEnabled(levelIndex >= 0);
+        _levelMid.setEnabled(levelIndex > 1);
+        _levelHard.setEnabled(levelIndex > 2);
+
+        DayAndWeek dayAndWeek = workoutController.getDayAndWeek();
+        _day1.setEnabled(dayAndWeek.day >= 0);
+        _day2.setEnabled(dayAndWeek.day > 1);
+        _day3.setEnabled(dayAndWeek.day > 2);
+
+        _week1.setEnabled(dayAndWeek.week >= 0);
+        _week2.setEnabled(dayAndWeek.week > 1);
+        _week3.setEnabled(dayAndWeek.week > 2);
+        _week4.setEnabled(dayAndWeek.week > 3);
+        _week5.setEnabled(dayAndWeek.week > 4);
+        _week6.setEnabled(dayAndWeek.week > 5);
     }
 
 
@@ -103,11 +150,24 @@ public class LevelSelectorFragment extends Fragment {
             }
         });
 
-    
+
+
+    }
+
+    public void setWorkoutController(WorkoutController workoutController_) {
+        this.workoutController = workoutController_;
+        configureButtons();
+    }
+    public void setLevelSelectorChangeListener(LevelSelectChangeListener levelSelectorChangeListener_) {
+        this.levelSelectorChangeListener = levelSelectorChangeListener_;
     }
 
     abstract class HoldThisForMeOnClickListener<T> implements View.OnClickListener {
         T _heldThing;
         public HoldThisForMeOnClickListener(T holdThis_) { _heldThing = holdThis_; }
+    }
+
+    public interface LevelSelectChangeListener {
+        void dayWeekOrLevelChanged();
     }
 }

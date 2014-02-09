@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
 		android:layout_height="match_parent" android:layout_gravity="center_horizontal"
 		>
   		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,10 +22,12 @@
                android:textColor="#ff454545"/>
 
             <fragment
-android:name="com.kinnack.nthings.fragments.LevelSelectorFragment"
-android:layout_width="wrap_content"
-android:layout_height="200dp"
-android:layout_gravity="center_horizontal" />
+                android:name="com.kinnack.nthings.fragments.LevelSelectorFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                tools:layout="@layout/level_selector_fragment"
+                android:id="@+id/levelSelectorFragment" />
 
             <com.kinnack.nthings.widget.SetOverviewChart
                 android:id="@+id/setOverviewChart"
