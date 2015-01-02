@@ -13,12 +13,12 @@ import android.content.Context;
 import android.widget.SimpleAdapter;
 
 public class HistoricViewAdapter extends SimpleAdapter {
-    public static final String WEEK="week";
-    public static final String DAY="day";
-    public static final String LEVEL="level";
-    public static final String COUNTS="counts";
-    public static final String AVG_TIME="avgTime";
-    public static final String DATE="date";
+    public static final String WEEK     ="week";
+    public static final String DAY      ="day";
+    public static final String LEVEL    ="level";
+    public static final String COUNTS   ="counts";
+    public static final String AVG_TIME ="avgTime";
+    public static final String DATE     ="date";
     public static final String FREQUENCY="frequency";
     
     public HistoricViewAdapter(Context context_, History history_) {

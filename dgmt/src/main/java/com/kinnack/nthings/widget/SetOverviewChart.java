@@ -44,6 +44,7 @@ public class SetOverviewChart extends View {
 
 		_counts.clear();
 		_maxCountForSet = Integer.MIN_VALUE;
+        if (_exercseSet == null) return;
 		for(int count : _exercseSet.getCounts()) {
 		
 			if (count > _maxCountForSet) _maxCountForSet = count;

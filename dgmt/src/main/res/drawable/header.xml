@@ -1,13 +1,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 	<item>
 		<shape  android:shape="rectangle">
-
-		        <gradient
-		                android:startColor="#cc479e00"
-		                android:centerColor="#ff479e00"
-		                android:endColor="#dd397f00"
-		                android:angle="270"/>
-		        
+            <solid android:color="#ff479e00"/>
 		</shape>
 	</item>
 

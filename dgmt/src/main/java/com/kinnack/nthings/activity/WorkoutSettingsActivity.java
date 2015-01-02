@@ -202,7 +202,9 @@ public class WorkoutSettingsActivity extends ActionBarActivity {
         ((TextView)findViewById(R.id.count_for_settings)).setText("Drop and Give Me "+count+"!");
         
         SetOverviewChart chart = (SetOverviewChart)findViewById(R.id.setOverviewChart);
+
         ExerciseSet set = workoutController.getSet();
+        if (set == null) return;
         chart.setExercseSet(set);
         chart.setMaxX(set.getMinMaxCounts()[1]);
     }
