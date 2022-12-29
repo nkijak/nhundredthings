@@ -18,12 +18,12 @@ import com.kinnack.nthings.controller.WorkoutController;
 import com.kinnack.nthings.helper.PrettyDateAndTime;
 import com.kinnack.nthings.model.Workout.Type;
 import com.kinnack.nthings.receiver.ReminderReceiver;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-public class Home extends ActionBarActivity {
+public class Home extends AppCompatActivity {
     public static final String TAG = "dgmt:HOME";
     private static final int RESET_INTENT = 300;
     private WorkoutController pushupController;
