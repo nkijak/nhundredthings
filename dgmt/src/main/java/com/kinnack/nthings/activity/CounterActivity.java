@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -17,6 +18,11 @@ import android.widget.TextView;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.model.SoundAlert;
+import com.kinnack.nthings.model.colyseus.MyRoomState;
+
+import io.colyseus.Client;
+import io.colyseus.Room;
+import io.colyseus.util.callbacks.Function1Void;
 
 import static android.os.PowerManager.ON_AFTER_RELEASE;
 import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
@@ -38,6 +44,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     private boolean useSubcount = false;
     protected SoundAlert soundAlert;
     private PowerManager.WakeLock wakeLock;
+    private RoomDelegate _roomDelegate = new RoomDelegate();
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +72,13 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         
         if (extras.getBoolean(IS_TEST)) {
             dialogToUser(R.string.is_test_title,R.string.is_test_msg);
-        } 
+        }
+
+//        Client client = new Client("ws://192.168.1.177:2567");
+//        client.joinOrCreate(MyRoomState.class,
+//                "my_room",
+//                _roomDelegate,
+//                Throwable::printStackTrace);
         
         stopWatch = new StopWatch();
         stopWatch.start();
@@ -143,6 +156,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     
     // ??? Is it necessary to stop the counter each time?
     protected void count() {
+        _roomDelegate.countRep();
         incrementProgress();
         
         stopWatch.stop();
@@ -247,5 +261,19 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = pm.newWakeLock(SCREEN_DIM_WAKE_LOCK|ON_AFTER_RELEASE, "RestActivity.screenOn");
         wakeLock.acquire();
+    }
+
+
+    private static class RoomDelegate implements Function1Void<Room<MyRoomState>> {
+        private Room<MyRoomState> _room = null;
+        @Override
+        public void invoke(Room<MyRoomState> room) {
+            Log.i("CLIENT", "joined "+room.getName()+" with sess="+room.getSessionId());
+            _room = room;
+        }
+
+        public void countRep() {
+            _room.send("rep");
+        }
     }
 }
