@@ -1,7 +1,6 @@
 package com.kinnack.nthings.activity;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,7 +32,7 @@ import com.kinnack.nthings.model.level.Level;
 import com.kinnack.nthings.widget.SetOverviewChart;
 import org.json.JSONException;
 
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -41,7 +40,7 @@ import java.nio.channels.FileChannel;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class WorkoutSettingsActivity extends ActionBarActivity {
+public class WorkoutSettingsActivity extends AppCompatActivity {
     public static final String TAG = "dgmt:WorkoutSettings";
     private static final int COUNTER_INTENT = 100;
     private static final int TEST_INTENT = 150;

@@ -21,6 +21,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.core.app.NotificationBuilderWithBuilderAccessor;
+
 public class ReminderReceiver extends BroadcastReceiver {
     public static final int RESPONSE_CODE = 91191;
     public static final int NOTIFICATION_ID = 1200;
@@ -74,7 +76,8 @@ public class ReminderReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager)context_.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.notification_icon, message_, System.currentTimeMillis());
         PendingIntent pendingIntent = PendingIntent.getActivity(context_, 0, new Intent(context_,Home.class), 0);
-        notification.setLatestEventInfo(context_, subject_, message_, pendingIntent);
+        //TODO this was removed, what to replace it with?
+        //notification.setLatestEventInfo(context_, subject_, message_, pendingIntent);
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(NOTIFICATION_ID, notification);
     }

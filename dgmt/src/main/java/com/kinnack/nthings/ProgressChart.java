@@ -47,8 +47,9 @@ public class ProgressChart {
         
         renderer.setShowLegend(false);
         
-        seriesRenderer.setChartValuesTextSize(24f);
-        renderer.setDisplayChartValues(true);
+//        seriesRenderer.setChartValuesTextSize(24f);
+        renderer.setLabelsTextSize(24f);
+        renderer.setDisplayValues(true);
 
         renderer.setMargins(new int[]{30,40,50,0});
         renderer.setMarginsColor(Color.WHITE);
