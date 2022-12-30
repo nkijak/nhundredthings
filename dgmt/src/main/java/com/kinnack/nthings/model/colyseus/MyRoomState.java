@@ -34,8 +34,8 @@ public class MyRoomState extends Schema {
     public String mySynchronizedProperty = "Hello world";
 
     @SchemaField(type="1/number")
-    public int numParticipants = 0;
+    public float numParticipants = 0f;
 
     @SchemaField(type = "2/map/ref", ref = UserState.class)
-    public MapSchema<UserState> cells = new MapSchema<>(UserState.class);
+    public MapSchema<UserState> users = new MapSchema<>(UserState.class);
 }

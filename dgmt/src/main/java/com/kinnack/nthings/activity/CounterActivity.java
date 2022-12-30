@@ -26,8 +26,9 @@ import io.colyseus.util.callbacks.Function1Void;
 
 import static android.os.PowerManager.ON_AFTER_RELEASE;
 import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
+import io.colyseus.serializer.schema.types.SchemaReflection;
 
-public class CounterActivity extends Activity implements OnSeekBarChangeListener{
+public class CounterActivity extends Activity implements OnSeekBarChangeListener, Function1Void<Room<MyRoomState>>{
     public static final String INIT_COUNT_KEY = "com.kinnack.nthings.init_count";
     public static final String SHOW_DONE = "com.kinnack.nthings.show_done";
     public static final String MAX_COUNT = "com.kinnack.nthing.max_count";
@@ -44,8 +45,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     private boolean useSubcount = false;
     protected SoundAlert soundAlert;
     private PowerManager.WakeLock wakeLock;
-    private RoomDelegate _roomDelegate = new RoomDelegate();
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +74,16 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
             dialogToUser(R.string.is_test_title,R.string.is_test_msg);
         }
 
-//        Client client = new Client("ws://192.168.1.177:2567");
-//        client.joinOrCreate(MyRoomState.class,
-//                "my_room",
-//                _roomDelegate,
-//                Throwable::printStackTrace);
+        Client client = new Client("ws://192.168.1.177:2567");
+// FIXME implementation broken, casts LinkedHashMap to AvailableRoom without actual conversion
+//        client.getAvailableRooms("my_room", rooms -> {
+//            rooms.stream().forEach(room -> Log.d("AvailalbeRooms", room.getRoomId()));
+//        });
+        SchemaReflection sr = new SchemaReflection();
+        client.joinOrCreate(MyRoomState.class,
+                "my_room",
+                this,
+                Throwable::printStackTrace);
         
         stopWatch = new StopWatch();
         stopWatch.start();
@@ -156,7 +161,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     
     // ??? Is it necessary to stop the counter each time?
     protected void count() {
-        _roomDelegate.countRep();
+        countRep();
         incrementProgress();
         
         stopWatch.stop();
@@ -264,16 +269,31 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     }
 
 
-    private static class RoomDelegate implements Function1Void<Room<MyRoomState>> {
-        private Room<MyRoomState> _room = null;
-        @Override
-        public void invoke(Room<MyRoomState> room) {
-            Log.i("CLIENT", "joined "+room.getName()+" with sess="+room.getSessionId());
-            _room = room;
-        }
+    private static final String ROOM_TAG = "ROOM";
+    private Room<MyRoomState> _room = null;
+    @Override
+    public void invoke(Room<MyRoomState> room) {
+        Log.i("CLIENT", "joined "+room.getName()+" with sess="+room.getSessionId());
+        _room = room;
 
-        public void countRep() {
+        room.setOnJoin(() -> {
+            Log.d(ROOM_TAG, "onJoin()");
+        });
+
+        room.setOnLeave(code -> {
+            Log.d(ROOM_TAG, "onLeave(" + code + ")");
+        });
+
+        room.setOnError((reason, message) -> {
+            Log.d(ROOM_TAG, "onError(" + reason + ", " + message + ")");
+        });
+    }
+
+    public void countRep() {
+        try {
             _room.send("rep");
+        } catch (Exception e) {
+            Log.w("CounterActivity.countRep", "publishing count failed", e);
         }
     }
 }

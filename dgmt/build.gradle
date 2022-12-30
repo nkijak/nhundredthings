@@ -43,4 +43,5 @@ dependencies {
     }
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
     implementation "io.github.doorbash:colyseus-kotlin:0.14.5"
+    implementation "org.slf4j:slf4j-android:1.7.36"
 }

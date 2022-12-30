@@ -14,6 +14,6 @@ import { Schema, MapSchema, Context, type } from "@colyseus/schema";
 
 
 public class UserState extends Schema {
-    @SchemaField(type="0/int64")
-    public int reps = 0;
+    @SchemaField(type="0/number")
+    public float reps = 0f;
 }
