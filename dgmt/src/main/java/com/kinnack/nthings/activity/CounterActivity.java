@@ -74,20 +74,22 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         
         if (extras.getBoolean(IS_TEST)) {
             dialogToUser(R.string.is_test_title,R.string.is_test_msg);
-        }
-
-        Client client = new Client("ws://192.168.1.177:2567");
+        } else {
+            Client client = new Client("ws://192.168.1.177:2567");
 // FIXME implementation broken, casts LinkedHashMap to AvailableRoom without actual conversion
 //        client.getAvailableRooms("my_room", rooms -> {
 //            rooms.stream().forEach(room -> Log.d("AvailalbeRooms", room.getRoomId()));
 //        });
-        LinkedHashMap<String, Object> options = new LinkedHashMap<String, Object>();
-        options.put("maxClients", 2);
-        client.joinOrCreate(MyRoomState.class,
-                "my_room",
-                //options, FIXME options on the rooms seem to create new rooms each time
-                this,
-                Throwable::printStackTrace);
+            LinkedHashMap<String, Object> options = new LinkedHashMap<String, Object>();
+            options.put("maxClients", 2);
+            options.put("maxReps", neededCount);
+            Log.d("CLIENT", "looking for neededCount="+neededCount);
+            client.joinOrCreate(MyRoomState.class,
+                    "my_room",
+                    options, //FIXME options on the rooms seem to create new rooms each time
+                    this,
+                    Throwable::printStackTrace);
+        }
         
         stopWatch = new StopWatch();
         stopWatch.start();
@@ -187,10 +189,12 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         stopWatch.start();
     }
 
-    private void updateOtherUserProgress(int progress) {
+    private void updateOtherUserProgress(float progress, float numberNeeded) {
+        float progressPercent = progress / numberNeeded;
+        int iprogress = (int) (progressPercent > 1.0 ? 100 : progressPercent * 100);
         ProgressBar subProgress = (ProgressBar)findViewById(R.id.SubCountProgress);
         subProgress.setVisibility(View.VISIBLE);
-        subProgress.setProgress(progress, true);
+        subProgress.setProgress(iprogress, true);
     }
 
     /**
@@ -307,9 +311,8 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
                     .filter(entry -> !entry.getKey().equals(room.getSessionId()))
                     .findFirst()
                     .map(entry -> {
-                        int reps = (int)Math.floor(entry.getValue().reps);
-                        Log.d(ROOM_TAG, "User: "+ entry.getKey() + " reps="+entry.getValue());
-                        runOnUiThread(() -> updateOtherUserProgress(reps));
+                        Log.d(ROOM_TAG, "User: "+ entry.getKey() + " reps="+entry.getValue().reps + " max="+state.maxReps);
+                        runOnUiThread(() -> updateOtherUserProgress(entry.getValue().reps, state.maxReps));
                         return entry.getValue();
                     });
         });

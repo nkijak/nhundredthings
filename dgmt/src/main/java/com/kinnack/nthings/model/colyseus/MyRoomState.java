@@ -31,11 +31,14 @@ export class MyRoomState extends Schema {
 
 public class MyRoomState extends Schema {
     @SchemaField(type="0/string")
-    public String mySynchronizedProperty = "Hello world";
+    public String winner = "";
 
     @SchemaField(type="1/number")
     public float numParticipants = 0f;
 
-    @SchemaField(type = "2/map/ref", ref = UserState.class)
+    @SchemaField(type="2/number")
+    public float maxReps = 0f;
+
+    @SchemaField(type = "3/map/ref", ref = UserState.class)
     public MapSchema<UserState> users = new MapSchema<>(UserState.class);
 }
