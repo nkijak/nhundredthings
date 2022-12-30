@@ -20,6 +20,8 @@ import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.model.SoundAlert;
 import com.kinnack.nthings.model.colyseus.MyRoomState;
 
+import java.util.LinkedHashMap;
+
 import io.colyseus.Client;
 import io.colyseus.Room;
 import io.colyseus.util.callbacks.Function1Void;
@@ -79,9 +81,11 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
 //        client.getAvailableRooms("my_room", rooms -> {
 //            rooms.stream().forEach(room -> Log.d("AvailalbeRooms", room.getRoomId()));
 //        });
-        SchemaReflection sr = new SchemaReflection();
+        LinkedHashMap<String, Object> options = new LinkedHashMap<String, Object>();
+        options.put("maxClients", 2);
         client.joinOrCreate(MyRoomState.class,
                 "my_room",
+                //options, FIXME options on the rooms seem to create new rooms each time
                 this,
                 Throwable::printStackTrace);
         
@@ -183,6 +187,11 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         stopWatch.start();
     }
 
+    private void updateOtherUserProgress(int progress) {
+        ProgressBar subProgress = (ProgressBar)findViewById(R.id.SubCountProgress);
+        subProgress.setVisibility(View.VISIBLE);
+        subProgress.setProgress(progress, true);
+    }
 
     /**
      * 
@@ -286,6 +295,27 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
 
         room.setOnError((reason, message) -> {
             Log.d(ROOM_TAG, "onError(" + reason + ", " + message + ")");
+        });
+
+        room.setOnStateChange((state, isInitial) -> {
+            if (isInitial) {
+                Log.d(ROOM_TAG, "initial state received");
+                return;
+            }
+
+            state.users.entrySet().stream()
+                    .filter(entry -> !entry.getKey().equals(room.getSessionId()))
+                    .findFirst()
+                    .map(entry -> {
+                        int reps = (int)Math.floor(entry.getValue().reps);
+                        Log.d(ROOM_TAG, "User: "+ entry.getKey() + " reps="+entry.getValue());
+                        runOnUiThread(() -> updateOtherUserProgress(reps));
+                        return entry.getValue();
+                    });
+        });
+
+        room.onMessage("rep", Float.class, rep -> {
+            Log.i(ROOM_TAG, "Rep received: "+rep);
         });
     }
 
