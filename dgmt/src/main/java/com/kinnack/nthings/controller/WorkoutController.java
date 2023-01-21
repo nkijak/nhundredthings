@@ -208,7 +208,11 @@ public abstract class WorkoutController {
     }
 
     public void removeCurrentLog() {
-        history.removeCurrentLog();
+        if (null != history) {
+            history.removeCurrentLog();
+        } else {
+            Log.d("WorkoutController.removeCurrentLog", "removeCurrentLog called when history is null");
+        }
     }
 
     public boolean setCurrentLevel(Level level_) {

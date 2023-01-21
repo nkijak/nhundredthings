@@ -8,6 +8,7 @@ repositories {
 //        //url "https://repo.spring.io/plugins-release/"
 //    }
     mavenLocal()
+    maven { url 'https://jitpack.io' }
 }
 
 android {
@@ -15,7 +16,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -24,6 +25,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -36,4 +41,7 @@ dependencies {
     implementation('de.keyboardsurfer.android.widget:crouton:1.8.4@aar') {
         exclude group: 'com.google.android', module: 'support-v4'
     }
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    implementation "io.github.doorbash:colyseus-kotlin:0.14.5"
+    implementation "org.slf4j:slf4j-android:1.7.36"
 }

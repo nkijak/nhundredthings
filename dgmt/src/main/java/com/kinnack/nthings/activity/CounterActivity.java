@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -17,11 +18,19 @@ import android.widget.TextView;
 import com.kinnack.nthings.R;
 import com.kinnack.nthings.StopWatch;
 import com.kinnack.nthings.model.SoundAlert;
+import com.kinnack.nthings.model.colyseus.MyRoomState;
+
+import java.util.LinkedHashMap;
+
+import io.colyseus.Client;
+import io.colyseus.Room;
+import io.colyseus.util.callbacks.Function1Void;
 
 import static android.os.PowerManager.ON_AFTER_RELEASE;
 import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
+import io.colyseus.serializer.schema.types.SchemaReflection;
 
-public class CounterActivity extends Activity implements OnSeekBarChangeListener{
+public class CounterActivity extends Activity implements OnSeekBarChangeListener, Function1Void<Room<MyRoomState>>{
     public static final String INIT_COUNT_KEY = "com.kinnack.nthings.init_count";
     public static final String SHOW_DONE = "com.kinnack.nthings.show_done";
     public static final String MAX_COUNT = "com.kinnack.nthing.max_count";
@@ -38,7 +47,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     private boolean useSubcount = false;
     protected SoundAlert soundAlert;
     private PowerManager.WakeLock wakeLock;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +74,22 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         
         if (extras.getBoolean(IS_TEST)) {
             dialogToUser(R.string.is_test_title,R.string.is_test_msg);
-        } 
+        } else {
+            Client client = new Client("ws://192.168.1.177:2567");
+// FIXME implementation broken, casts LinkedHashMap to AvailableRoom without actual conversion
+//        client.getAvailableRooms("my_room", rooms -> {
+//            rooms.stream().forEach(room -> Log.d("AvailalbeRooms", room.getRoomId()));
+//        });
+            LinkedHashMap<String, Object> options = new LinkedHashMap<String, Object>();
+            options.put("maxClients", 2);
+            options.put("maxReps", neededCount);
+            Log.d("CLIENT", "looking for neededCount="+neededCount);
+            client.joinOrCreate(MyRoomState.class,
+                    "my_room",
+                    options, //FIXME options on the rooms seem to create new rooms each time
+                    this,
+                    Throwable::printStackTrace);
+        }
         
         stopWatch = new StopWatch();
         stopWatch.start();
@@ -143,6 +167,7 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
     
     // ??? Is it necessary to stop the counter each time?
     protected void count() {
+        countRep();
         incrementProgress();
         
         stopWatch.stop();
@@ -164,6 +189,13 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         stopWatch.start();
     }
 
+    private void updateOtherUserProgress(float progress, float numberNeeded) {
+        float progressPercent = progress / numberNeeded;
+        int iprogress = (int) (progressPercent > 1.0 ? 100 : progressPercent * 100);
+        ProgressBar subProgress = (ProgressBar)findViewById(R.id.SubCountProgress);
+        subProgress.setVisibility(View.VISIBLE);
+        subProgress.setProgress(iprogress, true);
+    }
 
     /**
      * 
@@ -247,5 +279,54 @@ public class CounterActivity extends Activity implements OnSeekBarChangeListener
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = pm.newWakeLock(SCREEN_DIM_WAKE_LOCK|ON_AFTER_RELEASE, "RestActivity.screenOn");
         wakeLock.acquire();
+    }
+
+
+    private static final String ROOM_TAG = "ROOM";
+    private Room<MyRoomState> _room = null;
+    @Override
+    public void invoke(Room<MyRoomState> room) {
+        Log.i("CLIENT", "joined "+room.getName()+" with sess="+room.getSessionId());
+        _room = room;
+
+        room.setOnJoin(() -> {
+            Log.d(ROOM_TAG, "onJoin()");
+        });
+
+        room.setOnLeave(code -> {
+            Log.d(ROOM_TAG, "onLeave(" + code + ")");
+        });
+
+        room.setOnError((reason, message) -> {
+            Log.d(ROOM_TAG, "onError(" + reason + ", " + message + ")");
+        });
+
+        room.setOnStateChange((state, isInitial) -> {
+            if (isInitial) {
+                Log.d(ROOM_TAG, "initial state received");
+                return;
+            }
+
+            state.users.entrySet().stream()
+                    .filter(entry -> !entry.getKey().equals(room.getSessionId()))
+                    .findFirst()
+                    .map(entry -> {
+                        Log.d(ROOM_TAG, "User: "+ entry.getKey() + " reps="+entry.getValue().reps + " max="+state.maxReps);
+                        runOnUiThread(() -> updateOtherUserProgress(entry.getValue().reps, state.maxReps));
+                        return entry.getValue();
+                    });
+        });
+
+        room.onMessage("rep", Float.class, rep -> {
+            Log.i(ROOM_TAG, "Rep received: "+rep);
+        });
+    }
+
+    public void countRep() {
+        try {
+            _room.send("rep");
+        } catch (Exception e) {
+            Log.w("CounterActivity.countRep", "publishing count failed", e);
+        }
     }
 }
